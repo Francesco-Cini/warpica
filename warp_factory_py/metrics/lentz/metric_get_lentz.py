@@ -39,11 +39,11 @@ def metric_get_lentz(grid_size, world_centre, v, scale, grid_scale):
                 
                 for t in range(grid_size[0]):
 
-                    xs = (t * grid_scale[0] - world_centre[0]) * v * c
+                    xs = (t * grid_scale[0] - world_centre[0]) * v * c()
 
                     xp = x - xs 
 
-                    WFX, WFY = get_warp_factory_by_region(xp, y, scale)
+                    WFX, WFY = get_warp_factor_by_region(xp, y, scale)
 
                     beta[0][t, i, j, k] = - WFX * v
                     beta[1][t, i, j, k] = - WFY * v
