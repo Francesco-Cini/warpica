@@ -1,17 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from warp_factory_py.metrics.lentz.metric_get_lentz import metric_get_lentz
+from warp_factory_py.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
 from warp_factory_py.solver.get_energy_tensor import get_energy_tensor
 from warp_factory_py.visualiser.utils.surf_q_modified import sqm
 
-grid_size = np.array([5, 20, 20, 20])
+grid_size = np.array([5, 25, 25, 25])
 world_centre = (grid_size + 1) / 2
 velocity = 0.5
 R = 5
 sigma = 0.5
 
-metric = metric_get_lentz(grid_size, world_centre, velocity, None, None)
+metric = metric_get_alcubierre(grid_size, world_centre, velocity, R, sigma)
 energy_tensor = get_energy_tensor(metric, "fourth")
 
 slice_idx = int(np.round(world_centre[3])) - 1
