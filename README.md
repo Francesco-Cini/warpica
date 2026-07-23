@@ -1,10 +1,10 @@
-# WarpFactoryPy
+# PyWarp
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Status](https://img.shields.io/badge/status-experimental-orange.svg)]()
 
-WarpFactoryPy is an experimental Python library for constructing and analysing
+PyWarp is an experimental Python library for constructing and analysing
 warp-drive spacetimes using Einstein's theory of general relativity. It is a
 Python adaptation of the original WarpFactory MATLAB toolkit.
 
@@ -73,7 +73,7 @@ More complete examples are available in the [`examples`](examples) directory.
 
 ## Attribution
 
-WarpFactoryPy is an independent adaptation of the MIT-licensed
+PyWarp is an independent adaptation of the MIT-licensed
 [WarpFactory MATLAB toolkit](https://github.com/NerdsWithAttitudes/WarpFactory)
 created by Christopher Helmerich and Jared Fuchs.
 
@@ -82,6 +82,6 @@ with or endorsed by the original authors.
 
 ## License
 
-WarpFactoryPy is distributed under the [MIT License](LICENSE). The license
+PyWarp is distributed under the [MIT License](LICENSE). The license
 retains attribution for the original WarpFactory authors and identifies the
 copyright holder of this Python adaptation.
