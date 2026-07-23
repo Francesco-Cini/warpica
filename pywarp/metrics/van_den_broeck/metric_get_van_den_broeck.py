@@ -42,7 +42,7 @@ def metric_get_van_den_broeck(grid_size, world_centre, v, R_1, sigma_1, R_2, sig
 
                 for t in range(grid_size[0]):
 
-                    x_s = (t * grid_scale[0] - world_centre[0]) * v * ((1 + A) ** 2) * c
+                    x_s = (t * grid_scale[0] - world_centre[0]) * v * ((1 + A) ** 2) * c()
 
                     r = np.sqrt(((x - x_s) ** 2) + (y ** 2) + (z ** 2))
 

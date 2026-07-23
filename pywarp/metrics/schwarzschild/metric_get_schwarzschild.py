@@ -43,19 +43,19 @@ def metric_get_schwarzschild(grid_size, world_centre, r_s, grid_scaling):
 
                 r = np.sqrt((x ** 2) + (y ** 2) + (z ** 2)) + epsilon
 
-                metric['tensor'][0, 0][t, i, j, k] = - ((1 - r_s) / r)
-                metric['tensor'][1, 1][t, i, j, k] = (((x ** 2) / ((1 - r_s) / r)) + (y ** 2) + (z ** 2)) / (r ** 2)
-                metric['tensor'][2, 2][t, i, j, k] = ((x ** 2) + ((y ** 2) / ((1 - r_s) / r)) + (z ** 2)) / (r ** 2)
-                metric['tensor'][3, 3][t, i, j, k] = ((x ** 2) + (y ** 2) + ((z ** 2) / ((1 - r_s) / r))) / (r ** 2)
+                metric['tensor'][0][0][t, i, j, k] = - ((1 - r_s) / r)
+                metric['tensor'][1][1][t, i, j, k] = (((x ** 2) / (1 - r_s / r)) + (y ** 2) + (z ** 2)) / (r ** 2)
+                metric['tensor'][2][2][t, i, j, k] = ((x ** 2) + ((y ** 2) / ((1 - r_s) / r)) + (z ** 2)) / (r ** 2)
+                metric['tensor'][3][3][t, i, j, k] = ((x ** 2) + (y ** 2) + ((z ** 2) / ((1 - r_s) / r))) / (r ** 2)
                 
-                metric['tensor'][1, 2][t, i, j, k] = r_s / ((r ** 3) - (r ** 2) * r_s) * x * y
-                metric['tensor'][2, 1][t, i, j, k] = metric['tensor'][1, 2][1, i, j, k]
+                metric['tensor'][1][2][t, i, j, k] = r_s / ((r ** 3) - (r ** 2) * r_s) * x * y
+                metric['tensor'][2][1][t, i, j, k] = metric['tensor'][1][2][t, i, j, k]
 
-                metric['tensor'][1, 3][t, i, j, k] = r_s / ((r ** 3) - (r ** 2) * r_s) * x * z
-                metric['tensor'][3, 1][t, i, j, k] = metric['tensor'][1, 3][1, i, j, k]
+                metric['tensor'][1][3][t, i, j, k] = r_s / ((r ** 3) - (r ** 2) * r_s) * x * z
+                metric['tensor'][3][1][t, i, j, k] = metric['tensor'][1][3][t, i, j, k]
 
-                metric['tensor'][2, 3][t, i, j, k] = r_s / ((r ** 3) - (r ** 2) * r_s) * y * z
-                metric['tensor'][3, 2][t, i, j, k] = metric['tensor'][2, 3][1, i, j, k]
+                metric['tensor'][2][3][t, i, j, k] = r_s / ((r ** 3) - (r ** 2) * r_s) * y * z
+                metric['tensor'][3][2][t, i, j, k] = metric['tensor'][2][3][t, i, j, k]
 
 
     return metric 
