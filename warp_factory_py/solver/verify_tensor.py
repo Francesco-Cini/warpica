@@ -41,10 +41,17 @@ def verify_tensor(input_tensor, suppress_msgs = None):
         if is_field(input_tensor, 'tensor'):
             tensor = input_tensor['tensor']
             if (
-                isinstance(tensor, (list, tuple))
-                and len(tensor) == 4
-                and all(isinstance(row,(list, tuple)) and len(row) == 4 for row in tensor)
-                and hasattr(tensor[0][0], "shape")
+                (
+                    isinstance(tensor, (list, tuple))
+                    and len(tensor) == 4
+                    and all(isinstance(row, (list, tuple, np.ndarray)) and len(row) == 4 for row in tensor)
+                )
+                or (
+                    isinstance(tensor, np.ndarray)
+                    and tensor.shape[:2] == (4, 4)
+                )
+            ) and (
+                hasattr(tensor[0][0], "shape")
                 and len(tensor[0][0].shape) == 4
             ):
                 disp_message("tensor: Verified", suppress_msgs)

@@ -6,7 +6,21 @@ from warp_factory_py.metrics.utils.shape_function_alcubierre import shape_functi
 from warp_factory_py.units.universal_constants.c import c 
 from warp_factory_py.metrics.three_plus_one_builder import three_plus_one_builder
 
-def metric_get_alcubierre_comoving(grid_size, world_centre, v, R, sigma, grid_scale):
+def metric_get_alcubierre_comoving(
+        grid_size: np.ndarray,
+        world_centre: np.ndarray, 
+        v: float, 
+        R: float, 
+        sigma: float, 
+        grid_scale: np.ndarray | None
+        ) -> dict:
+    """
+    Parameters
+    ----------
+
+    Returns
+    -------
+    """
 
     if grid_scale is None:
         grid_scale = np.array([1, 1, 1, 1])

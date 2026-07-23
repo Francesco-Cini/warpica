@@ -2,7 +2,7 @@ from datetime import datetime
 
 from warp_factory_py.solver.verify_tensor import verify_tensor
 from warp_factory_py.solver.utils.strcmpi import strcmpi
-from warp_factory_py.analyser.utils.change_tensor_index import change_tensor_index
+from warp_factory_py.analyser.change_tensor_index import change_tensor_index
 from warp_factory_py.solver.utils.met_2_den import met_2_den
 
 def get_energy_tensor(metric, diff_order):

@@ -5,7 +5,13 @@ from warp_factory_py.metrics.set_minkowski_three_plus_one import set_minkowski_t
 from warp_factory_py.units.universal_constants.c import c 
 from warp_factory_py.metrics.three_plus_one_builder import three_plus_one_builder
 
-def metric_get_lentz(grid_size, world_centre, v, scale, grid_scale):
+def metric_get_lentz(
+        grid_size: np.ndarray, 
+        world_centre: np.ndarray, 
+        v: float, 
+        scale, 
+        grid_scale: np.ndarray | None
+        ) -> dict:
 
     if scale is None:
         scale = np.max(grid_size[1:4] / 7)
