@@ -23,7 +23,7 @@ def metric_get_van_den_broeck(grid_size, world_centre, v, R_1, sigma_1, R_2, sig
     metric['params']['sigma_2'] = sigma_2
     metric['params']['A'] = A 
 
-    metric['tpye'] = "metric"
+    metric['type'] = "metric"
     metric['name'] = "Van Den Broeck"
     metric['scaling'] = grid_scale
     metric['coords'] = "cartesian"

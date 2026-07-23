@@ -19,7 +19,7 @@ def metric_get_schwarzschild(grid_size, world_centre, r_s, grid_scaling):
     metric['params']['world_centre'] = world_centre
     metric['params']['r_s'] = r_s
 
-    metric['type'] = "meric"
+    metric['type'] = "metric"
     metric['frame'] = "comoving"
     metric['name'] = "Schwarzschild"
     metric['scaling'] = grid_scaling

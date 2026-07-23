@@ -21,9 +21,6 @@ def get_energy_tensor(metric, diff_order):
     if strcmpi(diff_order, 'fourth'):
         energy_tensor = met_2_den(metric['tensor'], metric['scaling'])
 
-    elif strcmpi(diff_order, 'second'):
-        energy_tensor = met_2_den_2(metric['tensor'], metric['scaling'])
-
     else:
         raise Exception("Order Flag Not Specified Correctly. Options: 'fourth' or 'second'")
         

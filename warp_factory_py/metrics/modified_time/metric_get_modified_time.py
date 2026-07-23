@@ -41,7 +41,7 @@ def metric_get_modified_time(grid_size, world_centre, v, R, sigma, A, grid_scali
 
                 for t in range(grid_size[0]):
 
-                    xs = (t * grid_scaling[0] - world_centre[0]) * v * c
+                    xs = (t * grid_scaling[0] - world_centre[0]) * v * c()
 
                     r = (((x - xs) ** 2) + (y ** 2) + (z ** 2)) ** (1 / 2)
 
