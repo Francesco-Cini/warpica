@@ -1,7 +1,7 @@
 import numpy as np
 from datetime import date as _date
 
-from warp_factory_py.metrics.set_minkowski import set_minkowski
+from pywarp.metrics.set_minkowski import set_minkowski
 
 def metric_get_schwarzschild(grid_size, world_centre, r_s, grid_scaling):
 
@@ -31,7 +31,7 @@ def metric_get_schwarzschild(grid_size, world_centre, r_s, grid_scaling):
 
     epsilon = 0.0000000001
 
-    t = 1
+    t = 0
 
     for i in range(grid_size[1]):
         for j in range(grid_size[2]):
@@ -43,10 +43,10 @@ def metric_get_schwarzschild(grid_size, world_centre, r_s, grid_scaling):
 
                 r = np.sqrt((x ** 2) + (y ** 2) + (z ** 2)) + epsilon
 
-                metric['tensor'][0][0][t, i, j, k] = - ((1 - r_s) / r)
+                metric['tensor'][0][0][t, i, j, k] = - (1 - r_s / r)
                 metric['tensor'][1][1][t, i, j, k] = (((x ** 2) / (1 - r_s / r)) + (y ** 2) + (z ** 2)) / (r ** 2)
-                metric['tensor'][2][2][t, i, j, k] = ((x ** 2) + ((y ** 2) / ((1 - r_s) / r)) + (z ** 2)) / (r ** 2)
-                metric['tensor'][3][3][t, i, j, k] = ((x ** 2) + (y ** 2) + ((z ** 2) / ((1 - r_s) / r))) / (r ** 2)
+                metric['tensor'][2][2][t, i, j, k] = ((x ** 2) + ((y ** 2) / (1 - r_s / r)) + (z ** 2)) / (r ** 2)
+                metric['tensor'][3][3][t, i, j, k] = ((x ** 2) + (y ** 2) + ((z ** 2) / (1 - r_s / r))) / (r ** 2)
                 
                 metric['tensor'][1][2][t, i, j, k] = r_s / ((r ** 3) - (r ** 2) * r_s) * x * y
                 metric['tensor'][2][1][t, i, j, k] = metric['tensor'][1][2][t, i, j, k]

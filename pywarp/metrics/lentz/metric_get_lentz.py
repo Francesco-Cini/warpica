@@ -1,9 +1,9 @@
 import numpy as np
 from datetime import date as _date
 
-from warp_factory_py.metrics.set_minkowski_three_plus_one import set_minkowski_three_plus_one
-from warp_factory_py.units.universal_constants.c import c 
-from warp_factory_py.metrics.three_plus_one_builder import three_plus_one_builder
+from pywarp.metrics.set_minkowski_three_plus_one import set_minkowski_three_plus_one
+from pywarp.units.universal_constants.c import c
+from pywarp.metrics.three_plus_one_builder import three_plus_one_builder
 
 def metric_get_lentz(
         grid_size: np.ndarray, 

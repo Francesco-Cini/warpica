@@ -1,5 +1,5 @@
 import numpy as np
-from warp_factory_py.solver.utils.c3_inv import c3_inv
+from pywarp.solver.utils.c3_inv import c3_inv
 
 def three_plus_one_builder(alpha, beta, gamma):
 

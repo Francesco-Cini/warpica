@@ -1,9 +1,9 @@
 import numpy as np
 from datetime import date as _date
 
-from warp_factory_py.metrics.set_minkowski import set_minkowski
-from warp_factory_py.units.universal_constants.c import c
-from warp_factory_py.metrics.utils.shape_function_alcubierre import shape_function_alcubierre
+from pywarp.metrics.set_minkowski import set_minkowski
+from pywarp.units.universal_constants.c import c
+from pywarp.metrics.utils.shape_function_alcubierre import shape_function_alcubierre
 
 def metric_get_van_den_broeck(grid_size, world_centre, v, R_1, sigma_1, R_2, sigma_2, A, grid_scale):
 
@@ -50,13 +50,13 @@ def metric_get_van_den_broeck(grid_size, world_centre, v, R_1, sigma_1, R_2, sig
 
                     f_s = shape_function_alcubierre(r, R_2, sigma_2) * v 
 
-                    metric['tensor'][1, 1][t, i, j, k] = B ** 2
-                    metric['tensor'][2, 2][t, i, j, k] = B ** 2
-                    metric['tensor'][3, 3][t, i, j, k] = B ** 2
+                    metric['tensor'][1][1][t, i, j, k] = B ** 2
+                    metric['tensor'][2][2][t, i, j, k] = B ** 2
+                    metric['tensor'][3][3][t, i, j, k] = B ** 2
 
-                    metric['tensor'][0, 1][t, i, j, k] = - (B ** 2) * f_s
-                    metric['tensor'][1, 0][t, i, j, k] = metric['tensor'][0, 1][t, i, j, k]
+                    metric['tensor'][0][1][t, i, j, k] = - (B ** 2) * f_s
+                    metric['tensor'][1][0][t, i, j, k] = metric['tensor'][0][1][t, i, j, k]
 
-                    metric['tensor'][0, 0][t, i, j, k] = - (1 - (B ** 2) * (f_s ** 2))
+                    metric['tensor'][0][0][t, i, j, k] = - (1 - (B ** 2) * (f_s ** 2))
 
     return metric

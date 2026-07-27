@@ -1,7 +1,7 @@
 import numpy as np
 
-from warp_factory_py.analyser.change_tensor_index import change_tensor_index
-from warp_factory_py.solver.utils.c3_inv import c3_inv
+from pywarp.analyser.change_tensor_index import change_tensor_index
+from pywarp.solver.utils.c3_inv import c3_inv
 
 def three_plus_one_decomposer(metric):
 

@@ -1,8 +1,8 @@
 import numpy as np 
 from datetime import datetime 
 
-from warp_factory_py.metrics.set_minkowski_three_plus_one import set_minkowski_three_plus_one
-from warp_factory_py.metrics.three_plus_one_builder import three_plus_one_builder
+from pywarp.metrics.set_minkowski_three_plus_one import set_minkowski_three_plus_one
+from pywarp.metrics.three_plus_one_builder import three_plus_one_builder
 
 
 def custom_metric(grid_size, world_centre, grid_scaling, alpha_function, beta_function, gamma_function):

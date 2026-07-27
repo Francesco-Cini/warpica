@@ -1,9 +1,9 @@
 import numpy as np
 from datetime import date as _date
 
-from warp_factory_py.metrics.set_minkowski import set_minkowski
-from warp_factory_py.units.universal_constants.c import c 
-from warp_factory_py.metrics.utils.shape_function_alcubierre import shape_function_alcubierre 
+from pywarp.metrics.set_minkowski import set_minkowski
+from pywarp.units.universal_constants.c import c
+from pywarp.metrics.utils.shape_function_alcubierre import shape_function_alcubierre
 
 def metric_get_modified_time(grid_size, world_centre, v, R, sigma, A, grid_scaling):
 
