@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "warplab"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Numerical spacetime metrics, stress-energy and energy-condition analysis"
 readme = "README.md"
 license = "MIT"
@@ -60,6 +60,9 @@ markers = [
     "gpu: opt-in tests requiring a selected physical GPU backend",
     "slow: tests excluded from the default development suite",
 ]
+
+[tool.setuptools.dynamic]
+version = {attr = "warplab.__version__"}
 
 [tool.setuptools.packages.find]
 include = ["warplab*"]
