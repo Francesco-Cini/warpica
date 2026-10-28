@@ -12,10 +12,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dist", type=Path, default=Path("dist"))
     args = parser.parse_args()
-    wheels = list(args.dist.resolve().glob("warp_factory_py-*.whl"))
+    wheels = list(args.dist.resolve().glob("warplab-*.whl"))
     if len(wheels) != 1:
         raise SystemExit("Expected exactly one wheel in the selected dist directory")
-    with tempfile.TemporaryDirectory(prefix="pywarp-wheel-") as directory:
+    with tempfile.TemporaryDirectory(prefix="warplab-wheel-") as directory:
         root = Path(directory)
         venv.EnvBuilder(with_pip=True).create(root / "venv")
         python = (
@@ -29,13 +29,13 @@ def main():
             cwd=root,
         )
         script = """
-import pathlib, pywarp, numpy as np
+import pathlib, warplab, numpy as np
 import matplotlib
 matplotlib.use('Agg')
-from pywarp.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from pywarp.analyser.eval_metric import eval_metric
-from pywarp.visualiser import plot_tensor,plot_three_plus_one
-assert 'site-packages' in str(pathlib.Path(pywarp.__file__).resolve())
+from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warplab.analyser.eval_metric import eval_metric
+from warplab.visualiser import plot_tensor,plot_three_plus_one
+assert 'site-packages' in str(pathlib.Path(warplab.__file__).resolve())
 metric=metric_get_minkowski([1,5,5,5])
 for order in ('second','fourth'):
     result=eval_metric(metric,num_angular_vec=6,num_time_vec=2,diff_order=order)

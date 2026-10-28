@@ -1,4 +1,4 @@
-# pywarp
+# warplab
 
 Python numerical tools for spacetime metrics, stress-energy tensors and
 sampled energy-condition analysis, ported from WarpFactory.
@@ -20,7 +20,7 @@ use `.venv/bin/python` in place of `.\.venv\Scripts\python.exe`.
 
 - [Testing and examples: a beginner's guide](docs/testing.md)
 - [Runnable examples](examples/README.md)
-- [Second-order source conventions](pywarp/solver/utils/second_order/README.md)
+- [Second-order source conventions](warplab/solver/utils/second_order/README.md)
 
 CPU checks cover both finite-difference orders and all built-in metric
 families. Independent MATLAB fixtures cover representative flat/static/dynamic

@@ -2,8 +2,8 @@ import time
 
 import numpy as np
 
-from pywarp.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
-from pywarp.solver.get_energy_tensor import get_energy_tensor
+from warplab.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
+from warplab.solver.get_energy_tensor import get_energy_tensor
 
 
 def main():

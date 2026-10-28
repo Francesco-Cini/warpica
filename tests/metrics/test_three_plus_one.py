@@ -1,8 +1,8 @@
 import numpy as np
 
-from pywarp.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from pywarp.metrics.three_plus_one_builder import three_plus_one_builder
-from pywarp.metrics.three_plus_one_decomposer import three_plus_one_decomposer
+from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warplab.metrics.three_plus_one_builder import three_plus_one_builder
+from warplab.metrics.three_plus_one_decomposer import three_plus_one_decomposer
 
 
 def test_nondiagonal_spatial_metric_round_trip():
