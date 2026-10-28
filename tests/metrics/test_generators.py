@@ -3,11 +3,11 @@ import importlib
 import numpy as np
 import pytest
 
-from pywarp.metrics.custom_metric import custom_metric
-from pywarp.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from pywarp.metrics.three_plus_one_builder import three_plus_one_builder
-from pywarp.metrics.three_plus_one_decomposer import three_plus_one_decomposer
-from pywarp.solver.verify_tensor import verify_tensor
+from warplab.metrics.custom_metric import custom_metric
+from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warplab.metrics.three_plus_one_builder import three_plus_one_builder
+from warplab.metrics.three_plus_one_decomposer import three_plus_one_decomposer
+from warplab.solver.verify_tensor import verify_tensor
 
 CASES = [
     ("alcubierre", "alcubierre", [0.2, 1, 1]),
@@ -24,7 +24,7 @@ CASES = [
 
 
 def build(family, name, args):
-    module = importlib.import_module(f"pywarp.metrics.{family}.metric_get_{name}")
+    module = importlib.import_module(f"warplab.metrics.{family}.metric_get_{name}")
     fn = getattr(module, f"metric_get_{name}")
     return fn(np.array([1, 5, 5, 5]), np.array([1, 2.8, 2.7, 2.6]), *args, np.ones(4))
 
@@ -104,7 +104,7 @@ def test_custom_metric_coordinates_and_flat_limit():
 
 
 def test_lentz_template_regions():
-    from pywarp.metrics.lentz.metric_get_lentz import (
+    from warplab.metrics.lentz.metric_get_lentz import (
         get_warp_factor_by_region as region,
     )
 
@@ -128,7 +128,7 @@ def test_modified_metrics_reduce_to_alcubierre(comoving):
 )
 def test_comoving_requires_one_time_slice(family, name, args):
     fn = getattr(
-        importlib.import_module(f"pywarp.metrics.{family}.metric_get_{name}"),
+        importlib.import_module(f"warplab.metrics.{family}.metric_get_{name}"),
         f"metric_get_{name}",
     )
     with pytest.raises((ValueError, Exception), match="time|slice"):
@@ -139,7 +139,7 @@ def test_comoving_requires_one_time_slice(family, name, args):
 @pytest.mark.parametrize("order", ["second", "fourth"])
 @pytest.mark.parametrize("family,name,args", CASES, ids=[case[1] for case in CASES])
 def test_each_generator_reaches_public_solver(family, name, args, order):
-    from pywarp.solver.get_energy_tensor import get_energy_tensor
+    from warplab.solver.get_energy_tensor import get_energy_tensor
 
     metric = build(family, name, args)
     before = np.asarray(metric["tensor"]).copy()
@@ -154,8 +154,8 @@ def test_each_generator_reaches_public_solver(family, name, args, order):
 
 
 def test_shell_exterior_matches_schwarzschild_profile():
-    from pywarp.units.universal_constants.c import c
-    from pywarp.units.universal_constants.G import G
+    from warplab.units.universal_constants.c import c
+    from warplab.units.universal_constants.G import G
 
     metric = build(
         "warp_shell", "warp_shell_comoving", [1e25, 0.5, 1.5, 0, 1, 1, 0, False]
@@ -170,7 +170,7 @@ def test_shell_exterior_matches_schwarzschild_profile():
 @pytest.mark.integration
 @pytest.mark.parametrize("family,name,args", CASES, ids=[case[1] for case in CASES])
 def test_all_metrics_complete_analysis(family, name, args):
-    from pywarp.analyser.eval_metric import eval_metric
+    from warplab.analyser.eval_metric import eval_metric
 
     metric = build(family, name, args)
     result = eval_metric(metric, num_angular_vec=6, num_time_vec=2, diff_order="second")

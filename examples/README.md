@@ -2,7 +2,7 @@
 
 Examples are small programs you run to learn the API. Run these commands
 from the repository root after installing the project (`pip install -e .`).
-They do not require copying files into `pywarp/` or editing `sys.path`.
+They do not require copying files into `warplab/` or editing `sys.path`.
 
 | Command | Purpose |
 | --- | --- |

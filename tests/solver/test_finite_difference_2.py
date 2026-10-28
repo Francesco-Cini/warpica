@@ -3,7 +3,7 @@ import itertools
 import numpy as np
 import pytest
 
-from pywarp.solver.utils.take_finite_difference_2 import (
+from warplab.solver.utils.take_finite_difference_2 import (
     take_finite_difference_2 as derivative,
 )
 

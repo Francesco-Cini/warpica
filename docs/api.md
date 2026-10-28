@@ -31,8 +31,8 @@ result = eval_metric(
 )
 ```
 
-Import from `pywarp.solver.get_energy_tensor` and
-`pywarp.analyser.eval_metric`. Both second and fourth orders are supported.
+Import from `warplab.solver.get_energy_tensor` and
+`warplab.analyser.eval_metric`. Both second and fourth orders are supported.
 The solver returns contravariant stress-energy in SI units, with the same
 spacetime grid. `eval_metric` returns `metric`, `energy_tensor`,
 `energy_tensor_eulerian`, `null`, `weak`, `strong`, `dominant`, `expansion`,
@@ -56,7 +56,7 @@ See [GPU validation](gpu.md) before choosing a device backend.
 Install `.[plot]`, then:
 
 ```python
-from pywarp.visualiser import plot_tensor, plot_three_plus_one
+from warplab.visualiser import plot_tensor, plot_three_plus_one
 
 fig, axes = plot_tensor(metric, sliced_planes=[1, 4], slice_locations=[1, 5])
 fig.savefig("metric.png", dpi=150)

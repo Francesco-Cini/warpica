@@ -2,8 +2,8 @@
 
 import numpy as np
 
-from pywarp.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from pywarp.solver.get_energy_tensor import get_energy_tensor
+from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warplab.solver.get_energy_tensor import get_energy_tensor
 
 
 def main():

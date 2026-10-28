@@ -3,20 +3,20 @@ import itertools
 import numpy as np
 import pytest
 
-from pywarp.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from pywarp.solver.get_energy_tensor import get_energy_tensor
-from pywarp.solver.utils.second_order.c4_inv_2 import c4_inv_2
-from pywarp.solver.utils.second_order.c_det_2 import c_det_2
-from pywarp.solver.utils.second_order.ein_e_2 import ein_e_2
-from pywarp.solver.utils.second_order.ricci_t_2 import ricci_t_2
-from pywarp.solver.utils.second_order.ricci_t_mem_2 import ricci_t_mem_2
-from pywarp.solver.utils.second_order.take_finite_difference_1_2 import (
+from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warplab.solver.get_energy_tensor import get_energy_tensor
+from warplab.solver.utils.second_order.c4_inv_2 import c4_inv_2
+from warplab.solver.utils.second_order.c_det_2 import c_det_2
+from warplab.solver.utils.second_order.ein_e_2 import ein_e_2
+from warplab.solver.utils.second_order.ricci_t_2 import ricci_t_2
+from warplab.solver.utils.second_order.ricci_t_mem_2 import ricci_t_mem_2
+from warplab.solver.utils.second_order.take_finite_difference_1_2 import (
     take_finite_difference_1_2 as d1,
 )
-from pywarp.solver.utils.second_order.take_finite_difference_2_2 import (
+from warplab.solver.utils.second_order.take_finite_difference_2_2 import (
     take_finite_difference_2_2 as d2,
 )
-from pywarp.units.universal_constants.c import c
+from warplab.units.universal_constants.c import c
 
 
 @pytest.mark.parametrize("nested", [False, True])

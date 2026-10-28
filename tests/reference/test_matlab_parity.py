@@ -6,13 +6,13 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from pywarp.analyser.eval_metric import eval_metric
-from pywarp.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
-from pywarp.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from pywarp.solver.get_energy_tensor import get_energy_tensor
-from pywarp.solver.utils.c4_inv import c4_inv
-from pywarp.solver.utils.ricci_t import ricci_t
-from pywarp.solver.utils.second_order.ricci_t_2 import ricci_t_2
+from warplab.analyser.eval_metric import eval_metric
+from warplab.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
+from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warplab.solver.get_energy_tensor import get_energy_tensor
+from warplab.solver.utils.c4_inv import c4_inv
+from warplab.solver.utils.ricci_t import ricci_t
+from warplab.solver.utils.second_order.ricci_t_2 import ricci_t_2
 
 pytestmark = pytest.mark.parity
 DIRECTORY = Path(__file__).parent / "matlab"

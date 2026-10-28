@@ -4,15 +4,15 @@ import itertools
 import numpy as np
 import pytest
 
-from pywarp.analyser.change_tensor_index import change_tensor_index
-from pywarp.analyser.do_frame_transfer import do_frame_transfer
-from pywarp.analyser.utils.get_eulerian_transformation_matrix import (
+from warplab.analyser.change_tensor_index import change_tensor_index
+from warplab.analyser.do_frame_transfer import do_frame_transfer
+from warplab.analyser.utils.get_eulerian_transformation_matrix import (
     get_eulerian_transformation_matrix,
 )
-from pywarp.analyser.utils.get_inner_product import get_inner_product
-from pywarp.analyser.utils.get_trace import get_trace
-from pywarp.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from pywarp.metrics.three_plus_one_builder import three_plus_one_builder
+from warplab.analyser.utils.get_inner_product import get_inner_product
+from warplab.analyser.utils.get_trace import get_trace
+from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warplab.metrics.three_plus_one_builder import three_plus_one_builder
 
 
 def curved_metric():

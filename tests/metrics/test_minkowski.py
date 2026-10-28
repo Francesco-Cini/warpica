@@ -1,6 +1,6 @@
 import numpy as np
 
-from pywarp.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
 
 
 def test_minkowski_signature_and_scaling():

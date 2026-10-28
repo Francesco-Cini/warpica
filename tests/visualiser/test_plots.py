@@ -7,11 +7,11 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-from pywarp.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from pywarp.visualiser import plot_tensor, plot_three_plus_one, plotThreePlusOne
-from pywarp.visualiser.utils.get_slice_data import get_slice_data
-from pywarp.visualiser.utils.label_cartesian_axis import label_cartesian_axis
-from pywarp.visualiser.utils.plot_component import plot_component
+from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warplab.visualiser import plot_tensor, plot_three_plus_one, plotThreePlusOne
+from warplab.visualiser.utils.get_slice_data import get_slice_data
+from warplab.visualiser.utils.label_cartesian_axis import label_cartesian_axis
+from warplab.visualiser.utils.plot_component import plot_component
 
 
 @pytest.mark.parametrize("planes", list(itertools.combinations(range(1, 5), 2)))

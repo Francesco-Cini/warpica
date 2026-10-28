@@ -1,11 +1,11 @@
 import numpy as np
 import pytest
 
-from pywarp.analyser.get_momentum_flow_lines import get_momentum_flow_lines
-from pywarp.analyser.get_scalars import get_scalars
-from pywarp.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from pywarp.solver.utils.trilinear_interp import trilinear_interp
-from pywarp.units.universal_constants.c import c
+from warplab.analyser.get_momentum_flow_lines import get_momentum_flow_lines
+from warplab.analyser.get_scalars import get_scalars
+from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warplab.solver.utils.trilinear_interp import trilinear_interp
+from warplab.units.universal_constants.c import c
 
 
 @pytest.mark.parametrize("order,trim", [("second", 1), ("fourth", 2)])

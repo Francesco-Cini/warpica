@@ -1,13 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from pywarp.analyser.change_tensor_index import change_tensor_index
-from pywarp.analyser.get_energy_conditions import get_energy_conditions
-from pywarp.analyser.get_momentum_flow_lines import get_momentum_flow_lines
-from pywarp.analyser.get_scalars import get_scalars
-from pywarp.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
-from pywarp.solver.get_energy_tensor import get_energy_tensor
-from pywarp.visualiser.utils.surf_q_modified import sqm
+from warplab.analyser.change_tensor_index import change_tensor_index
+from warplab.analyser.get_energy_conditions import get_energy_conditions
+from warplab.analyser.get_momentum_flow_lines import get_momentum_flow_lines
+from warplab.analyser.get_scalars import get_scalars
+from warplab.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
+from warplab.solver.get_energy_tensor import get_energy_tensor
+from warplab.visualiser.utils.surf_q_modified import sqm
 
 
 def main():

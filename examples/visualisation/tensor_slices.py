@@ -5,8 +5,8 @@ from pathlib import Path
 
 import numpy as np
 
-from pywarp.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
-from pywarp.visualiser import plot_tensor, plot_three_plus_one
+from warplab.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
+from warplab.visualiser import plot_tensor, plot_three_plus_one
 
 
 def main():
