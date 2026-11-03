@@ -51,6 +51,26 @@ associated with the 0.5 m grid spacing. Analytic tests in `tests/analyser/`
 and `tests/numerical/` check Python's intended behavior independently; passing
 parity tests does not claim these corrected outputs are identical upstream.
 
+## Stability contract for 1.0
+
+The behaviour in the right-hand column above is the supported contract: a
+later 1.x release will not change these results. Each difference is pinned
+by a test that checks the analytically correct answer, not a recording of
+current output.
+
+| Difference | Why Python's behaviour is correct | Pinned by |
+| --- | --- | --- |
+| Minkowski lowering of Eulerian components | The Eulerian frame is orthonormal, so its metric is already Minkowski; lowering with the curved metric would apply the curvature twice. Dust at rest must report the same density in any coordinates. | `test_conditions_are_frame_independent_in_a_curved_metric` |
+| Strictly timelike speeds | A speed of exactly 1 is the null limit, which the Null condition already covers. Speeds are `linspace(0, 1, n, endpoint=False)`. | `test_timelike_speeds_include_rest_and_exclude_the_null_limit`, `test_timelike_samples_are_strictly_timelike` |
+| Future-directed dominant flux | The dominant condition requires a future-directed causal flux, so a causal but past-directed flux is a violation. | `test_dust_sign_and_sample_return` (negative density) |
+| Expansion and shear scaling | The result for a physical flow must not depend on how finely it is sampled. | `test_expansion_uses_the_supplied_spatial_spacing`, `test_flrw_expansion_shear_and_vorticity` |
+| Comoving Modified Time and Van Den Broeck g00 | Both must reduce to Alcubierre when their extra parameters are neutral. | `test_modified_metrics_reduce_to_alcubierre` |
+| Linear warp-shell interpolation | The radial profiles are smooth enough that 100,000 linear samples are accurate to about 1e-10 or better; the choice of interpolant is not visible in results. | `test_linear_interpolation_error_is_negligible` |
+
+Because these are conventions of the output, not of the interface, a switch
+selecting the upstream behaviour could be added in a 1.x release without
+breaking anything. None is provided in 1.0.
+
 ## Reproduce
 
 Download and extract the exact commit archive from GitHub into
