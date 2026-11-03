@@ -24,10 +24,10 @@ The metrics, solver and analyser names are also available from the top-level
 imports neither Matplotlib nor any GPU library.
 
 Everything else is internal and may change without notice: the helper
-modules under every `utils` directory, `warplab.solver.utils.second_order`,
-`warplab.gpu`, and the `Metric` dataclass in `warplab.metrics.metrics`. Deep
-paths such as `warplab.solver.get_energy_tensor` keep working, but only the
-names listed above are covered by the compatibility promise.
+modules under every `utils` directory, `warplab.solver.utils.second_order`
+and `warplab.gpu`. Deep paths such as `warplab.solver.get_energy_tensor` keep
+working, but only the names listed above are covered by the compatibility
+promise.
 
 ## Metrics and tensors
 
