@@ -52,6 +52,24 @@ associated with the 0.5 m grid spacing. Analytic tests in `tests/analyser/`
 and `tests/numerical/` check Python's intended behavior independently; passing
 parity tests does not claim these corrected outputs are identical upstream.
 
+## Known upstream defects
+
+Exporting references for the remaining metric families exposed defects in
+upstream `metricGet_ModifiedTime` and `metricGet_ModifiedTimeComoving` at the
+pinned commit. They are why Modified Time has no MATLAB reference case.
+
+| Defect | Variant | Effect |
+| --- | --- | --- |
+| `gridScale` is used but the parameter is named `gridScaling` (line 62) | non-comoving | The function raises "Unrecognized function or variable" on every call that reaches the loop. |
+| `x`, `y`, `z` use spacing indices 1, 2, 3 instead of 2, 3, 4 (lines 55-57, 60-62) | both | The x position is scaled by the time spacing, the y position by the x spacing, and so on; results are wrong whenever the spacings differ. |
+| The symmetric shift copy reads `tensor{1,2}(t,i,k,k)` instead of `(t,i,j,k)` (line 72) | both | The `{2,1}` component is taken from the wrong cell, so the metric is not symmetric when `j != k`. |
+
+The Alcubierre, Lentz and Van Den Broeck generators use the correct indices
+and a symmetric copy, and have reference cases. Python's Modified Time uses
+the correct indices; it is checked by its reduction to the Alcubierre metric
+(`test_modified_metrics_reduce_to_alcubierre`) and by the generator tests
+instead of by MATLAB parity.
+
 ## Stability contract for 1.0
 
 The behaviour in the right-hand column above is the supported contract: a
