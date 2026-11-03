@@ -187,7 +187,10 @@ def test_all_metrics_complete_analysis(family, name, args):
 
 
 def test_shell_is_finite_when_a_grid_point_is_the_centre():
-    """Upstream returns NaN at r == 0 (0/0 in the radial direction)."""
+    """Upstream returns NaN when a grid radius lands exactly on a radial sample.
+
+    Its Legendre interpolation divides by zero there, and r == 0 is sample 1.
+    """
     from warplab.solver import get_energy_tensor
 
     metric = build_at_origin_shell()

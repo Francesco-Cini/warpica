@@ -43,10 +43,14 @@ cases = addCase(cases,'schwarzschild',[1,5,5,5],[0,0.13,0.11,0.07], ...
 % the near corner outside the sampled range and indexes past the array.
 cases = addCase(cases,'warp_shell_comoving',[1,5,5,5],[0,0.04,0.03,0.02], ...
     @(g,ctr,s) metricGet_WarpShellComoving(g,ctr,2e26,0.5,1.5,0.1,1,1,0.2,true,s));
-% smoothFactor 1 makes upstream's smooth() an identity; a larger factor
-% exercises the moving-average window rules. Needs the Curve Fitting Toolbox.
+% smoothFactor 1 makes upstream's smooth() an identity. 502 gives a density
+% span of 898.58 (non-integer, floor even) and an even pressure span of 502,
+% so the window rules decide the result: it moves the metric by about 1e-3
+% and the floor-versus-round choice alone by about 3e-6. 100,000 radial
+% samples are about 2e-5 m apart, so small factors would change nothing at
+% the grid points. Needs the Curve Fitting Toolbox.
 cases = addCase(cases,'warp_shell_smoothed',[1,5,5,5],[0,0.04,0.03,0.02], ...
-    @(g,ctr,s) metricGet_WarpShellComoving(g,ctr,2e26,0.5,1.5,0.1,1,5,0.2,true,s));
+    @(g,ctr,s) metricGet_WarpShellComoving(g,ctr,2e26,0.5,1.5,0.1,1,502,0.2,true,s));
 
 for ci = 1:numel(cases)
     name = cases(ci).name;
