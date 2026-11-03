@@ -52,6 +52,18 @@ associated with the 0.5 m grid spacing. Analytic tests in `tests/analyser/`
 and `tests/numerical/` check Python's intended behavior independently; passing
 parity tests does not claim these corrected outputs are identical upstream.
 
+## Toolbox requirement for the warp-shell reference
+
+Upstream `metricGet_WarpShellComoving` calls `smooth()`, which requires the
+MATLAB Curve Fitting Toolbox (or another toolbox that provides it). The
+exporter needs it for the two warp-shell cases. It is deliberately **not**
+replaced by a stand-in: Python's `_smooth` is itself a reimplementation of
+`smooth()`, so a second reimplementation written from the same reading of the
+documentation would only confirm the assumption it is meant to test. One shell
+case uses `smoothFactor=1`, where `smooth()` reduces to the identity, and the
+other uses `smoothFactor=5`, where the window rules (non-integer and even
+spans) change the result.
+
 ## Known upstream defects
 
 Exporting references for the remaining metric families exposed defects in
