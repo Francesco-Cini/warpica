@@ -5,6 +5,10 @@
 - Rename the package from `pywarp` to `warplab`.
 - Document the CPU path as stable and the CuPy and DirectML backends as
   experimental.
+- Rename the internal `surf_q_modified.sqm` surface-plot helper to
+  `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
+  a non-2D height array with a clear `ValueError` before creating any figure,
+  and add tests, including a smoke test of the example that uses it.
 - Remove unused internal code: `flip_index`, the `Metric` dataclass,
   `red_blue` and the superseded `surf_q` helper.
 - Remove the `plotThreePlusOne` alias; use `plot_three_plus_one` with

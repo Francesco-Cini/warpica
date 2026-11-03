@@ -48,7 +48,7 @@ convention = "numpy"
 # Keep the established mathematical keyword argument for compatibility.
 "warplab/solver/utils/get_christoffel_sym.py" = ["E741"]
 # Select the optional plotting dependency and backend before importing pyplot.
-"tests/visualiser/test_plots.py" = ["D", "E402"]
+"tests/visualiser/*.py" = ["D", "E402"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
