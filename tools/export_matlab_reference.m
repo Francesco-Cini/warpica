@@ -1,29 +1,48 @@
 function export_matlab_reference(upstreamRoot, outputFile)
 % Reproduce fixtures using unmodified WarpFactory at the pinned commit.
 addpath(genpath(upstreamRoot));
-if isempty(ver('parallel'))
-    addpath(fullfile(fileparts(mfilename('fullpath')),'matlab_cpu_compat'),'-begin');
-end
+% Always use the CPU helpers so the export does not depend on whether the
+% machine has the Parallel Computing Toolbox or a supported GPU.
+addpath(fullfile(fileparts(mfilename('fullpath')),'matlab_cpu_compat'),'-begin');
 output.commit = '03b10cb02e73998af28db87201a43f2fa0e30319';
 output.runtime = version;
 output.generated_utc = char(datetime('now','TimeZone','UTC'));
 output.c = c;
 output.G = G;
-cases = {'minkowski', 'alcubierre_static', 'alcubierre_dynamic'};
-for ci = 1:length(cases)
-    name = cases{ci};
-    grid = [5,5,5,5];
-    spacing = [0.25/c, 0.5, 0.5, 0.5];
-    center = (grid+1)/2.*spacing;
-    velocity = 0.2;
-    if strcmp(name,'minkowski')
-        metric = metricGet_Minkowski(grid,spacing);
-    else
-        if strcmp(name,'alcubierre_static')
-            grid = [1,5,5,5]; center = (grid+1)/2.*spacing;
-        end
-        metric = metricGet_Alcubierre(grid,center,velocity,0.8,2,spacing);
-    end
+spacing = [0.25/c, 0.5, 0.5, 0.5];
+
+% Each case: name, grid, offset added to the default centre, generator.
+% Comoving generators need a single time slice. The three original cases
+% keep their exact parameters.
+cases = struct('name',{},'grid',{},'offset',{},'make',{});
+cases = addCase(cases,'minkowski',[5,5,5,5],[0,0,0,0], ...
+    @(g,ctr,s) metricGet_Minkowski(g,s));
+cases = addCase(cases,'alcubierre_static',[1,5,5,5],[0,0,0,0], ...
+    @(g,ctr,s) metricGet_Alcubierre(g,ctr,0.2,0.8,2,s));
+cases = addCase(cases,'alcubierre_dynamic',[5,5,5,5],[0,0,0,0], ...
+    @(g,ctr,s) metricGet_Alcubierre(g,ctr,0.2,0.8,2,s));
+cases = addCase(cases,'alcubierre_comoving',[1,5,5,5],[0,0,0,0], ...
+    @(g,ctr,s) metricGet_AlcubierreComoving(g,ctr,0.2,0.8,2,s));
+cases = addCase(cases,'lentz_dynamic',[5,5,5,5],[0,0,0,0], ...
+    @(g,ctr,s) metricGet_Lentz(g,ctr,0.2,1,s));
+cases = addCase(cases,'lentz_comoving',[1,5,5,5],[0,0,0,0], ...
+    @(g,ctr,s) metricGet_LentzComoving(g,ctr,0.2,1,s));
+cases = addCase(cases,'modified_time_dynamic',[5,5,5,5],[0,0,0,0], ...
+    @(g,ctr,s) metricGet_ModifiedTime(g,ctr,0.2,0.8,2,2,s));
+cases = addCase(cases,'van_den_broeck_dynamic',[5,5,5,5],[0,0,0,0], ...
+    @(g,ctr,s) metricGet_VanDenBroeck(g,ctr,0.2,1,1,2,1,0.1,s));
+% Offset the centre so no grid point sits at the singular origin.
+cases = addCase(cases,'schwarzschild',[1,5,5,5],[0,0.13,0.11,0.07], ...
+    @(g,ctr,s) metricGet_Schwarzschild(g,ctr,0.05,s));
+cases = addCase(cases,'warp_shell_comoving',[1,5,5,5],[0,0,0,0], ...
+    @(g,ctr,s) metricGet_WarpShellComoving(g,ctr,2e26,0.5,1.5,0.1,1,1,0.2,true,s));
+
+for ci = 1:numel(cases)
+    name = cases(ci).name;
+    grid = cases(ci).grid;
+    center = (grid+1)/2.*spacing + cases(ci).offset;
+    metric = cases(ci).make(grid,center,spacing);
+    item = struct();
     item.grid = grid; item.spacing = spacing; item.center = center;
     item.metric = packTensor(metric.tensor,grid);
     inverse = c4Inv(metric.tensor);
@@ -44,12 +63,20 @@ for ci = 1:length(cases)
     item.strong = packArray(getEnergyConditions(energy4,metric,'Strong',12,3,0),grid);
     item.dominant = packArray(getEnergyConditions(energy4,metric,'Dominant',12,3,0),grid);
     output.(name) = item;
+    fprintf('Exported case %s\n',name);
 end
 fid=fopen(outputFile,'w');
 assert(fid ~= -1,'Cannot open output file');
 cleanup=onCleanup(@() fclose(fid));
 fwrite(fid,jsonencode(output),'char');
 fprintf('Exported independent MATLAB reference to %s\n',outputFile);
+end
+
+function cases = addCase(cases,name,grid,offset,make)
+cases(end+1).name = name;
+cases(end).grid = grid;
+cases(end).offset = offset;
+cases(end).make = make;
 end
 
 function packed = packTensor(tensor,grid)
