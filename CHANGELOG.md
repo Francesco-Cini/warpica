@@ -5,6 +5,8 @@
 - Rename the package from `pywarp` to `warplab`.
 - Document the CPU path as stable and the CuPy and DirectML backends as
   experimental.
+- Remove unused internal code: `flip_index`, the `Metric` dataclass,
+  `red_blue` and the superseded `surf_q` helper.
 - Remove the `plotThreePlusOne` alias; use `plot_three_plus_one` with
   `sliced_planes` and `slice_locations`.
 
