@@ -35,14 +35,17 @@ cases = addCase(cases,'van_den_broeck_dynamic',[5,5,5,5],[0,0,0,0], ...
 % Offset the centre so no grid point sits at the singular origin.
 cases = addCase(cases,'schwarzschild',[1,5,5,5],[0,0.13,0.11,0.07], ...
     @(g,ctr,s) metricGet_Schwarzschild(g,ctr,0.05,s));
-% Offset the centre as well: upstream returns NaN at a grid point exactly on
-% the shell centre (0/0 in the radial direction), and the NaNs spread through
-% the derivative stencils.
-cases = addCase(cases,'warp_shell_comoving',[1,5,5,5],[0,0.13,0.11,0.07], ...
+% Offset the centre, but only slightly. Upstream's Legendre interpolation
+% returns NaN when a grid radius lands exactly on a sample (r = 0 is index 1,
+% so a grid point on the centre gives 0/0), and the NaNs spread through the
+% derivative stencils. Upstream also samples radii only up to 1.2 times the
+% distance from the centre to the far grid corner, so a larger offset leaves
+% the near corner outside the sampled range and indexes past the array.
+cases = addCase(cases,'warp_shell_comoving',[1,5,5,5],[0,0.04,0.03,0.02], ...
     @(g,ctr,s) metricGet_WarpShellComoving(g,ctr,2e26,0.5,1.5,0.1,1,1,0.2,true,s));
 % smoothFactor 1 makes upstream's smooth() an identity; a larger factor
 % exercises the moving-average window rules. Needs the Curve Fitting Toolbox.
-cases = addCase(cases,'warp_shell_smoothed',[1,5,5,5],[0,0.13,0.11,0.07], ...
+cases = addCase(cases,'warp_shell_smoothed',[1,5,5,5],[0,0.04,0.03,0.02], ...
     @(g,ctr,s) metricGet_WarpShellComoving(g,ctr,2e26,0.5,1.5,0.1,1,5,0.2,true,s));
 
 for ci = 1:numel(cases)
