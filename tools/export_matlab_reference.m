@@ -37,6 +37,10 @@ cases = addCase(cases,'schwarzschild',[1,5,5,5],[0,0.13,0.11,0.07], ...
     @(g,ctr,s) metricGet_Schwarzschild(g,ctr,0.05,s));
 cases = addCase(cases,'warp_shell_comoving',[1,5,5,5],[0,0,0,0], ...
     @(g,ctr,s) metricGet_WarpShellComoving(g,ctr,2e26,0.5,1.5,0.1,1,1,0.2,true,s));
+% smoothFactor 1 makes upstream's smooth() an identity; a larger factor
+% exercises the moving-average window rules. Needs the Curve Fitting Toolbox.
+cases = addCase(cases,'warp_shell_smoothed',[1,5,5,5],[0,0,0,0], ...
+    @(g,ctr,s) metricGet_WarpShellComoving(g,ctr,2e26,0.5,1.5,0.1,1,5,0.2,true,s));
 
 for ci = 1:numel(cases)
     name = cases(ci).name;
