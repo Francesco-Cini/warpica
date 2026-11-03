@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib.ticker import ScalarFormatter
 
 
-def sqm(
+def plot_themed_surface(
     *args,
     ax=None,
     dark=True,
@@ -38,8 +38,9 @@ def sqm(
     Parameters
     ----------
     *args : array_like
-        A height array Z, or coordinate arrays X, Y, Z.
-        Z-only input is squeezed and transposed.
+        A height array Z, or coordinate arrays X, Y, Z. Z-only input is
+        squeezed to two dimensions and transposed, so an (x, y) array plots
+        with x along the first axis; X, Y, Z are used as given.
     ax : matplotlib.axes.Axes or None, optional
         Existing 3D axes. When None, create axes and call plt.show().
     dark : bool, optional
@@ -83,7 +84,33 @@ def sqm(
     -------
     surface : mpl_toolkits.mplot3d.art3d.Poly3DCollection
         The plotted surface artist.
+
+    Raises
+    ------
+    ValueError
+        If the number of arrays is not one or three, or if a single height
+        array is not two-dimensional once squeezed.
     """
+    # ---------- Surface data (validated before any figure is created) ----------
+    if len(args) == 1:
+        z = np.squeeze(np.asarray(args[0])).T
+        if z.ndim != 2:
+            raise ValueError(
+                f"A height array must be two-dimensional after squeezing, "
+                f"got {z.ndim} dimension(s)"
+            )
+        n_y, n_x = z.shape
+        x, y = np.meshgrid(np.arange(n_x), np.arange(n_y))
+    elif len(args) == 3:
+        x = np.asarray(args[0])
+        y = np.asarray(args[1])
+        z = np.squeeze(np.asarray(args[2]))
+    else:
+        raise ValueError(
+            f"Pass either a height array Z or the arrays X, Y and Z, "
+            f"got {len(args)} array(s)"
+        )
+
     # ---------- Theme defaults ----------
     if dark:
         if cmap is None:
@@ -114,23 +141,6 @@ def sqm(
         fig.patch.set_facecolor(background_color)
 
     ax.set_facecolor(background_color)
-
-    # ---------- Detect call pattern ----------
-    if (
-        len(args) >= 3
-        and np.size(args[0]) > 3
-        and np.size(args[1]) > 3
-        and np.size(args[2]) > 3
-        and isinstance(args[1], (float, int, np.floating, np.ndarray))
-        and isinstance(args[2], (float, int, np.floating, np.ndarray))
-    ):
-        x = np.asarray(args[0])
-        y = np.asarray(args[1])
-        z = np.squeeze(np.asarray(args[2]))
-    else:
-        z = np.squeeze(np.asarray(args[0])).T
-        n_y, n_x = z.shape
-        x, y = np.meshgrid(np.arange(n_x), np.arange(n_y))
 
     # ---------- Surface ----------
     surf = ax.plot_surface(
