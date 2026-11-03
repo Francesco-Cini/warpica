@@ -57,7 +57,8 @@ parity tests does not claim these corrected outputs are identical upstream.
 | Output | Upstream behavior | Python behavior |
 | --- | --- | --- |
 | Schwarzschild metric | Adds `epsilon = 1e-10` to `r` ("to mitigate divide by zero errors") while using the unperturbed `x`, `y`, `z`. A grid point on the origin gives huge finite values instead of an error. | Uses the exact `r` and raises `ValueError` when the grid touches the origin or the coordinate horizon. Differs from upstream by about 1e-9 relative on the reference case. |
-| Warp shell at `r = 0` | A grid point exactly on the shell centre gives NaN in 12 metric components (0/0 in the radial direction), and the NaNs spread through the derivative stencils. | Takes the radial limit; the metric and stress-energy stay finite. |
+| Warp shell at `r = 0` | A grid radius that falls exactly on a radial sample makes the Legendre interpolation divide by zero (`x1 == x2`); `r = 0` is sample 1, so a grid point on the shell centre gives NaN in 12 metric components, and the NaNs spread through the derivative stencils. | Interpolates linearly, which has no such singularity; the metric and stress-energy stay finite. |
+| Warp-shell radial range | Samples radii only up to 1.2 times the distance from the centre to the **far** grid corner, and the interpolation needs two further samples. A centre far enough from the grid middle leaves the near corner outside the array and raises "Index exceeds the number of array elements". | Samples up to 1.2 times the largest grid radius (at least `R_2`), so any centre works. |
 
 The Schwarzschild difference is exactly the offset: upstream's formula
 evaluated with `r + 1e-10` reproduces the MATLAB reference to roundoff
