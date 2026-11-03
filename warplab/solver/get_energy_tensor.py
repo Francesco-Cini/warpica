@@ -1,7 +1,6 @@
 from copy import deepcopy
 from datetime import datetime
 
-from warplab.analyser.change_tensor_index import change_tensor_index
 from warplab.gpu import asarray as gpu_asarray
 from warplab.gpu import asnumpy as gpu_asnumpy
 from warplab.solver.utils.met_2_den import met_2_den
@@ -35,6 +34,9 @@ def get_energy_tensor(metric, diff_order="fourth", *, gpu=None):
     use float64 on the CPU for every device backend. The input metric is
     not modified.
     """
+    # Imported here because analyser imports solver; a module-level import is circular.
+    from warplab.analyser.change_tensor_index import change_tensor_index
+
     if diff_order is None:
         diff_order = "fourth"
 

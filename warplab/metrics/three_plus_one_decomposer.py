@@ -1,6 +1,5 @@
 import numpy as np
 
-from warplab.analyser.change_tensor_index import change_tensor_index
 from warplab.solver.utils.c3_inv import c3_inv
 
 
@@ -26,6 +25,9 @@ def three_plus_one_decomposer(metric):
     gamma_up : list of lists of arrays
         Inverse spatial metric.
     """
+    # Imported here because analyser imports metrics; a module-level import is circular.
+    from warplab.analyser.change_tensor_index import change_tensor_index
+
     metric = change_tensor_index(metric, "covariant")
 
     beta_down = [metric["tensor"][0][1], metric["tensor"][0][2], metric["tensor"][0][3]]
