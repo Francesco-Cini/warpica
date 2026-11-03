@@ -20,7 +20,9 @@ def get_energy_tensor(metric, diff_order="fourth", *, gpu=None):
     diff_order : {'second', 'fourth'}, optional
         Finite-difference accuracy order. Default is 'fourth'.
     gpu : {None, 'numpy', 'cupy', 'torch-directml'}, optional
-        Array backend for curvature calculations. None selects NumPy.
+        Array backend for curvature calculations. None selects NumPy. Only
+        the NumPy path is covered by the stability promise; 'cupy' and
+        'torch-directml' are experimental.
 
     Returns
     -------

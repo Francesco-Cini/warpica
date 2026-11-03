@@ -24,8 +24,9 @@ use `.venv/bin/python` in place of `.\.venv\Scripts\python.exe`.
 
 CPU checks cover both finite-difference orders and all built-in metric
 families. Independent MATLAB fixtures cover representative flat/static/dynamic
-cases. DirectML has been tested on an AMD RX 580; CUDA requires a separate
-NVIDIA hardware run. Analysis postprocessing runs on CPU.
+cases. The CPU path is the stable, supported one. GPU curvature backends
+are experimental: DirectML has been tested on an AMD RX 580, and CUDA has not
+yet been run on NVIDIA hardware. Analysis postprocessing runs on CPU.
 
 - [Public API and plotting](docs/api.md)
 - [MATLAB comparisons and intentional differences](docs/reference-validation.md)

@@ -16,6 +16,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# Experimental GPU backends: not covered by the 1.x stability promise.
 cuda = ["cupy-cuda12x>=13"]
 directml = ["torch-directml==0.2.5.dev240914"]
 release = ["build>=1", "twine>=6"]
