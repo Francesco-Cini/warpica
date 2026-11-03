@@ -20,8 +20,9 @@ metric/parameter combination.
 
 Parallel Computing Toolbox is absent on the validation machine. Upstream
 calls `isgpuarray` on its CPU path, and its vector generator hard-codes a GPU
-sphere helper even with `tryGPU=0`. The exporter prepends two explicit helpers
-only when the toolbox is not installed:
+sphere helper even with `tryGPU=0`. The exporter always prepends two explicit
+helpers, whether or not the toolbox is installed, so the export does not
+depend on the machine's GPU setup:
 
 - `isgpuarray.m` checks `isa(value, 'gpuArray')`, which is false for these arrays.
 - `getEvenPointsOnSphere.m` is the upstream helper with `useGPU=false`, selecting
