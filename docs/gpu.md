@@ -1,16 +1,27 @@
 # GPU support and validation
 
+## Stability: CPU is stable, GPU backends are experimental
+
+From 1.0, the compatibility promise covers the **CPU (NumPy) path**: its
+results and the `gpu=None` / `gpu="numpy"` behaviour. The `"cupy"` (CUDA) and
+`"torch-directml"` backends are **experimental**. They are tested as
+described below, but they may change in a 1.x release: precision, tolerances,
+supported versions and the extras that install them are not frozen, and a
+backend can be fixed, redesigned or removed without a major version bump.
+CUDA has not been run on real hardware at all. Passing the CPU test suite
+says nothing about either device backend.
+
 The public `gpu` argument accelerates **curvature calculation**. Final SI
 scaling/index contraction and analysis (frames, energy conditions and scalars)
 run on CPU float64. Outputs are NumPy arrays. GPU calculations are opt-in;
 the default remains CPU. There is no silent fallback when a requested device
 backend is unavailable.
 
-| Backend | Precision | Validation status |
-| --- | --- | --- |
-| NumPy | float64 | CPU analytic, integration and MATLAB reference checks |
-| torch-directml | float32 curvature, float64 host energy conversion | Tested on Radeon RX 580, Windows, Python 3.12, torch 2.4.1, torch-directml 0.2.5.dev240914 |
-| CuPy | float64 | Shared hardware tests provided; not executed locally because no NVIDIA GPU is present |
+| Backend | Status | Precision | Validation status |
+| --- | --- | --- | --- |
+| NumPy | **Stable** | float64 | CPU analytic, integration and MATLAB reference checks |
+| torch-directml | Experimental | float32 curvature, float64 host energy conversion | Tested on Radeon RX 580, Windows, Python 3.12, torch 2.4.1, torch-directml 0.2.5.dev240914 |
+| CuPy | Experimental | float64 | Shared hardware tests provided; not executed on real hardware because no NVIDIA GPU has been available |
 
 DirectML float64 reciprocal failed on this device, and strided slice writes
 produced wrong derivatives without raising errors. The DirectML stencil path

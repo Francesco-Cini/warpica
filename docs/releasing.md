@@ -23,9 +23,10 @@ builds wheel/sdist, checks metadata and runs the installed-wheel smoke test.
 These jobs will first execute remotely when the changes are pushed; adding
 the workflow does not mean those remote runs have already passed.
 
-Before publication, review the changelog, choose the version, run real GPU
-checks for each backend you intend to claim, inspect CI results, and confirm
-package metadata. Publishing and tagging are separate explicit actions.
+Before publication, review the changelog, choose the version, inspect CI
+results, and confirm package metadata. GPU backends are documented as
+experimental, so they do not block a release; run real hardware checks
+before promoting a backend to stable. Publishing and tagging are separate explicit actions.
 The optional `cuda` extra targets CUDA 12 wheels; the `directml` extra pins
 the tested backend and currently requires a supported Python (tested 3.12).
 Install plotting separately with `.[plot]`; the core solver needs only NumPy

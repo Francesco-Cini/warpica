@@ -78,6 +78,8 @@ The `gpu` option selects solver curvature acceleration only: `None` or
 `"numpy"` uses CPU, `"cupy"` uses CUDA float64, and `"torch-directml"` uses
 DirectML float32. SI scaling/index contraction and downstream analysis run
 on CPU float64. All public outputs are NumPy arrays or lists of NumPy arrays.
+Only the CPU path is covered by the stability promise: `"cupy"` and
+`"torch-directml"` are experimental and may change in a 1.x release.
 See [GPU validation](gpu.md) before choosing a device backend.
 
 ## Plotting
