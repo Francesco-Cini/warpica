@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from warplab.visualiser import plot_tensor, plot_three_plus_one, plotThreePlusOne
+from warplab.visualiser import plot_tensor, plot_three_plus_one
 from warplab.visualiser.utils.get_slice_data import get_slice_data
 from warplab.visualiser.utils.label_cartesian_axis import label_cartesian_axis
 from warplab.visualiser.utils.plot_component import plot_component
@@ -47,7 +47,6 @@ def test_tensor_and_decomposition_return_figures_without_show(monkeypatch, tmp_p
     for plotter, shape in (
         (plot_tensor, (4, 4)),
         (plot_three_plus_one, (2, 5)),
-        (plotThreePlusOne, (2, 5)),
     ):
         fig, axes = plotter(metric)
         assert axes.shape == shape

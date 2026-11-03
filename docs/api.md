@@ -96,7 +96,6 @@ Plots return Matplotlib figures and axes; they never call `show()`.
 Call `matplotlib.pyplot.show()` yourself for interactive display.
 `plot_tensor` returns a 4x4 component grid; `plot_three_plus_one` returns a
 2x5 grid containing lapse, covariant shift, and six spatial components.
-The older `plotThreePlusOne` spelling remains available.
 
 For compatibility with the original plotting interface, fixed axis numbers
 and slice locations are **one-based**: 1=t, 2=x, 3=y, 4=z. Default slicing
