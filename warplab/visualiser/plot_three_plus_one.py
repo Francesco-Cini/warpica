@@ -55,8 +55,3 @@ def plot_three_plus_one(metric, sliced_planes=None, slice_locations=None, alpha=
             ax.set_aspect("equal")
     fig.suptitle(metric.get("name", "Metric") + " - 3+1 decomposition")
     return fig, axes
-
-
-def plotThreePlusOne(metric, slicedPlanes=None, sliceLocations=None, alpha=None):
-    """Compatibility alias for the original MATLAB-style name."""
-    return plot_three_plus_one(metric, slicedPlanes, sliceLocations, alpha)

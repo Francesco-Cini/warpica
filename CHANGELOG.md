@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Rename the package from `pywarp` to `warplab`.
+- Remove the `plotThreePlusOne` alias; use `plot_three_plus_one` with
+  `sliced_planes` and `slice_locations`.
+
 ## 0.1.0 - release candidate
 
 - Complete and validate second- and fourth-order CPU curvature/energy solvers.
