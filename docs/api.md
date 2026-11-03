@@ -1,5 +1,34 @@
 # Public API and conventions
 
+## What is public
+
+The supported API is the set of names in `__all__` of these packages. They
+are what the version number promises to keep stable.
+
+| Package | Public names |
+| --- | --- |
+| `warplab.metrics` | `metric_get_minkowski`, `metric_get_alcubierre`, `metric_get_lentz`, `metric_get_modified_time`, `metric_get_van_den_broeck`, `metric_get_schwarzschild`, the `*_comoving` variants, `metric_get_warp_shell_comoving`, `custom_metric`, `three_plus_one_builder`, `three_plus_one_decomposer` |
+| `warplab.solver` | `get_energy_tensor` |
+| `warplab.analyser` | `eval_metric`, `get_energy_conditions`, `get_scalars`, `get_momentum_flow_lines`, `change_tensor_index`, `do_frame_transfer` |
+| `warplab.units` | `c`, `G` |
+| `warplab.visualiser` | `plot_tensor`, `plot_three_plus_one` (needs the `plot` extra) |
+
+```python
+from warplab.metrics import metric_get_alcubierre
+from warplab.solver import get_energy_tensor
+from warplab.analyser import eval_metric
+```
+
+The metrics, solver and analyser names are also available from the top-level
+`warplab` package, which loads them on first use. `import warplab` itself
+imports neither Matplotlib nor any GPU library.
+
+Everything else is internal and may change without notice: the helper
+modules under every `utils` directory, `warplab.solver.utils.second_order`,
+`warplab.gpu`, and the `Metric` dataclass in `warplab.metrics.metrics`. Deep
+paths such as `warplab.solver.get_energy_tensor` keep working, but only the
+names listed above are covered by the compatibility promise.
+
 ## Metrics and tensors
 
 A metric is a dictionary containing `type`, `name`, `coords`, `index`, `date`,
@@ -31,8 +60,8 @@ result = eval_metric(
 )
 ```
 
-Import from `warplab.solver.get_energy_tensor` and
-`warplab.analyser.eval_metric`. Both second and fourth orders are supported.
+Import from `warplab.solver` and
+`warplab.analyser`. Both second and fourth orders are supported.
 The solver returns contravariant stress-energy in SI units, with the same
 spacetime grid. `eval_metric` returns `metric`, `energy_tensor`,
 `energy_tensor_eulerian`, `null`, `weak`, `strong`, `dominant`, `expansion`,
