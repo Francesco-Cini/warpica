@@ -39,11 +39,6 @@ def verify_tensor(input_tensor, suppress_msgs=None):
             disp_message("Type: Metric", suppress_msgs)
         elif strcmpi(input_tensor["type"], "Stress-Energy"):
             disp_message("Type: Stress-Energy", suppress_msgs)
-        elif not is_field(input_tensor, "type"):
-            warnings.warn(
-                "Tensor type field does not exist. Must be either 'Metric' or 'Stress-Energy'"
-            )
-            verified = False
         else:
             warnings.warn("Unknown Type")
             verified = False
@@ -89,7 +84,7 @@ def verify_tensor(input_tensor, suppress_msgs=None):
                 or strcmpi(str(input_tensor["index"]), "mixedupdown")
                 or strcmpi(str(input_tensor["index"]), "mixeddownup")
             ):
-                disp_message("index" + str(input_tensor["index"]), suppress_msgs)
+                disp_message("index: " + str(input_tensor["index"]), suppress_msgs)
             else:
                 warnings.warn("Unknown index")
                 verified = False
@@ -97,7 +92,7 @@ def verify_tensor(input_tensor, suppress_msgs=None):
             warnings.warn("index: Empty")
             verified = False
     else:
-        warnings(
+        warnings.warn(
             "Tensor type does not exist. Must be either 'Metric' or 'Stress-Energy'"
         )
         verified = False
