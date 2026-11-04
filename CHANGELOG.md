@@ -9,6 +9,11 @@
   `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
   a non-2D height array with a clear `ValueError` before creating any figure,
   and add tests, including a smoke test of the example that uses it.
+- Fix `verify_tensor` raising `TypeError` for input without a `type` field (a
+  mistyped `warnings(...)` call); it now warns and returns `False`, as upstream
+  does. Remove its unreachable branch and fix the `index` message.
+- Remove the `phi_phi_flag` argument of `take_finite_difference_1` and `_2`. It
+  was always 0, and its branches set boundary values to hard-coded constants.
 - Remove unused internal code: `flip_index`, the `Metric` dataclass,
   `red_blue` and the superseded `surf_q` helper.
 - Remove the `plotThreePlusOne` alias; use `plot_three_plus_one` with
