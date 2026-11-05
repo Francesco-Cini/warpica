@@ -3,7 +3,9 @@ import copy
 import numpy as np
 import pytest
 
+from warplab.analyser import do_frame_transfer, eval_metric, get_energy_conditions
 from warplab.metrics import metric_get_minkowski
+from warplab.solver import get_energy_tensor
 from warplab.solver.verify_tensor import verify_tensor
 
 
@@ -97,11 +99,56 @@ def test_missing_coords_is_rejected():
         assert check(tensor) is False
 
 
-def test_non_cartesian_coords_are_flagged():
+@pytest.mark.parametrize("coords", ["spherical", "cylindrical", "", 3])
+def test_non_cartesian_coords_fail_verification(coords):
+    """Only Cartesian formulas are implemented; upstream merely warns."""
     tensor = valid_metric()
-    tensor["coords"] = "spherical"
+    tensor["coords"] = coords
     with pytest.warns(UserWarning, match="Non-cartesian"):
-        check(tensor)
+        assert check(tensor) is False
+
+
+def test_cartesian_comparison_ignores_case():
+    tensor = valid_metric()
+    tensor["coords"] = "Cartesian"
+    assert check(tensor) is True
+
+
+def non_cartesian_pair():
+    metric = valid_metric()
+    metric["coords"] = "spherical"
+    energy = copy.deepcopy(metric)
+    energy.update(type="Stress-Energy", index="contravariant")
+    return metric, energy
+
+
+ENTRY_POINTS = {
+    "get_energy_tensor": lambda metric, energy: get_energy_tensor(metric),
+    "eval_metric": lambda metric, energy: eval_metric(metric),
+    "do_frame_transfer": lambda metric, energy: do_frame_transfer(
+        metric, energy, "Eulerian"
+    ),
+    "get_energy_conditions": lambda metric, energy: get_energy_conditions(
+        energy, metric, "Null"
+    ),
+}
+
+
+@pytest.mark.parametrize("name", list(ENTRY_POINTS))
+def test_solver_and_analysis_reject_a_non_cartesian_metric(name):
+    metric, energy = non_cartesian_pair()
+    with pytest.warns(UserWarning, match="Non-cartesian"):
+        with pytest.raises(Exception, match="not verified"):
+            ENTRY_POINTS[name](metric, energy)
+
+
+def test_energy_conditions_report_a_missing_coords_field_cleanly():
+    """It used to be a KeyError before verification could run."""
+    metric, energy = non_cartesian_pair()
+    del metric["coords"]
+    with pytest.warns(UserWarning, match="coords: Empty"):
+        with pytest.raises(Exception, match="not verified"):
+            get_energy_conditions(energy, metric, "Null")
 
 
 def test_missing_index_is_rejected():
