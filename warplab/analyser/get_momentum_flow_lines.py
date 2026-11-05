@@ -30,7 +30,9 @@ def get_momentum_flow_lines(
         interpolation boundary or a NaN position.
     """
     if not strcmpi(energy_tensor["index"], "contravariant"):
-        raise Exception("Energy tensor for momentum flowlines should be contravariant.")
+        raise ValueError(
+            "Energy tensor for momentum flowlines should be contravariant."
+        )
 
     if max_steps < 0 or step_size <= 0:
         raise ValueError("max_steps must be nonnegative and step_size positive")

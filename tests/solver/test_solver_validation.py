@@ -42,7 +42,7 @@ def reference():
 
 @pytest.mark.parametrize("gpu", [None, "numpy"])
 def test_an_unknown_diff_order_is_rejected_on_both_code_paths(gpu):
-    with pytest.raises(Exception, match="fourth"):
+    with pytest.raises(ValueError, match="fourth"):
         get_energy_tensor(bubble(), "sixth", gpu=gpu)
 
 
@@ -91,7 +91,7 @@ def test_a_contravariant_metric_gives_the_same_result(reference):
 
 def test_an_unverified_metric_is_rejected():
     with pytest.warns(UserWarning, match="type does not exist"):
-        with pytest.raises(Exception, match="not verified"):
+        with pytest.raises(ValueError, match="not verified"):
             get_energy_tensor({})
 
 
