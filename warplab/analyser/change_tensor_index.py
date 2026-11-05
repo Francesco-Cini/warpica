@@ -1,9 +1,14 @@
 import numpy as np
 
+from warplab._typing import TensorDict
 from warplab.solver.utils.c4_inv import c4_inv
 
 
-def change_tensor_index(input_tensor, index, metric_tensor=None):
+def change_tensor_index(
+    input_tensor: TensorDict,
+    index: str,
+    metric_tensor: TensorDict | None = None,
+) -> TensorDict:
     """Return a tensor copy with the requested index convention.
 
     Parameters

@@ -9,6 +9,17 @@
   `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
   a non-2D height array with a clear `ValueError` before creating any figure,
   and add tests, including a smoke test of the example that uses it.
+- Document why the `directml` extra stays pinned to `torch-directml`
+  0.2.5.dev240914: it is the only installable release line and has no wheels
+  for Python 3.13 or newer.
+- Annotate the public API and ship a `py.typed` marker. Every public function
+  has full annotations (enforced by a test), metrics and tensors are
+  `dict[str, Any]`, `diff_order` and the backend are `Literal` types, and
+  `get_energy_conditions` is overloaded on `return_vec`. CI runs mypy and a test
+  that type-checks small user programs. Along the way mypy found that
+  `eval_metric(diff_order=None)` raised `ValueError`; it now means "fourth".
+  Remove dead assignments in `get_energy_conditions` and change `eval_metric`'s
+  internal calls to pass booleans.
 - Require Python 3.11 or newer. Python 3.10 reached its scheduled end of life in
   October 2026, and current Matplotlib and NumPy no longer support it. The test
   matrix is now 3.11, 3.12, 3.13 and 3.14; the code needed no change.

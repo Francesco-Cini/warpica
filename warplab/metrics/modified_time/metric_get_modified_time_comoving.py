@@ -2,13 +2,20 @@ from datetime import date as _date
 
 import numpy as np
 
+from warplab._typing import GridSize, TensorDict, Vector
 from warplab.metrics.set_minkowski import set_minkowski
 from warplab.metrics.utils.shape_function_alcubierre import shape_function_alcubierre
 
 
 def metric_get_modified_time_comoving(
-    grid_size, world_centre, v, R, sigma, A, grid_scaling=None
-):
+    grid_size: GridSize,
+    world_centre: Vector,
+    v: float,
+    R: float,
+    sigma: float,
+    A: float,
+    grid_scaling: Vector | None = None,
+) -> TensorDict:
     """Build the modified-time metric in comoving coordinates.
 
     Parameters
@@ -49,7 +56,7 @@ def metric_get_modified_time_comoving(
             f"Comoving Modified Time requires one time slice, got {grid_size[0]}"
         )
 
-    metric = {}
+    metric: TensorDict = {}
 
     metric["params"] = {}
 

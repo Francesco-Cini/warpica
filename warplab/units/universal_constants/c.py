@@ -1,4 +1,4 @@
-def c():
+def c() -> float:
     """Return the speed of light in vacuum.
 
     Returns

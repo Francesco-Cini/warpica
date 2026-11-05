@@ -1,12 +1,21 @@
-import numpy as np
+from collections.abc import Sequence
+from typing import Any
 
+import numpy as np
+from numpy.typing import ArrayLike
+
+from warplab._typing import Array, TensorDict
 from warplab.solver.utils.strcmpi import strcmpi
 from warplab.solver.utils.trilinear_interp import trilinear_interp
 
 
 def get_momentum_flow_lines(
-    energy_tensor, start_points, step_size, max_steps, scale_factor
-):
+    energy_tensor: TensorDict,
+    start_points: Sequence[ArrayLike] | Array,
+    step_size: float,
+    max_steps: int,
+    scale_factor: float,
+) -> list[Array]:
     """Trace momentum-flow paths by explicit Euler integration.
 
     Parameters
@@ -53,7 +62,7 @@ def get_momentum_flow_lines(
     starting_points_y = np.ravel(start_points[1])
     starting_points_z = np.ravel(start_points[2])
 
-    paths = [None for _ in range(max(starting_points_x.shape))]
+    paths: list[Any] = [None for _ in range(max(starting_points_x.shape))]
 
     for j in range(max(starting_points_x.shape)):
         pos = np.zeros((max_steps + 1, 3))

@@ -2,6 +2,7 @@
 
 import numpy as np
 
+from warplab._typing import GridSize, TensorDict, Vector
 from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
 from warplab.units.universal_constants.c import c
 from warplab.units.universal_constants.G import G
@@ -28,18 +29,18 @@ def _smooth(values, span):
 
 
 def metric_get_warp_shell_comoving(
-    grid_size,
-    world_centre,
-    m,
-    R_1,
-    R_2,
-    R_buff=0,
-    sigma=0,
-    smooth_factor=1,
-    v_warp=0,
-    do_warp=False,
-    grid_scaling=None,
-):
+    grid_size: GridSize,
+    world_centre: Vector,
+    m: float,
+    R_1: float,
+    R_2: float,
+    R_buff: float | None = 0,
+    sigma: float | None = 0,
+    smooth_factor: float | None = 1,
+    v_warp: float | None = 0,
+    do_warp: bool = False,
+    grid_scaling: Vector | None = None,
+) -> TensorDict:
     """Build a static spherical shell with an optional x-directed shift.
 
     Parameters

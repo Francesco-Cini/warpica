@@ -2,17 +2,18 @@ from datetime import date as _date
 
 import numpy as np
 
+from warplab._typing import GridSize, TensorDict, Vector
 from warplab.metrics.set_minkowski_three_plus_one import set_minkowski_three_plus_one
 from warplab.metrics.three_plus_one_builder import three_plus_one_builder
 
 
 def metric_get_lentz_comoving(
-    grid_size: np.ndarray,
-    world_centre: np.ndarray,
+    grid_size: GridSize,
+    world_centre: Vector,
     v: float,
-    scale,
-    grid_scale: np.ndarray | None = None,
-) -> dict:
+    scale: float | None,
+    grid_scale: Vector | None = None,
+) -> TensorDict:
     """Build the Lentz metric in comoving coordinates.
 
     Parameters
@@ -51,7 +52,7 @@ def metric_get_lentz_comoving(
     if grid_size[0] > 1:
         raise ValueError(f"Comoving Lentz requires one time slice, got {grid_size[0]}")
 
-    metric = {}
+    metric: TensorDict = {}
 
     metric["params"] = {}
 

@@ -1,6 +1,8 @@
 from copy import deepcopy
 from datetime import datetime
+from typing import Any
 
+from warplab._typing import Backend, DiffOrder, TensorDict
 from warplab.gpu import asarray as gpu_asarray
 from warplab.gpu import asnumpy as gpu_asnumpy
 from warplab.solver.utils.met_2_den import met_2_den
@@ -10,7 +12,12 @@ from warplab.solver.utils.verify_grid_size import verify_grid_size
 from warplab.solver.verify_tensor import verify_tensor
 
 
-def get_energy_tensor(metric, diff_order="fourth", *, gpu=None):
+def get_energy_tensor(
+    metric: TensorDict,
+    diff_order: DiffOrder | None = "fourth",
+    *,
+    gpu: Backend | None = None,
+) -> TensorDict:
     """Compute the contravariant stress-energy tensor of a metric.
 
     Parameters
@@ -58,7 +65,9 @@ def get_energy_tensor(metric, diff_order="fourth", *, gpu=None):
         metric = change_tensor_index(metric, "covariant")
 
     if gpu is not None:
-        metric_tensor_gpu = [[None for _ in range(4)] for _ in range(4)]
+        metric_tensor_gpu: list[list[Any]] = [
+            [None for _ in range(4)] for _ in range(4)
+        ]
 
         for i in range(4):
             for j in range(4):
@@ -112,7 +121,7 @@ def get_energy_tensor(metric, diff_order="fourth", *, gpu=None):
                 "Order Flag Not Specified Correctly. Options: 'fourth' or 'second'"
             )
 
-    energy = {}
+    energy: TensorDict = {}
 
     energy["type"] = "Stress-Energy"
     energy["tensor"] = energy_tensor

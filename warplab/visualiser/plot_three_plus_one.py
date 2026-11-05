@@ -1,6 +1,10 @@
+from collections.abc import Sequence
+
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.figure import Figure
 
+from warplab._typing import Array, TensorDict
 from warplab.analyser.change_tensor_index import change_tensor_index
 from warplab.metrics.three_plus_one_decomposer import three_plus_one_decomposer
 from warplab.solver.verify_tensor import verify_tensor
@@ -8,7 +12,12 @@ from warplab.visualiser.plot_tensor import _slice_setup
 from warplab.visualiser.utils.plot_component import plot_component
 
 
-def plot_three_plus_one(metric, sliced_planes=None, slice_locations=None, alpha=None):
+def plot_three_plus_one(
+    metric: TensorDict,
+    sliced_planes: Sequence[int] | Array | None = None,
+    slice_locations: Sequence[float] | Array | None = None,
+    alpha: float | None = None,
+) -> tuple[Figure, Array]:
     """Plot slices of the lapse, covariant shift, and spatial metric.
 
     Parameters
@@ -47,7 +56,8 @@ def plot_three_plus_one(metric, sliced_planes=None, slice_locations=None, alpha=
         plot_component(
             np.asarray(field)[indices],
             title,
-            *labels,
+            labels[0],
+            labels[1],
             alpha=1 if alpha is None else alpha,
             ax=ax,
             x=coords[0],
