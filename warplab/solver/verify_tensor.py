@@ -24,6 +24,8 @@ def verify_tensor(input_tensor, suppress_msgs=None):
     Notes
     -----
     This checks structure, not numerical validity, symmetry, or signature.
+    Only Cartesian coordinates are supported, so any other ``coords`` value
+    fails verification (upstream WarpFactory only warns).
     """
     if suppress_msgs is None:
         suppress_msgs = 0
@@ -73,6 +75,7 @@ def verify_tensor(input_tensor, suppress_msgs=None):
                 warnings.warn(
                     "Non-cartesian coordinates are not supported at this time. Set .coords to 'cartesian'."
                 )
+                verified = False
         else:
             warnings.warn("coords: Empty")
             verified = False

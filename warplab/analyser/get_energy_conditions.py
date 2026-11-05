@@ -75,11 +75,6 @@ def get_energy_conditions(
             'Incorrect energy condition input, use either: "Null", "Weak", "Dominant", "Strong"'
         )
 
-    if not strcmpi(metric["coords"], "cartesian"):
-        raise Warning(
-            "Evaluation not verified for coordinate systems other than Cartesian!"
-        )
-
     if not verify_tensor(metric, 1):
         raise Exception(
             "Metric is not verified. Please verify metric using verify_tensor(metric)"

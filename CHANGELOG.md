@@ -9,6 +9,10 @@
   `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
   a non-2D height array with a clear `ValueError` before creating any figure,
   and add tests, including a smoke test of the example that uses it.
+- Make `verify_tensor` fail for non-Cartesian `coords` (upstream only warns), so
+  the solver and analysis functions reject such metrics instead of silently
+  applying Cartesian formulas. `get_energy_conditions` no longer raises a bare
+  `Warning` for this case or fails with `KeyError` when `coords` is missing.
 - Fix `verify_tensor` raising `TypeError` for input without a `type` field (a
   mistyped `warnings(...)` call); it now warns and returns `False`, as upstream
   does. Remove its unreachable branch and fix the `index` message.
