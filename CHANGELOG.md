@@ -9,6 +9,9 @@
   `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
   a non-2D height array with a clear `ValueError` before creating any figure,
   and add tests, including a smoke test of the example that uses it.
+- Require Python 3.11 or newer. Python 3.10 reached its scheduled end of life in
+  October 2026, and current Matplotlib and NumPy no longer support it. The test
+  matrix is now 3.11, 3.12, 3.13 and 3.14; the code needed no change.
 - Fix `AttributeError: module 'numpy' has no attribute 'acos'` on NumPy 1.x:
   `np.acos` was added in NumPy 2.0, so every energy-condition calculation failed
   there. Use `np.arccos`.
