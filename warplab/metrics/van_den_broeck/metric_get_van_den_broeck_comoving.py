@@ -50,8 +50,8 @@ def metric_get_van_den_broeck_comoving(
         grid_scale = np.array([1, 1, 1, 1])
 
     if grid_size[0] > 1:
-        raise Exception(
-            "The time grid is greater than 1, only a size of 1 can be used in comoving"
+        raise ValueError(
+            f"Comoving Van Den Broeck requires one time slice, got {grid_size[0]}"
         )
 
     metric = {}

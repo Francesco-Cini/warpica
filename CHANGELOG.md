@@ -9,6 +9,12 @@
   `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
   a non-2D height array with a clear `ValueError` before creating any figure,
   and add tests, including a smoke test of the example that uses it.
+- Raise `ValueError` everywhere the package used a bare `Exception`, and for the
+  one `Warning` raised for an unknown frame. `ValueError` is a subclass of
+  `Exception`, so `except Exception` code keeps working. Unify the single-time-
+  slice messages of the comoving generators, Schwarzschild and the warp shell
+  (they now report the size received), and fix typos in two messages. A test
+  rejects any bare `Exception`, `BaseException` or `Warning` raise in the package.
 - Add an advisory performance guard (`tests/performance`, run with
   `--run-performance`) that fails on super-linear cost growth or a slowdown of
   about three times against a fixed NumPy kernel. It runs as its own CI job

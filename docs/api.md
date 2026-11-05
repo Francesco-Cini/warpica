@@ -29,6 +29,17 @@ and `warplab.gpu`. Deep paths such as `warplab.solver.get_energy_tensor` keep
 working, but only the names listed above are covered by the compatibility
 promise.
 
+## Errors
+
+Invalid arguments, malformed or unverified tensors and unsupported
+configurations (a grid axis too short for the stencil, non-Cartesian
+coordinates, a comoving generator given several time slices) raise
+`ValueError`, with a message that names the offending argument. The package
+never raises a bare `Exception` or `Warning`, so catching `ValueError` is
+enough. `verify_tensor` is the one function that reports problems as warnings
+and a `False` result instead of raising. Using plotting without the `plot`
+extra, or a GPU backend that is not installed, raises `ImportError`.
+
 ## Metrics and tensors
 
 A metric is a dictionary containing `type`, `name`, `coords`, `index`, `date`,

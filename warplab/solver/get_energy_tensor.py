@@ -48,7 +48,7 @@ def get_energy_tensor(metric, diff_order="fourth", *, gpu=None):
         diff_order = "fourth"
 
     if not verify_tensor(metric, 1):
-        raise Exception(
+        raise ValueError(
             "Metric is not verified. Please verify metric using verify_tensor(metric)."
         )
 
@@ -108,7 +108,7 @@ def get_energy_tensor(metric, diff_order="fourth", *, gpu=None):
             energy_tensor = met_2_den_2(metric["tensor"], metric["scaling"])
 
         else:
-            raise Exception(
+            raise ValueError(
                 "Order Flag Not Specified Correctly. Options: 'fourth' or 'second'"
             )
 

@@ -71,18 +71,19 @@ def get_energy_conditions(
         or strcmpi(condition, "Dominant")
         or strcmpi(condition, "Strong")
     ):
-        raise Exception(
+        raise ValueError(
             'Incorrect energy condition input, use either: "Null", "Weak", "Dominant", "Strong"'
         )
 
     if not verify_tensor(metric, 1):
-        raise Exception(
-            "Metric is not verified. Please verify metric using verify_tensor(metric)"
+        raise ValueError(
+            "Metric is not verified. Please verify metric using verify_tensor(metric)."
         )
 
     if not verify_tensor(energy_tensor, 1):
-        raise Exception(
-            "Stress-energy is not verified. Please verify stress-eenergy using verify_tensor(EnergyTensor)"
+        raise ValueError(
+            "Stress-energy is not verified. Please verify Stress-energy tensor using "
+            "verify_tensor(energy_tensor)."
         )
 
     import copy

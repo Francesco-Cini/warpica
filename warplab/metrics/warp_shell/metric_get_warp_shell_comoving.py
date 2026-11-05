@@ -83,7 +83,9 @@ def metric_get_warp_shell_comoving(
     smooth_factor = 1 if smooth_factor is None else smooth_factor
     v_warp = 0 if v_warp is None else v_warp
     if grid_size[0] != 1:
-        raise ValueError("Comoving warp shell requires one time slice")
+        raise ValueError(
+            f"Comoving warp shell requires one time slice, got {grid_size[0]}"
+        )
     if not (m >= 0 and 0 <= R_1 < R_2 and 0 <= 2 * R_buff < R_2 - R_1):
         raise ValueError("Require nonnegative mass, 0 <= R_1 < R_2, and a valid buffer")
     if smooth_factor < 0 or sigma < 0:
