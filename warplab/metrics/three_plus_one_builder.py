@@ -1,9 +1,17 @@
+from collections.abc import Sequence
+from typing import Any
+
 import numpy as np
 
+from warplab._typing import Array
 from warplab.solver.utils.c3_inv import c3_inv
 
 
-def three_plus_one_builder(alpha, beta, gamma):
+def three_plus_one_builder(
+    alpha: Array,
+    beta: Sequence[Array],
+    gamma: Sequence[Sequence[Array]],
+) -> list[list[Array]]:
     """Assemble a covariant spacetime metric from its 3+1 fields.
 
     Parameters
@@ -30,14 +38,14 @@ def three_plus_one_builder(alpha, beta, gamma):
     s = alpha.shape
 
     # Raise the covariant shift before forming beta_i * beta^i.
-    beta_up = [None for _ in range(3)]
+    beta_up: list[Any] = [None for _ in range(3)]
 
     for i in range(3):
         beta_up[i] = np.zeros(s)
         for j in range(3):
             beta_up[i] = beta_up[i] + gamma_up[i][j] * beta[j]
 
-    metric_tensor = [[None for _ in range(4)] for _ in range(4)]
+    metric_tensor: list[list[Any]] = [[None for _ in range(4)] for _ in range(4)]
 
     metric_tensor[0][0] = -(alpha**2)
     for i in range(3):

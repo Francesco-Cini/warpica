@@ -36,6 +36,7 @@ from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
 from warplab.analyser.eval_metric import eval_metric
 from warplab.visualiser import plot_tensor,plot_three_plus_one
 assert 'site-packages' in str(pathlib.Path(warplab.__file__).resolve())
+assert (pathlib.Path(warplab.__file__).parent / 'py.typed').is_file(), 'py.typed missing'
 metric=metric_get_minkowski([1,5,5,5])
 for order in ('second','fourth'):
     result=eval_metric(metric,num_angular_vec=6,num_time_vec=2,diff_order=order)
@@ -43,7 +44,7 @@ for order in ('second','fourth'):
 for plot in (plot_tensor,plot_three_plus_one):
     figure,_=plot(metric)
     figure.canvas.draw()
-print('Installed wheel: both solvers, analysis and plots passed')
+print('Installed wheel: both solvers, analysis, plots and the py.typed marker passed')
 """
         subprocess.run([str(python), "-I", "-c", script], check=True, cwd=root)
 

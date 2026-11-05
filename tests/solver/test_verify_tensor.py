@@ -138,7 +138,7 @@ ENTRY_POINTS = {
 def test_solver_and_analysis_reject_a_non_cartesian_metric(name):
     metric, energy = non_cartesian_pair()
     with pytest.warns(UserWarning, match="Non-cartesian"):
-        with pytest.raises(Exception, match="not verified"):
+        with pytest.raises(ValueError, match="not verified"):
             ENTRY_POINTS[name](metric, energy)
 
 
@@ -147,7 +147,7 @@ def test_energy_conditions_report_a_missing_coords_field_cleanly():
     metric, energy = non_cartesian_pair()
     del metric["coords"]
     with pytest.warns(UserWarning, match="coords: Empty"):
-        with pytest.raises(Exception, match="not verified"):
+        with pytest.raises(ValueError, match="not verified"):
             get_energy_conditions(energy, metric, "Null")
 
 

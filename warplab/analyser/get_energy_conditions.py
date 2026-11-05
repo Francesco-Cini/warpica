@@ -1,5 +1,8 @@
+from typing import Literal, overload
+
 import numpy as np
 
+from warplab._typing import Array, TensorDict
 from warplab.analyser.change_tensor_index import change_tensor_index
 from warplab.analyser.do_frame_transfer import do_frame_transfer
 from warplab.analyser.utils.generate_uniform_field import generate_uniform_field
@@ -10,15 +13,39 @@ from warplab.solver.utils.strcmpi import strcmpi
 from warplab.solver.verify_tensor import verify_tensor
 
 
+@overload
 def get_energy_conditions(
-    energy_tensor,
-    metric,
-    condition,
-    num_angular_vec=None,
-    num_time_vec=None,
-    return_vec=None,
-    gpu=None,
-):
+    energy_tensor: TensorDict,
+    metric: TensorDict,
+    condition: str,
+    num_angular_vec: int | None = None,
+    num_time_vec: int | None = None,
+    return_vec: Literal[False] | None = None,
+    gpu: str | None = None,
+) -> Array: ...
+
+
+@overload
+def get_energy_conditions(
+    energy_tensor: TensorDict,
+    metric: TensorDict,
+    condition: str,
+    num_angular_vec: int | None,
+    num_time_vec: int | None,
+    return_vec: Literal[True],
+    gpu: str | None = None,
+) -> tuple[Array, Array, Array]: ...
+
+
+def get_energy_conditions(
+    energy_tensor: TensorDict,
+    metric: TensorDict,
+    condition: str,
+    num_angular_vec: int | None = None,
+    num_time_vec: int | None = None,
+    return_vec: bool | None = None,
+    gpu: str | None = None,
+) -> Array | tuple[Array, Array, Array]:
     """Evaluate an energy condition over sampled observer directions.
 
     Parameters
@@ -63,7 +90,7 @@ def get_energy_conditions(
         num_time_vec = 10
 
     if return_vec is None:
-        return_vec = 0
+        return_vec = False
 
     if not (
         strcmpi(condition, "Null")
@@ -71,18 +98,19 @@ def get_energy_conditions(
         or strcmpi(condition, "Dominant")
         or strcmpi(condition, "Strong")
     ):
-        raise Exception(
+        raise ValueError(
             'Incorrect energy condition input, use either: "Null", "Weak", "Dominant", "Strong"'
         )
 
     if not verify_tensor(metric, 1):
-        raise Exception(
-            "Metric is not verified. Please verify metric using verify_tensor(metric)"
+        raise ValueError(
+            "Metric is not verified. Please verify metric using verify_tensor(metric)."
         )
 
     if not verify_tensor(energy_tensor, 1):
-        raise Exception(
-            "Stress-energy is not verified. Please verify stress-eenergy using verify_tensor(EnergyTensor)"
+        raise ValueError(
+            "Stress-energy is not verified. Please verify Stress-energy tensor using "
+            "verify_tensor(energy_tensor)."
         )
 
     import copy
@@ -180,7 +208,7 @@ def get_energy_conditions(
                         - energy_tensor["tensor"][mu][nu] * vec_field[nu, ii]
                     )
 
-            vector = {}
+            vector: TensorDict = {}
             vector["field"] = np.array(
                 [
                     temp[:, :, :, :, 0],
@@ -242,12 +270,6 @@ def get_energy_conditions(
                     vec[:, :, :, :, ii, jj] = temp
 
     if return_vec == 1:
-        vector_field_out = vec_field
-    else:
-        vec = []
-        vector_field_out = []
-
-    if return_vec == 1:
-        return map_array, vec, vector_field_out
+        return map_array, vec, vec_field
 
     return map_array

@@ -9,6 +9,34 @@
   `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
   a non-2D height array with a clear `ValueError` before creating any figure,
   and add tests, including a smoke test of the example that uses it.
+- Document why the `directml` extra stays pinned to `torch-directml`
+  0.2.5.dev240914: it is the only installable release line and has no wheels
+  for Python 3.13 or newer.
+- Annotate the public API and ship a `py.typed` marker. Every public function
+  has full annotations (enforced by a test), metrics and tensors are
+  `dict[str, Any]`, `diff_order` and the backend are `Literal` types, and
+  `get_energy_conditions` is overloaded on `return_vec`. CI runs mypy and a test
+  that type-checks small user programs. Along the way mypy found that
+  `eval_metric(diff_order=None)` raised `ValueError`; it now means "fourth".
+  Remove dead assignments in `get_energy_conditions` and change `eval_metric`'s
+  internal calls to pass booleans.
+- Require Python 3.11 or newer. Python 3.10 reached its scheduled end of life in
+  October 2026, and current Matplotlib and NumPy no longer support it. The test
+  matrix is now 3.11, 3.12, 3.13 and 3.14; the code needed no change.
+- Fix `AttributeError: module 'numpy' has no attribute 'acos'` on NumPy 1.x:
+  `np.acos` was added in NumPy 2.0, so every energy-condition calculation failed
+  there. Use `np.arccos`.
+- Declare dependency floors: `numpy>=1.26` and `array-api-compat>=1.5`
+  (matplotlib stays at 3.8). Each is the oldest version the full test suite
+  passes on, checked by a new `minimum` CI job that installs exactly those
+  versions. Add Python 3.13 to the test matrix and a `lint` job running
+  `ruff check` and `ruff format --check`, which CI did not run before.
+- Raise `ValueError` everywhere the package used a bare `Exception`, and for the
+  one `Warning` raised for an unknown frame. `ValueError` is a subclass of
+  `Exception`, so `except Exception` code keeps working. Unify the single-time-
+  slice messages of the comoving generators, Schwarzschild and the warp shell
+  (they now report the size received), and fix typos in two messages. A test
+  rejects any bare `Exception`, `BaseException` or `Warning` raise in the package.
 - Add an advisory performance guard (`tests/performance`, run with
   `--run-performance`) that fails on super-linear cost growth or a slowdown of
   about three times against a fixed NumPy kernel. It runs as its own CI job

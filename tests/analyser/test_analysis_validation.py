@@ -1,9 +1,4 @@
-"""Input validation, defaults and edge cases of the analysis entry points.
-
-Several of these functions still raise bare ``Exception``; the tests accept any
-exception type for those messages so they keep passing when the types are
-tightened.
-"""
+"""Input validation, defaults and edge cases of the analysis entry points."""
 
 import copy
 import importlib
@@ -72,7 +67,7 @@ def bubble_and_energy():
 def test_frame_transfer_rejects_an_unverified_metric(bubble_and_energy):
     _, energy = bubble_and_energy
     with pytest.warns(UserWarning, match="type does not exist"):
-        with pytest.raises(Exception, match="Metric is not verified"):
+        with pytest.raises(ValueError, match="Metric is not verified"):
             do_frame_transfer({}, energy, "Eulerian")
 
 
@@ -81,7 +76,7 @@ def test_frame_transfer_reports_a_metric_missing_a_field_cleanly(bubble_and_ener
     metric, energy = bubble_and_energy
     broken = {key: value for key, value in metric.items() if key != "index"}
     with pytest.warns(UserWarning, match="index: Empty"):
-        with pytest.raises(Exception, match="Metric is not verified"):
+        with pytest.raises(ValueError, match="Metric is not verified"):
             do_frame_transfer(broken, energy, "Eulerian")
 
 
@@ -89,13 +84,13 @@ def test_frame_transfer_rejects_an_unverified_energy_tensor(bubble_and_energy):
     metric, energy = bubble_and_energy
     broken = {key: value for key, value in energy.items() if key != "coords"}
     with pytest.warns(UserWarning, match="coords: Empty"):
-        with pytest.raises(Exception, match="Stress-energy is not verified"):
+        with pytest.raises(ValueError, match="Stress-energy is not verified"):
             do_frame_transfer(metric, broken, "Eulerian")
 
 
 def test_frame_transfer_rejects_an_unknown_frame(bubble_and_energy):
     metric, energy = bubble_and_energy
-    with pytest.raises(Exception, match="Frame not found"):
+    with pytest.raises(ValueError, match="Frame not found"):
         do_frame_transfer(metric, energy, "Lagrangian")
 
 
@@ -131,7 +126,7 @@ def test_frame_transfer_does_not_modify_its_inputs(bubble_and_energy):
 
 def test_unknown_condition_names_are_rejected(bubble_and_energy):
     metric, energy = bubble_and_energy
-    with pytest.raises(Exception, match="Incorrect energy condition"):
+    with pytest.raises(ValueError, match="Incorrect energy condition"):
         get_energy_conditions(energy, metric, "Bogus")
 
 
@@ -156,10 +151,10 @@ def test_sample_counts_must_be_positive(bubble_and_energy, angular, timelike):
 def test_unverified_inputs_are_rejected(bubble_and_energy):
     metric, energy = bubble_and_energy
     with pytest.warns(UserWarning, match="type does not exist"):
-        with pytest.raises(Exception, match="Metric is not verified"):
+        with pytest.raises(ValueError, match="Metric is not verified"):
             get_energy_conditions(energy, {}, "Null")
     with pytest.warns(UserWarning, match="type does not exist"):
-        with pytest.raises(Exception, match="Stress-energy is not verified"):
+        with pytest.raises(ValueError, match="Stress-energy is not verified"):
             get_energy_conditions({}, metric, "Null")
 
 
@@ -221,6 +216,15 @@ def test_keep_positive_defaults_to_true():
         np.testing.assert_array_equal(default[name], explicit[name])
 
 
+def test_eval_metric_treats_a_missing_diff_order_as_fourth():
+    """It used to reach get_scalars as None and raise ValueError."""
+    metric = bubble()
+    default = eval_metric(metric, num_angular_vec=4, num_time_vec=2)
+    missing = eval_metric(metric, num_angular_vec=4, num_time_vec=2, diff_order=None)
+    for name in ("null", "weak", "strong", "dominant", "expansion", "shear"):
+        np.testing.assert_array_equal(missing[name], default[name])
+
+
 def test_eval_metric_returns_every_documented_field():
     result = eval_metric(bubble(), num_angular_vec=4, num_time_vec=2)
     assert set(result) == {
@@ -258,7 +262,7 @@ def flow_energy(components=None, index="contravariant", shape=(8, 8, 8)):
 
 
 def test_flow_lines_need_a_contravariant_tensor():
-    with pytest.raises(Exception, match="should be contravariant"):
+    with pytest.raises(ValueError, match="should be contravariant"):
         get_momentum_flow_lines(
             flow_energy(index="covariant"), [[3], [3], [3]], 0.25, 4, 1
         )
@@ -317,7 +321,7 @@ def test_flow_lines_do_not_modify_the_tensor():
 
 
 def test_the_field_type_must_be_known():
-    with pytest.raises(Exception, match="Vector field type not generated"):
+    with pytest.raises(ValueError, match="Vector field type not generated"):
         generate_uniform_field("spacelike", 4, 2)
 
 

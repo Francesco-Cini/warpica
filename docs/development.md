@@ -9,6 +9,22 @@ python -m ruff format --check .
 python -m pytest -q -W error -m "not gpu"
 ```
 
+## Type checking
+
+```powershell
+python -m pip install -e ".[dev,test,plot]"
+python -m mypy
+python -m pytest -q tests/test_typing.py
+```
+
+`mypy` reads its settings from `pyproject.toml` and checks the functions that
+carry annotations, which includes the whole public API. `tests/test_typing.py`
+fails if a public function loses an annotation, if an annotation names a type
+that does not exist, if `py.typed` goes missing, and it runs mypy over small
+user programs to confirm that correct calls pass and wrong ones are reported.
+Run `mypy --check-untyped-defs` to see the roughly 120 errors still hiding in
+unannotated internals before deciding how far to extend the annotations.
+
 ## Coverage
 
 ```powershell

@@ -1,5 +1,8 @@
+from typing import Any
+
 import numpy as np
 
+from warplab._typing import Array, DiffOrder, TensorDict
 from warplab.analyser.change_tensor_index import change_tensor_index
 from warplab.analyser.utils.get_trace import get_trace
 from warplab.metrics.three_plus_one_decomposer import three_plus_one_decomposer
@@ -8,7 +11,10 @@ from warplab.solver.utils.cov_div import cov_div
 from warplab.solver.utils.verify_grid_size import verify_grid_size
 
 
-def get_scalars(metric, diff_order="fourth"):
+def get_scalars(
+    metric: TensorDict,
+    diff_order: DiffOrder = "fourth",
+) -> tuple[Array, Array, Array]:
     """Compute kinematic scalars for the Eulerian observer field.
 
     Parameters
@@ -76,14 +82,14 @@ def get_scalars(metric, diff_order="fourth"):
                         array_metric_tensor[t, i, j, k, :, :] @ u_up[t, i, j, k, :]
                     )
 
-    u_up_cell = [None for _ in range(4)]
-    u_down_cell = [None for _ in range(4)]
+    u_up_cell: list[Any] = [None for _ in range(4)]
+    u_down_cell: list[Any] = [None for _ in range(4)]
 
     for i in range(4):
         u_up_cell[i] = u_up[:, :, :, :, i]
         u_down_cell[i] = u_down[:, :, :, :, i]
 
-    del_u = [[None for _ in range(4)] for _ in range(4)]
+    del_u: list[list[Any]] = [[None for _ in range(4)] for _ in range(4)]
 
     metric = change_tensor_index(metric, "covariant")
 
@@ -105,8 +111,8 @@ def get_scalars(metric, diff_order="fourth"):
             )
 
     # Project onto the spatial hypersurface orthogonal to the observer velocity.
-    P_mix = [[None for _ in range(4)] for _ in range(4)]
-    P = [[None for _ in range(4)] for _ in range(4)]
+    P_mix: list[list[Any]] = [[None for _ in range(4)] for _ in range(4)]
+    P: list[list[Any]] = [[None for _ in range(4)] for _ in range(4)]
 
     for i in range(4):
         for j in range(4):
@@ -118,12 +124,12 @@ def get_scalars(metric, diff_order="fourth"):
             P_mix[i][j] = k_delta + u_up_cell[i] * u_down_cell[j]
             P[i][j] = metric["tensor"][i][j] + u_down_cell[i] * u_down_cell[j]
 
-    theta = {}
+    theta: TensorDict = {}
     theta["index"] = "covariant"
     theta["type"] = "tensor"
     theta["tensor"] = [[None for _ in range(4)] for _ in range(4)]
 
-    omega = {}
+    omega: TensorDict = {}
     omega["index"] = "covariant"
     omega["type"] = "tensor"
     omega["tensor"] = [[None for _ in range(4)] for _ in range(4)]
@@ -155,7 +161,7 @@ def get_scalars(metric, diff_order="fourth"):
             )
 
     # Removing one third of the expansion leaves the spatial, trace-free shear.
-    shear = {}
+    shear: TensorDict = {}
     shear["index"] = "covariant"
     shear["type"] = "tensor"
     shear["tensor"] = [[None for _ in range(4)] for _ in range(4)]

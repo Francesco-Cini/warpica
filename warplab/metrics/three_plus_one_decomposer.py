@@ -1,9 +1,14 @@
+from typing import Any
+
 import numpy as np
 
+from warplab._typing import Array, TensorDict
 from warplab.solver.utils.c3_inv import c3_inv
 
 
-def three_plus_one_decomposer(metric):
+def three_plus_one_decomposer(
+    metric: TensorDict,
+) -> tuple[Array, list[Array], list[list[Array]], list[Array], list[list[Array]]]:
     """Decompose a spacetime metric into lapse, shift, and spatial fields.
 
     Parameters
@@ -42,7 +47,7 @@ def three_plus_one_decomposer(metric):
 
     s = metric["tensor"][0][0].shape
 
-    beta_up = [None for _ in range(3)]
+    beta_up: list[Any] = [None for _ in range(3)]
     for i in range(3):
         beta_up[i] = np.zeros(s)
         for j in range(3):

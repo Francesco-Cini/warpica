@@ -2,14 +2,23 @@ from datetime import date as _date
 
 import numpy as np
 
+from warplab._typing import GridSize, TensorDict, Vector
 from warplab.metrics.set_minkowski import set_minkowski
 from warplab.metrics.utils.shape_function_alcubierre import shape_function_alcubierre
 from warplab.units.universal_constants.c import c
 
 
 def metric_get_van_den_broeck(
-    grid_size, world_centre, v, R_1, sigma_1, R_2, sigma_2, A, grid_scale=None
-):
+    grid_size: GridSize,
+    world_centre: Vector,
+    v: float,
+    R_1: float,
+    sigma_1: float,
+    R_2: float,
+    sigma_2: float,
+    A: float,
+    grid_scale: Vector | None = None,
+) -> TensorDict:
     """Build the Van den Broeck metric.
 
     Parameters
@@ -49,7 +58,7 @@ def metric_get_van_den_broeck(
     if grid_scale is None:
         grid_scale = np.array([1, 1, 1, 1])
 
-    metric = {}
+    metric: TensorDict = {}
 
     metric["params"] = {}
 

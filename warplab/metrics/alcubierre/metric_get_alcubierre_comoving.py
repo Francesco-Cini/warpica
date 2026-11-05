@@ -2,19 +2,20 @@ from datetime import date as _date
 
 import numpy as np
 
+from warplab._typing import GridSize, TensorDict, Vector
 from warplab.metrics.set_minkowski_three_plus_one import set_minkowski_three_plus_one
 from warplab.metrics.three_plus_one_builder import three_plus_one_builder
 from warplab.metrics.utils.shape_function_alcubierre import shape_function_alcubierre
 
 
 def metric_get_alcubierre_comoving(
-    grid_size: np.ndarray,
-    world_centre: np.ndarray,
+    grid_size: GridSize,
+    world_centre: Vector,
     v: float,
     R: float,
     sigma: float,
-    grid_scale: np.ndarray | None = None,
-) -> dict:
+    grid_scale: Vector | None = None,
+) -> TensorDict:
     """Build the Alcubierre metric in comoving coordinates.
 
     Parameters
@@ -49,11 +50,11 @@ def metric_get_alcubierre_comoving(
         grid_scale = np.array([1, 1, 1, 1])
 
     if grid_size[0] > 1:
-        raise Exception(
-            "The time grid is greater than 1, only a size of 1 can be used in the comoving"
+        raise ValueError(
+            f"Comoving Alcubierre requires one time slice, got {grid_size[0]}"
         )
 
-    metric = {}
+    metric: TensorDict = {}
 
     metric["params"] = {}
 
