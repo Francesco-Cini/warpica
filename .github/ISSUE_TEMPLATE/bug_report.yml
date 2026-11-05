@@ -1,0 +1,40 @@
+name: Bug report
+description: Something fails or gives a wrong result
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Check docs/reference-validation.md first: some differences from MATLAB
+        WarpFactory are deliberate.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Smallest script that shows it
+      render: python
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Traceback or wrong numbers
+      render: text
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: warplab, Python, NumPy and operating system
+    validations:
+      required: true
+  - type: dropdown
+    id: backend
+    attributes:
+      label: Backend
+      options: [CPU (default), CuPy (experimental), torch-directml (experimental)]
+    validations:
+      required: true
