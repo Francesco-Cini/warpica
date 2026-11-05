@@ -62,6 +62,22 @@ markers = [
     "slow: tests excluded from the default development suite",
 ]
 
+[tool.coverage.run]
+source = ["warplab"]
+# The backend adapters need a physical CUDA or DirectML device, so hosted CI
+# cannot run them (see docs/gpu.md). Everything else is measured.
+omit = ["warplab/gpu/utils/*"]
+
+[tool.coverage.report]
+fail_under = 98
+exclude_also = [
+    'if getattr\(getattr\(A, "device", None\), "type", None\) == "privateuseone":',
+    'if library == "cupy":',
+    'if library == "torch-directml":',
+    'if is_cupy_array\(value\):',
+    'if is_torch_array\(value\):',
+]
+
 [tool.setuptools.dynamic]
 version = {attr = "warplab.__version__"}
 

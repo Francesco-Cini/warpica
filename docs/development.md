@@ -9,6 +9,20 @@ python -m ruff format --check .
 python -m pytest -q -W error -m "not gpu"
 ```
 
+## Coverage
+
+```powershell
+python -m pytest -q -W error -m "not gpu" --cov=warplab --cov-report=term-missing
+```
+
+CI fails when line coverage drops below 98% (`fail_under` in `pyproject.toml`);
+the suite currently measures 100%. Only the CUDA and DirectML adapters are
+excluded, because they need a physical device that hosted runners do not have:
+`warplab/gpu/utils/` is omitted and the device-only `if` branches are listed in
+`exclude_also`. Add tests for new code instead of widening the exclusions, and
+raise the floor when coverage rises. Run the tests with the `plot` extra
+installed, or the plotting modules count as uncovered.
+
 Run `python -m ruff check . --fix` and `python -m ruff format .` to apply
 import ordering and formatting fixes. Review the diff before committing.
 Ruff's configuration lives in `pyproject.toml`: four-space indentation,

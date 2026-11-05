@@ -91,3 +91,52 @@ def test_constants():
 
     assert c() == 2.99792458e8
     assert G() == 6.6743e-11
+
+
+@pytest.mark.parametrize("name", ["analyser", "gpu", "metrics", "solver", "units"])
+def test_subpackages_are_loaded_on_first_access(name):
+    result = run_python(
+        "import sys, warplab\n"
+        f"assert 'warplab.{name}' not in sys.modules\n"
+        f"module = warplab.{name}\n"
+        f"assert module is sys.modules['warplab.{name}']\n"
+        f"assert warplab.{name} is module\n"
+    )
+    assert result.returncode == 0, result.stderr
+
+
+def test_dir_lists_the_public_names_before_they_are_loaded():
+    result = run_python(
+        "import warplab\n"
+        "names = dir(warplab)\n"
+        "assert 'metric_get_alcubierre' in names and 'get_energy_tensor' in names\n"
+        "assert 'units' in names and 'visualiser' in names and '__version__' in names\n"
+        "assert names == sorted(names)\n"
+    )
+    assert result.returncode == 0, result.stderr
+
+
+def test_a_loaded_name_is_cached_on_the_package():
+    result = run_python(
+        "import warplab\n"
+        "first = warplab.eval_metric\n"
+        "assert 'eval_metric' in vars(warplab)\n"
+        "assert warplab.eval_metric is first\n"
+    )
+    assert result.returncode == 0, result.stderr
+
+
+def test_a_subpackage_is_resolved_lazily_when_it_is_not_cached(monkeypatch):
+    """Drop the cached attribute so module-level __getattr__ has to import it."""
+    monkeypatch.delattr(warplab, "units", raising=False)
+    assert "units" not in vars(warplab)
+    module = warplab.units
+    assert module.__name__ == "warplab.units"
+    assert vars(warplab)["units"] is module
+
+
+def test_dir_includes_the_lazy_names():
+    names = dir(warplab)
+    assert names == sorted(names)
+    for name in (*warplab._EXPORTS, *warplab._SUBPACKAGES, "__version__"):
+        assert name in names
