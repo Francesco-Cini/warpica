@@ -10,9 +10,11 @@ readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
+# Floors are the oldest versions the full test suite passes on (see the
+# "minimum" CI job); matplotlib's floor is under the plot extra.
 dependencies = [
-    "array-api-compat",
-    "numpy",
+    "array-api-compat>=1.5",
+    "numpy>=1.26",
 ]
 
 [project.optional-dependencies]

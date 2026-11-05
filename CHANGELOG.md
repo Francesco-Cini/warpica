@@ -9,6 +9,14 @@
   `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
   a non-2D height array with a clear `ValueError` before creating any figure,
   and add tests, including a smoke test of the example that uses it.
+- Fix `AttributeError: module 'numpy' has no attribute 'acos'` on NumPy 1.x:
+  `np.acos` was added in NumPy 2.0, so every energy-condition calculation failed
+  there. Use `np.arccos`.
+- Declare dependency floors: `numpy>=1.26` and `array-api-compat>=1.5`
+  (matplotlib stays at 3.8). Each is the oldest version the full test suite
+  passes on, checked by a new `minimum` CI job that installs exactly those
+  versions. Add Python 3.13 to the test matrix and a `lint` job running
+  `ruff check` and `ruff format --check`, which CI did not run before.
 - Raise `ValueError` everywhere the package used a bare `Exception`, and for the
   one `Warning` raised for an unknown frame. `ValueError` is a subclass of
   `Exception`, so `except Exception` code keeps working. Unify the single-time-
