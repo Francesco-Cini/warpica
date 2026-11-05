@@ -5,6 +5,7 @@ from warplab.analyser.utils.get_trace import get_trace
 from warplab.metrics.three_plus_one_decomposer import three_plus_one_decomposer
 from warplab.solver.utils.c4_inv import c4_inv
 from warplab.solver.utils.cov_div import cov_div
+from warplab.solver.utils.verify_grid_size import verify_grid_size
 
 
 def get_scalars(metric, diff_order="fourth"):
@@ -27,10 +28,17 @@ def get_scalars(metric, diff_order="fourth"):
     vorticity_scalar : ndarray
         One half of the vorticity tensor contracted with itself.
         All outputs have shape (nt, nx, ny, nz).
+
+    Raises
+    ------
+    ValueError
+        If an axis has two or more samples but too few for the stencil
+        (5 for fourth order, 3 for second order). One sample is accepted.
     """
     metric = change_tensor_index(metric, "covariant")
 
     shape = metric["tensor"][0][0].shape
+    verify_grid_size(shape, diff_order)
     array_metric_tensor = np.empty((*shape, 4, 4))
 
     for i in range(4):

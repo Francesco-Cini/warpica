@@ -9,6 +9,11 @@
   `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
   a non-2D height array with a clear `ValueError` before creating any figure,
   and add tests, including a smoke test of the example that uses it.
+- Raise `ValueError` from `get_energy_tensor`, `get_scalars` and `eval_metric`
+  for an axis too short for the finite-difference stencil (2 to 4 samples for
+  fourth order, 2 for second order). Upstream silently returns zero derivatives,
+  which drops the time dependence of a moving metric. A single sample is still
+  accepted.
 - Make `verify_tensor` fail for non-Cartesian `coords` (upstream only warns), so
   the solver and analysis functions reject such metrics instead of silently
   applying Cartesian formulas. `get_energy_conditions` no longer raises a bare

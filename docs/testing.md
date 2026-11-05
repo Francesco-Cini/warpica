@@ -160,7 +160,11 @@ operation does not silently modify its inputs.
 - Time spacing is seconds; curvature and scalar derivatives use the `ct`
   basis. A single time slice intentionally has zero time derivatives.
 - Second order needs 3 samples along a differentiated axis; fourth order
-  needs 5. Shorter axes return zero derivatives as upstream does.
+  needs 5. An axis may also have exactly one sample (nothing varies along it).
+  `get_energy_tensor`, `get_scalars` and `eval_metric` raise `ValueError` for an
+  axis of two or more samples that is too short. The low-level derivative
+  functions still return zeros there, as upstream does, so call them through
+  the public entry points.
 - Pure derivatives copy the nearest interior value to their boundary cells.
   Mixed derivatives leave the boundary band zero. Convergence tests exclude
   these bands; copied edges are not high-order boundary conditions.
