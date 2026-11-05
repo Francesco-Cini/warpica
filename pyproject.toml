@@ -10,12 +10,34 @@ readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
+authors = [{ name = "Francesco Cini" }]
+keywords = ["general relativity", "warp drive", "energy conditions", "spacetime metrics", "numerical relativity"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Typing :: Typed",
+]
 # Floors are the oldest versions the full test suite passes on (see the
 # "minimum" CI job); matplotlib's floor is under the plot extra.
 dependencies = [
     "array-api-compat>=1.5",
     "numpy>=1.26",
 ]
+
+[project.urls]
+Homepage = "https://github.com/Francesco-Cini/pywarp"
+Documentation = "https://github.com/Francesco-Cini/pywarp/tree/develop/docs"
+Changelog = "https://github.com/Francesco-Cini/pywarp/blob/develop/CHANGELOG.md"
+Issues = "https://github.com/Francesco-Cini/pywarp/issues"
+Upstream = "https://github.com/NerdsWithAttitudes/WarpFactory"
 
 [project.optional-dependencies]
 # Experimental GPU backends: not covered by the 1.x stability promise.
@@ -46,7 +68,6 @@ convention = "numpy"
 "examples/**" = ["D"]
 "benchmarks/**" = ["D"]
 "tools/**" = ["D"]
-"count_lines.py" = ["D"]
 # Keep the established mathematical keyword argument for compatibility.
 "warplab/solver/utils/get_christoffel_sym.py" = ["E741"]
 # Select the optional plotting dependency and backend before importing pyplot.
