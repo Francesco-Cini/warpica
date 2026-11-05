@@ -241,11 +241,6 @@ def get_energy_conditions(
                 if return_vec == 1:
                     vec[:, :, :, :, ii, jj] = temp
 
-    else:
-        raise Exception(
-            "Unrecognised input energy condition, use either: 'Null', 'Weak', 'Strong', 'Dominant'"
-        )
-
     if return_vec == 1:
         vector_field_out = vec_field
     else:

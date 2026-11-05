@@ -39,6 +39,7 @@ def cov_div(
     -----
     Time spacings are in seconds; time derivatives are converted to ct.
     """
+    diff_order = str(diff_order).lower()
     if diff_order not in ("second", "fourth"):
         raise ValueError("diff_order must be second or fourth")
     derivative = (
