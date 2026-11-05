@@ -9,6 +9,17 @@
   `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
   a non-2D height array with a clear `ValueError` before creating any figure,
   and add tests, including a smoke test of the example that uses it.
+- `do_frame_transfer` now verifies the metric and stress-energy tensor before
+  transforming them, so a malformed metric reports "not verified" instead of a
+  `KeyError`.
+- Accept `diff_order` case-insensitively in `get_scalars` and `cov_div`, as
+  `get_energy_tensor` already did, so `eval_metric(diff_order="Fourth")` works.
+- `get_eulerian_transformation_matrix` raises `ValueError` for a non-symmetric
+  metric (previously an `assert`, which disappears under `python -O`), for an
+  unsupported shape (a 3 by 3 array used to fail with an `IndexError`), and for
+  a metric with no Eulerian observers. Remove the "imaginary" check that could
+  never trigger, because NumPy returns NaN where MATLAB returns a complex value.
+- Remove an unreachable branch from `get_energy_conditions`.
 - Raise `ValueError` from `get_energy_tensor`, `get_scalars` and `eval_metric`
   for an axis too short for the finite-difference stencil (2 to 4 samples for
   fourth order, 2 for second order). Upstream silently returns zero derivatives,

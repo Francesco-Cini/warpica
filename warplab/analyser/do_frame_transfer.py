@@ -32,12 +32,12 @@ def do_frame_transfer(metric, energy_tensor, frame, gpu=None):
     transformed_energy_tensor : dict
         Independent tensor copy with contravariant Eulerian components.
     """
-    if energy_tensor.get("frame", "").lower() == frame.lower() == "eulerian":
+    if (
+        is_field(energy_tensor, "frame")
+        and strcmpi(energy_tensor["frame"], frame)
+        and strcmpi(frame, "Eulerian")
+    ):
         return copy.deepcopy(energy_tensor)
-    metric = change_tensor_index(metric, "covariant")
-
-    transformed_energy_tensor = copy.deepcopy(energy_tensor)
-    transformed_energy_tensor["tensor"] = [[None for _ in range(4)] for _ in range(4)]
 
     if not verify_tensor(metric, 1):
         raise Exception(
@@ -46,8 +46,13 @@ def do_frame_transfer(metric, energy_tensor, frame, gpu=None):
 
     if not verify_tensor(energy_tensor, 1):
         raise Exception(
-            "Stress-energy is not verified. Please veify Stress-energy tensor using verify_tensor(energy_tensor)."
+            "Stress-energy is not verified. Please verify Stress-energy tensor using verify_tensor(energy_tensor)."
         )
+
+    metric = change_tensor_index(metric, "covariant")
+
+    transformed_energy_tensor = copy.deepcopy(energy_tensor)
+    transformed_energy_tensor["tensor"] = [[None for _ in range(4)] for _ in range(4)]
 
     if strcmpi(frame, "Eulerian") and not (
         is_field(energy_tensor, "frame") and strcmpi(energy_tensor["frame"], "Eulerian")
