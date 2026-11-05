@@ -23,6 +23,41 @@ excluded, because they need a physical device that hosted runners do not have:
 raise the floor when coverage rises. Run the tests with the `plot` extra
 installed, or the plotting modules count as uncovered.
 
+## Performance guard (advisory)
+
+```powershell
+python -m pytest tests/performance --run-performance -m performance -q
+```
+
+The guard times the stress-energy solver, `get_energy_conditions` and
+`get_scalars` on two grid sizes and fails on either of two machine-independent
+signals, so it works on any CPU:
+
+- **Scaling.** The cost may grow no faster than `cells**1.15`. Healthy code
+  measures 0.6 to 0.9, because fixed Python overhead dominates the small grid.
+- **Calibrated ratio.** The cost relative to a fixed NumPy kernel timed in the
+  same process may not exceed three times the value in
+  `tests/performance/baseline.json`.
+
+It is deliberately coarse. Injecting known slowdowns showed it flags a per-cell
+loop that makes an operation about 3.1 times slower overall, and quadratic work
+that equals the operation's own runtime at the largest grid. A 20% regression,
+or a smaller quadratic term, goes unnoticed. It does not measure GPU speed;
+use the scripts in `benchmarks/` on the hardware you care about.
+
+Normal test runs skip the timing tests, but they do run `test_guard_machinery.py`,
+which checks the verdict logic, the baseline file and that every guarded
+operation still executes. In CI the guard is its own job. It is **advisory**: it
+never blocks a merge, it reports in the job summary and as a warning
+annotation, and it must not be added to the required status checks. Rerun it
+before treating one failure as a real regression.
+
+The baseline was recorded on Windows with Python 3.14, and hosted runners differ.
+After a few CI runs, compare the "Ratio to reference" column in the job summary
+with `baseline.json`, and refresh it with
+`python -m tests.performance.timing --write-baseline` (or edit the ratios by
+hand) so the tolerance is centred on the runner.
+
 Run `python -m ruff check . --fix` and `python -m ruff format .` to apply
 import ordering and formatting fixes. Review the diff before committing.
 Ruff's configuration lives in `pyproject.toml`: four-space indentation,

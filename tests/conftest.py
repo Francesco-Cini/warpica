@@ -42,6 +42,18 @@ def pytest_addoption(parser):
         choices=["cupy", "torch-directml"],
         help="Opt into real hardware tests; a missing requested backend is a failure",
     )
+    parser.addoption(
+        "--run-performance",
+        action="store_true",
+        default=False,
+        help="Run the advisory performance guard in tests/performance",
+    )
+
+
+@pytest.fixture(scope="session")
+def performance_enabled(request):
+    if not request.config.getoption("--run-performance"):
+        pytest.skip("Pass --run-performance to run the advisory performance guard")
 
 
 @pytest.fixture(scope="session")
