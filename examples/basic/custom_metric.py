@@ -2,8 +2,8 @@
 
 import numpy as np
 
-from warplab.metrics.custom_metric import custom_metric
-from warplab.solver.get_energy_tensor import get_energy_tensor
+from warplab.metrics import custom_metric
+from warplab.solver import get_energy_tensor
 
 
 def main():

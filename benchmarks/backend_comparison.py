@@ -24,7 +24,9 @@ def main():
         default=1,
         help="untimed full solver runs per backend and order",
     )
-    parser.add_argument("--output", type=Path, default=Path("backend-results.json"))
+    parser.add_argument(
+        "--output", type=Path, default=Path("benchmarks/results/backend-results.json")
+    )
     args = parser.parse_args()
     if args.size < 5 or args.repeats < 1:
         parser.error("size >= 5 and repeats >= 1 required")

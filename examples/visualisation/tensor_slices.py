@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from warplab.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
+from warplab.metrics import metric_get_alcubierre
 from warplab.visualiser import plot_tensor, plot_three_plus_one
 
 

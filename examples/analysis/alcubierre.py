@@ -2,8 +2,8 @@
 
 import numpy as np
 
-from warplab.analyser.eval_metric import eval_metric
-from warplab.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
+from warplab.analyser import eval_metric
+from warplab.metrics import metric_get_alcubierre
 
 
 def main():
