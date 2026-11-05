@@ -9,6 +9,14 @@
   `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
   a non-2D height array with a clear `ValueError` before creating any figure,
   and add tests, including a smoke test of the example that uses it.
+- Add a 98% line-coverage floor to CI. The device-only CUDA and DirectML
+  branches are the only exclusions.
+- `plot_three_plus_one` now verifies its metric like `plot_tensor`, so a
+  malformed or non-Cartesian metric raises `ValueError("Invalid tensor")`
+  instead of a `KeyError`. Drop `plot_tensor`'s own Cartesian check, which
+  verification made unreachable.
+- Fix `metric_get_lentz` and `metric_get_lentz_comoving` failing with
+  `TypeError` when `scale` is omitted and `grid_size` is a list.
 - `do_frame_transfer` now verifies the metric and stress-energy tensor before
   transforming them, so a malformed metric reports "not verified" instead of a
   `KeyError`.

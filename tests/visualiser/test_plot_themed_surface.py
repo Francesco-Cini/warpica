@@ -183,3 +183,30 @@ def test_created_axes_are_3d_sized_and_shown_once(monkeypatch):
     assert calls == [1]
     assert surface.axes.name == "3d"
     assert tuple(surface.axes.figure.get_size_inches()) == (4, 3)
+
+
+def raising(*args, **kwargs):
+    raise RuntimeError("this Matplotlib version does not support the call")
+
+
+@pytest.mark.parametrize(
+    "step",
+    ["locator", "formatter", "offset text", "pane colour", "grid style", "box aspect"],
+)
+def test_a_failing_cosmetic_step_never_breaks_the_plot(ax, monkeypatch, step):
+    """Each styling step is guarded so an older or newer Matplotlib still plots."""
+    if step == "locator":
+        monkeypatch.setattr(ax.zaxis, "set_major_locator", raising)
+    elif step == "formatter":
+        monkeypatch.setattr(ax.zaxis, "set_major_formatter", raising)
+    elif step == "offset text":
+        monkeypatch.setattr(ax.zaxis, "get_offset_text", raising)
+    elif step == "pane colour":
+        monkeypatch.setattr(ax.xaxis, "set_pane_color", raising)
+    elif step == "grid style":
+        for axis in (ax.xaxis, ax.yaxis, ax.zaxis):
+            monkeypatch.setattr(axis, "_axinfo", {})
+    else:
+        monkeypatch.setattr(ax, "set_box_aspect", raising)
+    surface = plot_themed_surface(heights(), ax=ax, colorbar=False)
+    assert surface in ax.collections
