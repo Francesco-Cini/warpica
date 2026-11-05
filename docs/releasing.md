@@ -23,6 +23,10 @@ builds wheel/sdist, checks metadata and runs the installed-wheel smoke test.
 These jobs will first execute remotely when the changes are pushed; adding
 the workflow does not mean those remote runs have already passed.
 
+The advisory performance guard (see [development checks](development.md)) runs
+as a separate CI job and does not gate a release; look at its summary for an
+unexpected slowdown before tagging.
+
 Before publication, review the changelog, choose the version, inspect CI
 results, and confirm package metadata. GPU backends are documented as
 experimental, so they do not block a release; run real hardware checks

@@ -9,6 +9,10 @@
   `plot_themed_surface.plot_themed_surface`, reject a wrong number of arrays or
   a non-2D height array with a clear `ValueError` before creating any figure,
   and add tests, including a smoke test of the example that uses it.
+- Add an advisory performance guard (`tests/performance`, run with
+  `--run-performance`) that fails on super-linear cost growth or a slowdown of
+  about three times against a fixed NumPy kernel. It runs as its own CI job
+  that never blocks a merge, and its logic is tested in every build.
 - Add a 98% line-coverage floor to CI. The device-only CUDA and DirectML
   branches are the only exclusions.
 - `plot_three_plus_one` now verifies its metric like `plot_tensor`, so a

@@ -57,7 +57,7 @@ markers = [
     "integration: complete multi-component workflows",
     "numerical: convergence and accuracy checks",
     "parity: comparisons against MATLAB reference data",
-    "performance: runtime and memory benchmarks",
+    "performance: advisory timing guard; opt in with --run-performance",
     "gpu: opt-in tests requiring a selected physical GPU backend",
     "slow: tests excluded from the default development suite",
 ]
