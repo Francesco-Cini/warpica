@@ -1,3 +1,4 @@
+from warplab._typing import Backend, DiffOrder, TensorDict
 from warplab.analyser.do_frame_transfer import do_frame_transfer
 from warplab.analyser.get_energy_conditions import get_energy_conditions
 from warplab.analyser.get_scalars import get_scalars
@@ -5,14 +6,14 @@ from warplab.solver.get_energy_tensor import get_energy_tensor
 
 
 def eval_metric(
-    metric,
-    keep_positive=True,
-    num_angular_vec=100,
-    num_time_vec=10,
-    gpu=None,
+    metric: TensorDict,
+    keep_positive: bool | None = True,
+    num_angular_vec: int | None = 100,
+    num_time_vec: int | None = 10,
+    gpu: Backend | None = None,
     *,
-    diff_order="fourth",
-):
+    diff_order: DiffOrder | None = "fourth",
+) -> TensorDict:
     """Evaluate stress-energy, sampled energy conditions, and Eulerian scalars.
 
     Parameters
@@ -39,7 +40,7 @@ def eval_metric(
         and vorticity scalars.
     """
     if keep_positive is None:
-        keep_positive = 1
+        keep_positive = True
 
     if num_angular_vec is None:
         num_angular_vec = 100
@@ -47,7 +48,10 @@ def eval_metric(
     if num_time_vec is None:
         num_time_vec = 10
 
-    output = {}
+    if diff_order is None:
+        diff_order = "fourth"
+
+    output: TensorDict = {}
 
     output["metric"] = metric
 
@@ -62,7 +66,7 @@ def eval_metric(
         "Null",
         num_angular_vec,
         num_time_vec,
-        0,
+        False,
         gpu,
     )
     output["weak"] = get_energy_conditions(
@@ -71,7 +75,7 @@ def eval_metric(
         "Weak",
         num_angular_vec,
         num_time_vec,
-        0,
+        False,
         gpu,
     )
     output["strong"] = get_energy_conditions(
@@ -80,7 +84,7 @@ def eval_metric(
         "Strong",
         num_angular_vec,
         num_time_vec,
-        0,
+        False,
         gpu,
     )
     output["dominant"] = get_energy_conditions(
@@ -89,7 +93,7 @@ def eval_metric(
         "Dominant",
         num_angular_vec,
         num_time_vec,
-        0,
+        False,
         gpu,
     )
 

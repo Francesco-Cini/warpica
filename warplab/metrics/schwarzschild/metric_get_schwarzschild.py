@@ -1,9 +1,15 @@
 import numpy as np
 
+from warplab._typing import GridSize, TensorDict, Vector
 from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
 
 
-def metric_get_schwarzschild(grid_size, world_centre, r_s, grid_scaling=None):
+def metric_get_schwarzschild(
+    grid_size: GridSize,
+    world_centre: Vector,
+    r_s: float,
+    grid_scaling: Vector | None = None,
+) -> TensorDict:
     """Build the Schwarzschild metric.
 
     Parameters
@@ -31,7 +37,7 @@ def metric_get_schwarzschild(grid_size, world_centre, r_s, grid_scaling=None):
     For nonzero r_s, the grid must exclude the origin and coordinate horizon.
     """
     if grid_size[0] != 1:
-        raise ValueError("Schwarzschild requires one time slice")
+        raise ValueError(f"Schwarzschild requires one time slice, got {grid_size[0]}")
     if r_s < 0:
         raise ValueError("r_s must be nonnegative")
     metric = metric_get_minkowski(grid_size, grid_scaling)

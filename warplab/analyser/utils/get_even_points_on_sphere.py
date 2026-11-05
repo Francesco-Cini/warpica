@@ -21,7 +21,7 @@ def get_even_points_on_sphere(R, number_of_points):
 
     for i in range(number_of_points):
         theta = (2 * np.pi * i) / golden_ratio
-        phi = np.acos(1 - 2 * (i + 0.5) / number_of_points)
+        phi = np.arccos(1 - 2 * (i + 0.5) / number_of_points)
 
         vector[0, i] = R * np.cos(theta) * np.sin(phi)
         vector[1, i] = R * np.sin(theta) * np.sin(phi)

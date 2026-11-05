@@ -1,6 +1,10 @@
+from collections.abc import Sequence
+
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.figure import Figure
 
+from warplab._typing import Array, TensorDict
 from warplab.solver.verify_tensor import verify_tensor
 from warplab.visualiser.utils.get_slice_data import get_slice_data
 from warplab.visualiser.utils.plot_component import plot_component
@@ -35,7 +39,12 @@ def _component_title(symbol, index, i, j):
     return rf"${symbol}_{{{i}}}^{{{j}}}$"
 
 
-def plot_tensor(tensor, alpha=None, sliced_planes=None, slice_locations=None):
+def plot_tensor(
+    tensor: TensorDict,
+    alpha: float | None = None,
+    sliced_planes: Sequence[int] | Array | None = None,
+    slice_locations: Sequence[float] | Array | None = None,
+) -> tuple[Figure, Array]:
     """Plot a two-dimensional slice of all sixteen tensor components.
 
     Parameters
@@ -72,7 +81,8 @@ def plot_tensor(tensor, alpha=None, sliced_planes=None, slice_locations=None):
             plot_component(
                 np.asarray(tensor["tensor"][i][j])[indices],
                 _component_title(symbol, tensor["index"].lower(), i, j),
-                *labels,
+                labels[0],
+                labels[1],
                 alpha=1 if alpha is None else alpha,
                 ax=axes[i, j],
                 x=coords[0],

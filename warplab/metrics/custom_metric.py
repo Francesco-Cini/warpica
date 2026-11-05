@@ -1,12 +1,21 @@
+from collections.abc import Callable, Sequence
 from datetime import datetime
 
+from warplab._typing import Array, GridSize, TensorDict, Vector
 from warplab.metrics.set_minkowski_three_plus_one import set_minkowski_three_plus_one
 from warplab.metrics.three_plus_one_builder import three_plus_one_builder
 
 
 def custom_metric(
-    grid_size, world_centre, grid_scaling, alpha_function, beta_function, gamma_function
-):
+    grid_size: GridSize,
+    world_centre: Vector,
+    grid_scaling: Vector,
+    alpha_function: Callable[[float, float, float, float], float],
+    beta_function: Callable[[float, float, float, float], Vector],
+    gamma_function: Callable[
+        [float, float, float, float], Sequence[Sequence[float]] | Array
+    ],
+) -> TensorDict:
     """Build a metric from lapse, covariant shift, and spatial-metric callbacks.
 
     Parameters
@@ -32,7 +41,7 @@ def custom_metric(
         Cartesian covariant metric, grid scaling, and identifying metadata.
         Components use tensor[mu][nu] with shape (nt, nx, ny, nz).
     """
-    metric = {}
+    metric: TensorDict = {}
 
     metric["type"] = "metric"
     metric["name"] = "Custom Metric"

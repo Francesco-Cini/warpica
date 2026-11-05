@@ -1,4 +1,4 @@
-def G():
+def G() -> float:
     """Return the Newtonian gravitational constant.
 
     Returns

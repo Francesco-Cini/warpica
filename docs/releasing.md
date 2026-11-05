@@ -18,7 +18,7 @@ It exercises both solvers, the analysis pipeline and plotting. The editable
 checkout cannot conceal missing packaged modules.
 
 `.github/workflows/ci.yml` runs CPU tests and committed MATLAB fixture
-comparisons on Windows and Linux with Python 3.10, 3.12 and 3.14. It also
+comparisons on Windows and Linux with Python 3.11, 3.12, 3.13 and 3.14. It also
 builds wheel/sdist, checks metadata and runs the installed-wheel smoke test.
 These jobs will first execute remotely when the changes are pushed; adding
 the workflow does not mean those remote runs have already passed.

@@ -5,7 +5,7 @@ sampled energy-condition analysis, ported from WarpFactory.
 
 ## Start here
 
-From the repository root, with Python 3.10 or newer:
+From the repository root, with Python 3.11 or newer:
 
 ```powershell
 python -m venv .venv

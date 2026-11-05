@@ -30,8 +30,8 @@ def generate_uniform_field(type, num_angular_vec, num_time_vec, gpu=None):
     causal type is defined using signature (-, +, +, +).
     """
     if not (strcmpi(type, "nulllike") or strcmpi(type, "timelike")):
-        raise Exception(
-            "Vector field type not generated, used either: 'nulllike', 'timelike"
+        raise ValueError(
+            "Vector field type not generated, use either: 'nulllike' or 'timelike'"
         )
 
     if strcmpi(type, "timelike"):

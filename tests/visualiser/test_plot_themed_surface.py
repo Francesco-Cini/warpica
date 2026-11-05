@@ -34,30 +34,31 @@ def test_height_array_plots_x_along_its_first_axis(ax):
     surface = plot_themed_surface(heights((5, 7)), ax=ax, colorbar=False)
     # An (x, y) array of 5 by 7 has 4 by 6 cells; the axes span 0..4 and 0..6.
     assert len(surface.get_facecolor()) == 24
-    assert 4 < ax.get_xlim3d()[1] < 5
-    assert 6 < ax.get_ylim3d()[1] < 7
+    assert 4 <= ax.get_xlim3d()[1] < 5
+    assert 6 <= ax.get_ylim3d()[1] < 7
 
 
 def test_height_values_set_the_vertical_range(ax):
+    """The range contains the data; newer Matplotlib also adds a small margin."""
     plot_themed_surface(heights((5, 7)), ax=ax, colorbar=False)
     low, high = ax.get_zlim3d()
-    assert low < 0
-    assert high > 34
+    assert low <= 0
+    assert high >= 34
 
 
 def test_singleton_dimensions_are_squeezed(ax):
     plot_themed_surface(heights((5, 7)).reshape(1, 5, 7, 1), ax=ax, colorbar=False)
-    assert 4 < ax.get_xlim3d()[1] < 5
-    assert 6 < ax.get_ylim3d()[1] < 7
+    assert 4 <= ax.get_xlim3d()[1] < 5
+    assert 6 <= ax.get_ylim3d()[1] < 7
 
 
 def test_coordinate_arrays_are_used_as_given(ax):
     x, y = np.meshgrid(np.linspace(10, 20, 6), np.linspace(-5, 5, 4))
     plot_themed_surface(x, y, x + y, ax=ax, colorbar=False)
-    assert 9 < ax.get_xlim3d()[0] < 10
-    assert 20 < ax.get_xlim3d()[1] < 21
-    assert -6 < ax.get_ylim3d()[0] < -5
-    assert 5 < ax.get_ylim3d()[1] < 6
+    assert 9 < ax.get_xlim3d()[0] <= 10
+    assert 20 <= ax.get_xlim3d()[1] < 21
+    assert -6 < ax.get_ylim3d()[0] <= -5
+    assert 5 <= ax.get_ylim3d()[1] < 6
 
 
 @pytest.mark.parametrize("count", [0, 2, 4])

@@ -2,6 +2,7 @@ import copy
 
 import numpy as np
 
+from warplab._typing import TensorDict
 from warplab.analyser.change_tensor_index import change_tensor_index
 from warplab.analyser.utils.get_eulerian_transformation_matrix import (
     get_eulerian_transformation_matrix,
@@ -12,7 +13,12 @@ from warplab.solver.utils.tensor_cell_2_array import tensor_cell_2_array
 from warplab.solver.verify_tensor import verify_tensor
 
 
-def do_frame_transfer(metric, energy_tensor, frame, gpu=None):
+def do_frame_transfer(
+    metric: TensorDict,
+    energy_tensor: TensorDict,
+    frame: str,
+    gpu: str | None = None,
+) -> TensorDict:
     """Transform stress-energy to a local Eulerian orthonormal frame.
 
     Parameters
@@ -40,12 +46,12 @@ def do_frame_transfer(metric, energy_tensor, frame, gpu=None):
         return copy.deepcopy(energy_tensor)
 
     if not verify_tensor(metric, 1):
-        raise Exception(
+        raise ValueError(
             "Metric is not verified. Please verify metric using verify_tensor(metric)."
         )
 
     if not verify_tensor(energy_tensor, 1):
-        raise Exception(
+        raise ValueError(
             "Stress-energy is not verified. Please verify Stress-energy tensor using verify_tensor(energy_tensor)."
         )
 
@@ -92,6 +98,6 @@ def do_frame_transfer(metric, energy_tensor, frame, gpu=None):
         transformed_energy_tensor["index"] = "contravariant"
 
     else:
-        raise Warning("Frame not found")
+        raise ValueError(f"Frame not found: {frame!r}; only 'Eulerian' is supported")
 
     return transformed_energy_tensor

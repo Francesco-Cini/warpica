@@ -131,7 +131,7 @@ def test_comoving_requires_one_time_slice(family, name, args):
         importlib.import_module(f"warplab.metrics.{family}.metric_get_{name}"),
         f"metric_get_{name}",
     )
-    with pytest.raises((ValueError, Exception), match="time|slice"):
+    with pytest.raises(ValueError, match="requires one time slice, got 2"):
         fn(np.array([2, 3, 3, 3]), np.array([1, 2, 2, 2]), *args, np.ones(4))
 
 
