@@ -7,7 +7,7 @@ from warplab.analyser.get_momentum_flow_lines import get_momentum_flow_lines
 from warplab.analyser.get_scalars import get_scalars
 from warplab.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
 from warplab.solver.get_energy_tensor import get_energy_tensor
-from warplab.visualiser.utils.surf_q_modified import sqm
+from warplab.visualiser.utils.plot_themed_surface import plot_themed_surface
 
 
 def main():
@@ -53,7 +53,7 @@ def main():
     for i in range(4):
         for j in range(4):
             ax = axs[i, j]
-            sqm(
+            plot_themed_surface(
                 metric["tensor"][i][j][0, :, :, slice_idx],
                 ax=ax,
                 dark=True,
@@ -84,7 +84,7 @@ def main():
     for i in range(4):
         for j in range(4):
             ax = axs[i, j]
-            sqm(
+            plot_themed_surface(
                 energy_tensor["tensor"][i][j][0, :, :, slice_idx],
                 ax=ax,
                 dark=True,
@@ -125,7 +125,7 @@ def main():
         condition = condition_data[0]
         condition_name = condition_data[1]
 
-        sqm(
+        plot_themed_surface(
             condition[0, :, :, slice_idx],
             ax=ax,
             dark=True,
@@ -163,7 +163,7 @@ def main():
         scalar = scalar_data[0]
         scalar_name = scalar_data[1]
 
-        sqm(
+        plot_themed_surface(
             scalar[0, :, :, slice_idx],
             ax=ax,
             dark=True,

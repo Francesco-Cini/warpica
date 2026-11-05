@@ -11,6 +11,11 @@ def _cumtrapz(y, x):
     return np.concatenate(([0.0], np.cumsum((y[1:] + y[:-1]) * np.diff(x) / 2)))
 
 
+def _radial_limit(radius, R_2):
+    """Return the largest sampled radius, covering the grid and the shell."""
+    return 1.2 * max(float(radius.max()), R_2)
+
+
 def _smooth(values, span):
     # MATLAB smooth's centered moving average, with shrinking endpoint windows.
     width = int(span * len(values)) if 0 < span < 1 else int(span)
@@ -93,7 +98,7 @@ def metric_get_warp_shell_comoving(
         indexing="ij",
     )
     radius = np.sqrt(sum(x * x for x in xyz))
-    r = np.linspace(0, 1.2 * max(float(radius.max()), R_2), 100_000)
+    r = np.linspace(0, _radial_limit(radius, R_2), 100_000)
     rho = m / (4 * np.pi / 3 * (R_2**3 - R_1**3)) * ((r > R_1) & (r < R_2))
     mass = _cumtrapz(4 * np.pi * rho * r * r, r)
     rs = 2 * G() * mass[-1] / c() ** 2

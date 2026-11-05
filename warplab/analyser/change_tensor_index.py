@@ -68,38 +68,6 @@ def change_tensor_index(input_tensor, index, metric_tensor=None):
     return output
 
 
-def flip_index(input_tensor, metric_tensor):
-    """Raise or lower both tensor indices with the supplied metric.
-
-    Parameters
-    ----------
-    input_tensor : dict
-        Tensor containing a 4 by 4 table of component arrays.
-    metric_tensor : dict
-        Covariant metric to lower indices, or inverse metric to raise them.
-
-    Returns
-    -------
-    tensor : list of lists of arrays
-        A 4 by 4 component table; each component has the input grid shape.
-    """
-    temp_output_tensor = [[None for _ in range(4)] for _ in range(4)]
-
-    for i in range(4):
-        for j in range(4):
-            temp_output_tensor[i][j] = np.zeros(input_tensor["tensor"][i][j].shape)
-
-            for a in range(4):
-                for b in range(4):
-                    temp_output_tensor[i][j] = (
-                        temp_output_tensor[i][j]
-                        + input_tensor["tensor"][a][b]
-                        * metric_tensor["tensor"][a][i]
-                        * metric_tensor["tensor"][b][j]
-                    )
-    return temp_output_tensor
-
-
 def mix_index_1(input_tensor, metric_tensor):
     """Raise or lower the first tensor index with the supplied metric.
 

@@ -3,6 +3,7 @@ import numpy as np
 
 from warplab.analyser.change_tensor_index import change_tensor_index
 from warplab.metrics.three_plus_one_decomposer import three_plus_one_decomposer
+from warplab.solver.verify_tensor import verify_tensor
 from warplab.visualiser.plot_tensor import _slice_setup
 from warplab.visualiser.utils.plot_component import plot_component
 
@@ -29,6 +30,8 @@ def plot_three_plus_one(metric, sliced_planes=None, slice_locations=None, alpha=
     axes : ndarray, shape (2, 5)
         Matplotlib axes for the ten independent 3+1 fields.
     """
+    if not verify_tensor(metric, 1):
+        raise ValueError("Invalid tensor")
     metric = change_tensor_index(metric, "covariant")
     indices, coords, labels = _slice_setup(metric, sliced_planes, slice_locations)
     lapse, beta, gamma, _, _ = three_plus_one_decomposer(metric)

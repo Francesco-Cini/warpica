@@ -43,7 +43,7 @@ def metric_get_lentz(
     The metric uses signature (-, +, +, +).
     """
     if scale is None:
-        scale = np.max(grid_size[1:4] / 7)
+        scale = np.max(np.asarray(grid_size)[1:4] / 7)
 
     if grid_scale is None:
         grid_scale = np.array([1, 1, 1, 1])

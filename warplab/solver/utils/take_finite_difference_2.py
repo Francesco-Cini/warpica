@@ -1,7 +1,7 @@
 from array_api_compat import array_namespace
 
 
-def take_finite_difference_2(A, k_1, k_2, delta, phi_phi_flag=0):
+def take_finite_difference_2(A, k_1, k_2, delta):
     """Approximate a second derivative with fourth-order differences.
 
     Parameters
@@ -12,9 +12,6 @@ def take_finite_difference_2(A, k_1, k_2, delta, phi_phi_flag=0):
         Zero-based differentiation axes; equal axes give an unmixed derivative.
     delta : array_like, shape (4,)
         Grid spacings in (t, x, y, z) order.
-    phi_phi_flag : bool, optional
-        Enable the legacy special boundary values on axis 2 for unmixed
-        derivatives. Default is false; ignored by the DirectML path.
 
     Returns
     -------
@@ -67,16 +64,10 @@ def take_finite_difference_2(A, k_1, k_2, delta, phi_phi_flag=0):
                         + 16 * (A[:, :, 3:-1, :] + A[:, :, 1:-3, :])
                         - 30 * A[:, :, 2:-2, :]
                     ) / (12 * (delta[k_1] ** 2))
-                    if phi_phi_flag:
-                        B[:, :, 0, :] = -2
-                        B[:, :, 1, :] = -2
-                        B[:, :, -2, :] = 2
-                        B[:, :, -1, :] = 2
-                    else:
-                        B[:, :, -2, :] = B[:, :, -3, :]
-                        B[:, :, -1, :] = B[:, :, -3, :]
-                        B[:, :, 0, :] = B[:, :, 2, :]
-                        B[:, :, 1, :] = B[:, :, 2, :]
+                    B[:, :, -2, :] = B[:, :, -3, :]
+                    B[:, :, -1, :] = B[:, :, -3, :]
+                    B[:, :, 0, :] = B[:, :, 2, :]
+                    B[:, :, 1, :] = B[:, :, 2, :]
                 case 3:
                     B[:, :, :, 2:-2] = (
                         -(A[:, :, :, 4:] + A[:, :, :, :-4])

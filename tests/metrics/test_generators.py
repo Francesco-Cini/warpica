@@ -184,3 +184,44 @@ def test_all_metrics_complete_analysis(family, name, args):
         "vorticity",
     ):
         assert np.isfinite(result[key]).all()
+
+
+def test_shell_is_finite_when_a_grid_point_is_the_centre():
+    """Upstream returns NaN when a grid radius lands exactly on a radial sample.
+
+    Its Legendre interpolation divides by zero there, and r == 0 is sample 1.
+    """
+    from warplab.solver import get_energy_tensor
+
+    metric = build_at_origin_shell()
+    assert np.isfinite(metric["tensor"]).all()
+    assert np.isfinite(get_energy_tensor(metric)["tensor"]).all()
+
+
+def build_at_origin_shell():
+    from warplab.metrics import metric_get_warp_shell_comoving
+
+    # World centre (3, 3, 3) with unit spacing puts grid point 2 at r == 0.
+    return metric_get_warp_shell_comoving(
+        np.array([1, 5, 5, 5]),
+        np.array([1, 3, 3, 3]),
+        2e26,
+        0.5,
+        1.5,
+        0.1,
+        1,
+        1,
+        0.2,
+        True,
+        np.ones(4),
+    )
+
+
+def test_schwarzschild_rejects_a_grid_on_the_origin_or_horizon():
+    """Upstream silently adds 1e-10 to r instead; Python refuses the grid."""
+    from warplab.metrics import metric_get_schwarzschild
+
+    with pytest.raises(ValueError, match="origin or coordinate horizon"):
+        metric_get_schwarzschild(
+            np.array([1, 5, 5, 5]), np.array([1, 3, 3, 3]), 0.05, np.ones(4)
+        )
