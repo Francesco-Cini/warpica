@@ -48,7 +48,7 @@ convention = "numpy"
 # Keep the established mathematical keyword argument for compatibility.
 "warplab/solver/utils/get_christoffel_sym.py" = ["E741"]
 # Select the optional plotting dependency and backend before importing pyplot.
-"tests/visualiser/test_plots.py" = ["D", "E402"]
+"tests/visualiser/*.py" = ["D", "E402"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -57,9 +57,25 @@ markers = [
     "integration: complete multi-component workflows",
     "numerical: convergence and accuracy checks",
     "parity: comparisons against MATLAB reference data",
-    "performance: runtime and memory benchmarks",
+    "performance: advisory timing guard; opt in with --run-performance",
     "gpu: opt-in tests requiring a selected physical GPU backend",
     "slow: tests excluded from the default development suite",
+]
+
+[tool.coverage.run]
+source = ["warplab"]
+# The backend adapters need a physical CUDA or DirectML device, so hosted CI
+# cannot run them (see docs/gpu.md). Everything else is measured.
+omit = ["warplab/gpu/utils/*"]
+
+[tool.coverage.report]
+fail_under = 98
+exclude_also = [
+    'if getattr\(getattr\(A, "device", None\), "type", None\) == "privateuseone":',
+    'if library == "cupy":',
+    'if library == "torch-directml":',
+    'if is_cupy_array\(value\):',
+    'if is_torch_array\(value\):',
 ]
 
 [tool.setuptools.dynamic]

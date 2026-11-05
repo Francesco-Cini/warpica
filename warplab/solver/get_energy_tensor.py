@@ -6,6 +6,7 @@ from warplab.gpu import asnumpy as gpu_asnumpy
 from warplab.solver.utils.met_2_den import met_2_den
 from warplab.solver.utils.second_order.met_2_den_2 import met_2_den_2
 from warplab.solver.utils.strcmpi import strcmpi
+from warplab.solver.utils.verify_grid_size import verify_grid_size
 from warplab.solver.verify_tensor import verify_tensor
 
 
@@ -32,6 +33,10 @@ def get_energy_tensor(metric, diff_order="fourth", *, gpu=None):
 
     Notes
     -----
+    Every axis must have either one sample or at least 3 (second order) or 5
+    (fourth order); a shorter axis raises ValueError instead of silently giving
+    zero derivatives.
+
     DirectML uses float32 curvature. Final SI scaling and index contraction
     use float64 on the CPU for every device backend. The input metric is
     not modified.
@@ -46,6 +51,8 @@ def get_energy_tensor(metric, diff_order="fourth", *, gpu=None):
         raise Exception(
             "Metric is not verified. Please verify metric using verify_tensor(metric)."
         )
+
+    verify_grid_size(metric["tensor"][0][0].shape, diff_order)
 
     if not strcmpi(metric["index"], "covariant"):
         metric = change_tensor_index(metric, "covariant")

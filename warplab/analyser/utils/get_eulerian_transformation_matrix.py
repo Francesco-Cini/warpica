@@ -1,6 +1,9 @@
 import numpy as np
 
 
+# NumPy returns NaN or inf for a degenerate metric; the checks at the end turn
+# that into one clear error, so keep the intermediate warnings out of the way.
+@np.errstate(divide="ignore", invalid="ignore")
 def get_eulerian_transformation_matrix(g, coords=None):
     """Construct an orthonormal Eulerian basis from a covariant metric.
 
@@ -16,11 +19,18 @@ def get_eulerian_transformation_matrix(g, coords=None):
     M : ndarray
         Basis matrix with the same shape as g; M.T @ g @ M is the
         Minkowski metric at each grid cell.
+
+    Raises
+    ------
+    ValueError
+        If g has an unsupported shape, is not symmetric, or has no Eulerian
+        observers (it is singular or its t = const surfaces are not spacelike).
     """
     g = np.asarray(g)
 
-    if g.ndim == 2:
-        assert np.allclose(g, g.T), "g is Not Symmetric"
+    if g.ndim == 2 and g.shape == (4, 4):
+        if not np.allclose(g, g.T):
+            raise ValueError("g is not symmetric")
 
         M = np.zeros((4, 4), dtype=np.result_type(g, float))
 
@@ -94,7 +104,7 @@ def get_eulerian_transformation_matrix(g, coords=None):
 
         M[3, 3] = np.sqrt(1 / factor_0)
 
-    elif g.ndim == 6:
+    elif g.ndim == 6 and g.shape[-2:] == (4, 4):
         M = np.zeros_like(g, dtype=np.result_type(g, float))
 
         factor_0 = g[..., 3, 3]
@@ -176,16 +186,15 @@ def get_eulerian_transformation_matrix(g, coords=None):
         M[..., 3, 3] = np.sqrt(1 / factor_0)
 
     else:
-        raise Exception("Unrecognised matrix size")
-
-    if not np.isfinite(M).all():
-        raise Exception(
-            "Eulerian Transformation is Infinite - Numerical Precision Insufficient"
+        raise ValueError(
+            f"Unrecognised matrix size {g.shape}; "
+            "expected (4, 4) or (nt, nx, ny, nz, 4, 4)"
         )
 
-    if not np.isreal(M).all():
-        raise Exception(
-            "Eulerian Transformation is imaginary - Numerical Precision Insufficient"
+    if not np.isfinite(M).all():
+        raise ValueError(
+            "Eulerian transformation is not finite: the metric is singular, or its "
+            "t = const surfaces are not spacelike so no Eulerian observers exist"
         )
 
     return M

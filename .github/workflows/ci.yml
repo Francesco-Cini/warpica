@@ -26,6 +26,37 @@ jobs:
         with:
           name: coverage-${{ matrix.os }}-${{ matrix.python }}
           path: coverage.xml
+  performance:
+    # Advisory only: it reports slowdowns but must never block a merge, because
+    # timings on a shared runner are noisy. Do not add it to the required checks.
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      PERFORMANCE_REPORT: performance-report.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[test]"
+      - id: guard
+        continue-on-error: true
+        run: python -m pytest tests/performance --run-performance -m performance -q -W error -p no:cacheprovider
+      - name: Summarise
+        if: always()
+        run: |
+          if [ -f performance-report.json ]; then
+            python -m tests.performance.timing --summary performance-report.json >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Flag a possible slowdown
+        if: steps.guard.outcome == 'failure'
+        run: echo "::warning title=Performance guard::A timing check failed. This is advisory; rerun the job before treating it as a regression."
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-report
+          path: performance-report.json
+          if-no-files-found: ignore
   package:
     runs-on: ubuntu-latest
     steps:

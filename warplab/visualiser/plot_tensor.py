@@ -7,8 +7,6 @@ from warplab.visualiser.utils.plot_component import plot_component
 
 
 def _slice_setup(tensor, sliced_planes, slice_locations):
-    if tensor.get("coords", "").lower() != "cartesian":
-        raise ValueError("Only Cartesian coordinates are supported")
     planes = (1, 4) if sliced_planes is None else sliced_planes
     indices = get_slice_data(planes, slice_locations, tensor)
     axes = [i for i, index in enumerate(indices) if isinstance(index, slice)]

@@ -1,0 +1,19 @@
+{
+  "note": "Cost of each operation on its large grid relative to reference_workload, measured on the machine below. Refresh with python -m tests.performance.timing --write-baseline",
+  "machine": {
+    "python": "3.14.4",
+    "numpy": "2.5.1",
+    "platform": "Windows-11-10.0.26300-SP0"
+  },
+  "operations": {
+    "energy_tensor": {
+      "ratio": 35.7383
+    },
+    "scalars": {
+      "ratio": 45.7331
+    },
+    "energy_conditions": {
+      "ratio": 10.7768
+    }
+  }
+}

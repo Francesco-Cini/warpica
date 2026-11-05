@@ -41,19 +41,15 @@ def ricci_t(gu, gl, delta):
     # supply the remaining entries without additional finite differences.
     for i in range(4):
         for j in range(i, 4):
-            phi_phi_flag = 0
-
             for k in range(4):
-                diff_1_gl[i][j][k] = take_finite_difference_1(
-                    gl[i][j], k, delta, phi_phi_flag
-                )
+                diff_1_gl[i][j][k] = take_finite_difference_1(gl[i][j], k, delta)
                 # The stored time coordinate is seconds; curvature uses ct.
                 if k == 0:
                     diff_1_gl[i][j][k] = (1 / c()) * diff_1_gl[i][j][k]
 
                 for n in range(k, 4):
                     diff_2_gl[i][j][k][n] = take_finite_difference_2(
-                        gl[i][j], k, n, delta, phi_phi_flag
+                        gl[i][j], k, n, delta
                     )
 
                     if (n == 0 and k != 0) or (n != 0 and k == 0):
