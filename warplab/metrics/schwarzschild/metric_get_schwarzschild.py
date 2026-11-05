@@ -1,9 +1,15 @@
 import numpy as np
 
+from warplab._typing import GridSize, TensorDict, Vector
 from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
 
 
-def metric_get_schwarzschild(grid_size, world_centre, r_s, grid_scaling=None):
+def metric_get_schwarzschild(
+    grid_size: GridSize,
+    world_centre: Vector,
+    r_s: float,
+    grid_scaling: Vector | None = None,
+) -> TensorDict:
     """Build the Schwarzschild metric.
 
     Parameters

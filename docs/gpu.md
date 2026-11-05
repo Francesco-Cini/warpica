@@ -35,7 +35,12 @@ curvature; use CPU/CUDA float64 for precision-sensitive investigations.
 ## Install and run hardware tests
 
 DirectML currently needs an older supported Python; the tested environment
-uses Python 3.12. Use a separate environment from Python 3.14:
+uses Python 3.12. Use a separate environment from Python 3.14. The `directml`
+extra pins `torch-directml==0.2.5.dev240914` because that is the only kind of
+release that exists: PyPI carries development builds only, the newest dates
+from September 2024, and it ships wheels up to Python 3.12 (with PyTorch
+2.4.1), so the extra cannot be installed on Python 3.13 or newer. Loosening the
+pin would not help; a future release would need testing before it is allowed.
 
 ```powershell
 py -3.12 -m venv .venv-directml

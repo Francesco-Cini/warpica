@@ -29,6 +29,23 @@ and `warplab.gpu`. Deep paths such as `warplab.solver.get_energy_tensor` keep
 working, but only the names listed above are covered by the compatibility
 promise.
 
+## Type hints
+
+The package ships a `py.typed` marker, and every public function is fully
+annotated (a test enforces this), so editors and type checkers use the
+signatures. Metrics and stress-energy tensors are typed as `dict[str, Any]` on
+purpose: their layout is documented here, but the type system does not freeze
+it. Grid sizes, centres and spacings accept sequences or NumPy arrays. A few
+arguments have closed sets of values and are `Literal` types:
+`diff_order` (`"second"`, `"fourth"`) and the `gpu` backend. They also accept
+other capitalisations at run time, but a type checker will flag them.
+`get_energy_conditions` is overloaded, so a checker knows that
+`return_vec=True` returns three arrays and anything else returns one.
+
+Only annotated functions are type-checked by the project's own mypy run. Most
+internal helpers are not annotated yet, and their annotations are not part of
+the compatibility promise.
+
 ## Errors
 
 Invalid arguments, malformed or unverified tensors and unsupported

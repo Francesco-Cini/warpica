@@ -216,6 +216,15 @@ def test_keep_positive_defaults_to_true():
         np.testing.assert_array_equal(default[name], explicit[name])
 
 
+def test_eval_metric_treats_a_missing_diff_order_as_fourth():
+    """It used to reach get_scalars as None and raise ValueError."""
+    metric = bubble()
+    default = eval_metric(metric, num_angular_vec=4, num_time_vec=2)
+    missing = eval_metric(metric, num_angular_vec=4, num_time_vec=2, diff_order=None)
+    for name in ("null", "weak", "strong", "dominant", "expansion", "shear"):
+        np.testing.assert_array_equal(missing[name], default[name])
+
+
 def test_eval_metric_returns_every_documented_field():
     result = eval_metric(bubble(), num_angular_vec=4, num_time_vec=2)
     assert set(result) == {

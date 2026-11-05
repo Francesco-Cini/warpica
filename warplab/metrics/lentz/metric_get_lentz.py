@@ -2,18 +2,19 @@ from datetime import date as _date
 
 import numpy as np
 
+from warplab._typing import GridSize, TensorDict, Vector
 from warplab.metrics.set_minkowski_three_plus_one import set_minkowski_three_plus_one
 from warplab.metrics.three_plus_one_builder import three_plus_one_builder
 from warplab.units.universal_constants.c import c
 
 
 def metric_get_lentz(
-    grid_size: np.ndarray,
-    world_centre: np.ndarray,
+    grid_size: GridSize,
+    world_centre: Vector,
     v: float,
-    scale,
-    grid_scale: np.ndarray | None = None,
-) -> dict:
+    scale: float | None,
+    grid_scale: Vector | None = None,
+) -> TensorDict:
     """Build the Lentz metric.
 
     Parameters
@@ -48,7 +49,7 @@ def metric_get_lentz(
     if grid_scale is None:
         grid_scale = np.array([1, 1, 1, 1])
 
-    metric = {}
+    metric: TensorDict = {}
 
     metric["params"] = {}
 

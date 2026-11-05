@@ -2,14 +2,21 @@ from datetime import date as _date
 
 import numpy as np
 
+from warplab._typing import GridSize, TensorDict, Vector
 from warplab.metrics.set_minkowski import set_minkowski
 from warplab.metrics.utils.shape_function_alcubierre import shape_function_alcubierre
 from warplab.units.universal_constants.c import c
 
 
 def metric_get_modified_time(
-    grid_size, world_centre, v, R, sigma, A, grid_scaling=None
-):
+    grid_size: GridSize,
+    world_centre: Vector,
+    v: float,
+    R: float,
+    sigma: float,
+    A: float,
+    grid_scaling: Vector | None = None,
+) -> TensorDict:
     """Build the modified-time metric.
 
     Parameters
@@ -44,7 +51,7 @@ def metric_get_modified_time(
     if grid_scaling is None:
         grid_scaling = np.array([1, 1, 1, 1])
 
-    metric = {}
+    metric: TensorDict = {}
 
     metric["params"] = {}
 

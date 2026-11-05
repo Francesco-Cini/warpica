@@ -1,7 +1,16 @@
+from typing import Any
+
 import numpy as np
+from numpy.typing import ArrayLike
+
+from warplab._typing import Array, Backend
 
 
-def asarray(value, *, library=None):
+def asarray(
+    value: ArrayLike,
+    *,
+    library: Backend | None = None,
+) -> Any:
     """Convert a value to the selected CPU or GPU array backend.
 
     Parameters
@@ -35,7 +44,9 @@ def asarray(value, *, library=None):
     )
 
 
-def asnumpy(value):
+def asnumpy(
+    value: Any,
+) -> Array:
     """Return a NumPy view or host copy of an array.
 
     Parameters

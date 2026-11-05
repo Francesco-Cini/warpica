@@ -2,8 +2,13 @@ from datetime import datetime
 
 import numpy as np
 
+from warplab._typing import GridSize, TensorDict, Vector
 
-def metric_get_minkowski(grid_size, grid_scaling=None):
+
+def metric_get_minkowski(
+    grid_size: GridSize,
+    grid_scaling: Vector | None = None,
+) -> TensorDict:
     """Build the Minkowski metric.
 
     Parameters
@@ -27,7 +32,7 @@ def metric_get_minkowski(grid_size, grid_scaling=None):
     if grid_scaling is None:
         grid_scaling = np.array([1, 1, 1, 1])
 
-    metric = {}
+    metric: TensorDict = {}
 
     metric["type"] = "metric"
     metric["name"] = "Minkowski"
