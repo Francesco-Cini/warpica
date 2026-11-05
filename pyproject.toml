@@ -9,7 +9,7 @@ description = "Numerical spacetime metrics, stress-energy and energy-condition a
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 # Floors are the oldest versions the full test suite passes on (see the
 # "minimum" CI job); matplotlib's floor is under the plot extra.
 dependencies = [
@@ -30,7 +30,7 @@ test = [
 dev = ["ruff>=0.11"]
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py311"
 line-length = 88
 
 [tool.ruff.lint]
