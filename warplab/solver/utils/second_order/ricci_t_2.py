@@ -35,6 +35,13 @@ def ricci_t_2(g_u, g_l, delta):
 
 
 def _ricci_tensor(g_u, g_l, delta, *, cache_second, time_is_seconds):
+    """Compute the Ricci tensor from the inverse and covariant metric.
+
+    Shared body of the two second-order Ricci routines. It differentiates the
+    metric, builds the Christoffel terms and contracts them. `cache_second`
+    computes each distinct second derivative once and reuses it, and
+    `time_is_seconds` divides time derivatives by c to reach the ct basis.
+    """
     xp = array_namespace(g_l[0][0])
     R_munu = [[None for _ in range(4)] for _ in range(4)]
     diff_1_g_l = [[[None for _ in range(4)] for _ in range(4)] for _ in range(4)]
@@ -43,6 +50,7 @@ def _ricci_tensor(g_u, g_l, delta, *, cache_second, time_is_seconds):
     # Second derivative of g_ij along axes k and n. With cache_second, each distinct
     # (i, j, k, n) is computed once and reused.
     def second(i, j, k, n):
+        """Return the second derivative of g_ij along axes k and n."""
         # Symmetric metric and commuting mixed partial derivatives.
         i, j = min(i, j), max(i, j)
         k, n = min(k, n), max(k, n)

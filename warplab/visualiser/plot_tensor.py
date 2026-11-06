@@ -11,6 +11,10 @@ from warplab.visualiser.utils.plot_component import plot_component
 
 
 def _slice_setup(tensor, sliced_planes, slice_locations):
+    """Resolve a plot slice into an index, axis coordinates and axis labels.
+
+    Returns `(indices, coords, labels)` for the two axes that stay free.
+    """
     # sliced_planes names the two axes to FIX (default: time and z), so the plot
     # shows the other two (x and y by default). Axis numbers and locations are
     # one-based; get_slice_data turns them into an index that fixes those axes.
@@ -36,6 +40,7 @@ def _slice_setup(tensor, sliced_planes, slice_locations):
 
 
 def _component_title(symbol, index, i, j):
+    """Return the LaTeX title of component (i, j) for the given index type."""
     if index == "covariant":
         return rf"${symbol}_{{{i}{j}}}$"
     if index == "contravariant":

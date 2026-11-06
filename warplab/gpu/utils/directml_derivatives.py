@@ -7,10 +7,13 @@ No CPU round trip is used for the derivative calculation.
 import torch
 
 
-# Apply a 1-D stencil along `axis`: move that axis last, add the shifted slices
-# weighted by the (offset, weight) pairs, divide by the denominator, and move
-# the axis back. The result is shorter by `radius` cells at each end.
 def _interior(value, axis, coefficients, radius, denominator):
+    """Apply a 1-D stencil along `axis` to the cells where it fits.
+
+    The axis is moved last, the shifted slices are added with the (offset, weight)
+    pairs in `coefficients`, the sum is divided by `denominator`, and the axis is
+    moved back. The result is shorter by `radius` cells at each end.
+    """
     permutation = [i for i in range(value.ndim) if i != axis] + [axis]
     inverse = [permutation.index(i) for i in range(value.ndim)]
     work = value.permute(permutation).contiguous()
@@ -23,9 +26,11 @@ def _interior(value, axis, coefficients, radius, denominator):
     return (result / float(denominator)).permute(inverse).contiguous()
 
 
-# Pad `radius` cells at each end of `axis`, repeating the end value (copy=True)
-# or zeros (copy=False), restoring the original length.
 def _boundary(value, axis, radius, copy):
+    """Pad `radius` cells at each end of `axis`, restoring the original length.
+
+    The padding repeats the end value when `copy` is true and is zero otherwise.
+    """
     permutation = [i for i in range(value.ndim) if i != axis] + [axis]
     inverse = [permutation.index(i) for i in range(value.ndim)]
     work = value.permute(permutation).contiguous()
