@@ -122,21 +122,33 @@ def get_energy_conditions(
 
     # Analysis is CPU float64. The public solver gathers device results before
     # this stage; do not mix NumPy arrays with CuPy/DirectML tensors here.
+    # Grid shape (t, x, y, z): a, b, c, d are the sample counts on each axis.
     a, b, c, d = metric["tensor"][0][0].shape
 
+    # Express T in the orthonormal frame of the Eulerian observers (those at
+    # rest relative to the constant-time slices), where the metric is exactly
+    # Minkowski. The conditions are statements about what such observers see.
     energy_tensor = do_frame_transfer(metric, energy_tensor, "Eulerian", gpu)
 
     # Components are now in an orthonormal frame: use Minkowski to raise/lower.
     metric = metric_get_minkowski(np.array([a, b, c, d]))
 
+    # Null and dominant conditions sample light-like vectors; weak and strong
+    # sample timelike ones at several speeds.
     if strcmpi(condition, "Null") or strcmpi(condition, "Dominant"):
         type = "nulllike"
 
     elif strcmpi(condition, "Weak") or strcmpi(condition, "Strong"):
         type = "timelike"
 
+    # vec_field[mu][ii] (light-like) or vec_field[mu][ii][jj] (timelike) is
+    # component mu of sampled direction ii at speed index jj.
     vec_field = generate_uniform_field(type, num_angular_vec, num_time_vec)
 
+    # map_array holds the worst value seen so far in every cell. It starts at
+    # +inf because the conditions keep a running minimum; the dominant
+    # condition keeps a maximum and starts at -inf (its sign is flipped at the
+    # end so that negative always means violated).
     map_array = np.full(
         (a, b, c, d), -np.inf if strcmpi(condition, "Dominant") else np.inf
     )
@@ -147,6 +159,8 @@ def get_energy_conditions(
         )
 
     # Null energy condition
+    # Requires T_mu_nu k^mu k^nu >= 0 for every light-like k. Each sample
+    # contracts T with the vector, summed over mu and nu.
     if strcmpi(condition, "Null"):
         energy_tensor = change_tensor_index(energy_tensor, "covariant", metric)
 
@@ -168,6 +182,8 @@ def get_energy_conditions(
                 vec[:, :, :, :, ii] = temp
 
     # Weak energy condition
+    # Requires T_mu_nu u^mu u^nu >= 0 for every timelike u: the energy density
+    # measured by an observer with that 4-velocity is never negative.
     elif strcmpi(condition, "Weak"):
         energy_tensor = change_tensor_index(energy_tensor, "covariant", metric)
 
@@ -190,6 +206,9 @@ def get_energy_conditions(
                     vec[:, :, :, :, ii, jj] = temp
 
     # Dominant energy condition
+    # Requires the energy flux -T^mu_nu u^nu seen by each observer to be
+    # timelike or null and future directed. The flux is built as a 4-vector
+    # below and its signed Minkowski length is the tested quantity.
     elif strcmpi(condition, "Dominant"):
         metric_minkowski = metric_get_minkowski(np.array([a, b, c, d]))
         metric_minkowski = change_tensor_index(metric_minkowski, "covariant")
@@ -239,6 +258,8 @@ def get_energy_conditions(
             vec = -vec
 
     # Strong energy condition
+    # Requires (T_mu_nu - (1/2) T eta_mu_nu) u^mu u^nu >= 0 for every timelike
+    # u, where T is the trace of the stress-energy (e_trace below).
     elif strcmpi(condition, "Strong"):
         metric_minkowski = metric_get_minkowski(np.array([a, b, c, d]))
         metric_minkowski = change_tensor_index(metric_minkowski, "covariant")

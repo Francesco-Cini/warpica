@@ -15,6 +15,8 @@ def get_christoffel_sym(g_u, diff_1_gl, i, k, l):
     gamma : array
         Selected Christoffel component on the grid.
     """
+    # Gamma^i_kl = (1/2) g^im (d_l g_mk + d_k g_ml - d_m g_kl), summed over m.
+    # Here diff_1_gl[a][b][c] holds the derivative of g_ab along axis c.
     gamma = 0
     for m in range(4):
         gamma = gamma + (1 / 2) * g_u[i][m] * (

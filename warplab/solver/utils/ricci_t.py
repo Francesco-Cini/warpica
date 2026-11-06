@@ -31,6 +31,8 @@ def ricci_t(gu, gl, delta):
 
     R_munu = [[None for _ in range(4)] for _ in range(4)]
 
+    # diff_1_gl[i][j][k]    = d_k g_ij        (first derivatives)
+    # diff_2_gl[i][j][k][n] = d_k d_n g_ij    (second derivatives)
     diff_1_gl = [[[None for _ in range(4)] for _ in range(4)] for _ in range(4)]
     diff_2_gl = [
         [[[None for _ in range(4)] for _ in range(4)] for _ in range(4)]
@@ -52,15 +54,21 @@ def ricci_t(gu, gl, delta):
                         gl[i][j], k, n, delta
                     )
 
+                    # Same seconds-to-ct conversion for second derivatives: a mixed
+                    # time/space derivative gets one factor 1/c here, a double time
+                    # derivative gets 1/c**2 just below.
                     if (n == 0 and k != 0) or (n != 0 and k == 0):
                         diff_2_gl[i][j][k][n] = (1 / c()) * diff_2_gl[i][j][k][n]
 
                     if k == 0 and n == 0:
                         diff_2_gl[i][j][k][n] = diff_2_gl[i][j][k][n] / c() ** 2
 
+                    # Mixed partial derivatives commute: d_k d_n g = d_n d_k g.
                     if k != n:
                         diff_2_gl[i][j][n][k] = diff_2_gl[i][j][k][n]
 
+    # Only the upper triangle (i <= j) was computed above; fill the lower
+    # triangle by the symmetry g_ij = g_ji.
     for k in range(4):
         diff_1_gl[1][0][k] = diff_1_gl[0][1][k]
         diff_1_gl[2][0][k] = diff_1_gl[0][2][k]
@@ -77,10 +85,16 @@ def ricci_t(gu, gl, delta):
             diff_2_gl[3][1][k][n] = diff_2_gl[1][3][k][n]
             diff_2_gl[3][2][k][n] = diff_2_gl[2][3][k][n]
 
+    # Contract the inverse metric with the first derivatives once, up front,
+    # so the loops below only multiply cached arrays (see raised_derivatives).
     raised, skew, connection = raised_derivatives(gu, diff_1_gl)
 
     for i in range(4):
         for j in range(i, 4):
+            # Ricci tensor R_ij written directly in terms of metric derivatives:
+            # for each pair (a, b), second-derivative terms plus products of first
+            # derivatives (the Christoffel-squared part), weighted by g^ab and summed.
+            # The overall factor 1/2 is applied when the sum is stored.
             R_munu_temp = xp.zeros_like(gl[0][0])
 
             for a in range(4):
@@ -118,6 +132,7 @@ def ricci_t(gu, gl, delta):
 
             R_munu[i][j] = (1 / 2) * R_munu_temp
 
+    # R_mu_nu is symmetric: copy the upper triangle into the lower.
     R_munu[1][0] = R_munu[0][1]
     R_munu[2][0] = R_munu[0][2]
     R_munu[2][1] = R_munu[1][2]

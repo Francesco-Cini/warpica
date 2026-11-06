@@ -15,6 +15,7 @@ def ein_t(R_munu, R, gl):
     tensor : list of lists of arrays
         A 4 by 4 component table; each component has the input grid shape.
     """
+    # Einstein tensor: G_mu_nu = R_mu_nu - (1/2) g_mu_nu R.
     E = [[None for _ in range(4)] for _ in range(4)]
 
     for mu in range(4):

@@ -35,8 +35,13 @@ def generate_uniform_field(type, num_angular_vec, num_time_vec, gpu=None):
         )
 
     if strcmpi(type, "timelike"):
+        # Speeds as fractions of c. endpoint=False excludes exactly 1, so every
+        # sampled vector is strictly timelike (speed 1 would be light-like).
         bb = np.linspace(0, 1, num_time_vec, endpoint=False)
 
+        # Each vector is (1, v n): time component 1 and a direction n scaled by
+        # the speed v. It is then divided by its Euclidean norm, which fixes the
+        # overall scale of the reported values but not their sign.
         vec_field = np.ones((4, num_angular_vec, num_time_vec))
 
         for jj in range(num_time_vec):

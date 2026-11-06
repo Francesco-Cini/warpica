@@ -68,8 +68,13 @@ def do_frame_transfer(
         array_energy_tensor = tensor_cell_2_array(energy_tensor)
         array_metric_tensor = tensor_cell_2_array(metric)
 
+        # M holds the observer's orthonormal legs as columns, one 4x4 matrix per
+        # grid cell.
         M = get_eulerian_transformation_matrix(array_metric_tensor, metric["coords"])
 
+        # Change of basis for a covariant rank-2 tensor in every cell:
+        # T_(a)(b) = M^mu_(a) M^nu_(b) T_mu_nu, i.e. M^T T M (matmul broadcasts
+        # over the grid axes).
         transformed_temp_tensor = {}
 
         transformed_temp_tensor["tensor"] = np.matmul(

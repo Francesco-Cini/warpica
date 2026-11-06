@@ -25,14 +25,20 @@ def met_2_den(gl, delta):
     if delta is None:
         delta = np.array([1, 1, 1, 1])
 
+    # 1. Inverse metric g^mu_nu, needed to raise indices and in the curvature.
     gu = c4_inv(gl)
 
+    # 2. Ricci tensor R_mu_nu from first and second derivatives of the metric.
     R_munu = ricci_t(gu, gl, delta)
 
+    # 3. Ricci scalar R = g^mu_nu R_mu_nu.
     R = ricci_s(R_munu, gu)
 
+    # 4. Einstein tensor G_mu_nu = R_mu_nu - (1/2) g_mu_nu R (named E here).
     E = ein_t(R_munu, R, gl)
 
+    # 5. Einstein's equation G = (8 pi G / c^4) T, solved for T and with both
+    # indices raised: contravariant stress-energy T^mu_nu in SI units.
     energy_density = ein_e(E, gu)
 
     return energy_density

@@ -34,6 +34,13 @@ def get_eulerian_transformation_matrix(g, coords=None):
 
         M = np.zeros((4, 4), dtype=np.result_type(g, float))
 
+        # Closed-form orthonormal tetrad (Gram-Schmidt on the coordinate basis,
+        # starting from z). The factor_ values are leading minors of g:
+        #   factor_0 = g_zz                      factor_1 = det of the (y, z) block
+        #   factor_2 = det of the (x, y, z) block   factor_3 = -det g.
+        # The columns of M are the observer's orthonormal legs, so M^T g M is
+        # diag(-1, 1, 1, 1). Column 0 is the Eulerian observer's 4-velocity
+        # (1/alpha, -beta^i/alpha); M[0, 0] = sqrt(factor_2 / factor_3) = 1/alpha.
         factor_0 = g[3, 3]
 
         factor_1 = -(g[2, 3] ** 2) + g[2, 2] * factor_0
@@ -104,6 +111,8 @@ def get_eulerian_transformation_matrix(g, coords=None):
 
         M[3, 3] = np.sqrt(1 / factor_0)
 
+    # Same formulas, applied to every grid cell at once: g has shape
+    # (t, x, y, z, 4, 4) and the ellipsis indexes the leading grid axes.
     elif g.ndim == 6 and g.shape[-2:] == (4, 4):
         M = np.zeros_like(g, dtype=np.result_type(g, float))
 

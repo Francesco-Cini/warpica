@@ -13,6 +13,7 @@ def ricci_s(R_munu, gu):
     R : array
         Ricci scalar on the input grid.
     """
+    # Ricci scalar: contract R_mu_nu with the inverse metric over both indices.
     R = 0
 
     for mu in range(4):

@@ -51,6 +51,7 @@ def get_scalars(
         for j in range(4):
             array_metric_tensor[:, :, :, :, i, j] = metric["tensor"][i][j]
 
+    # 3+1 split of the metric: read off the lapse alpha and shift vector beta^i.
     alpha, _, _, beta_up, _ = three_plus_one_decomposer(metric)
 
     array_beta = np.empty((*shape, 3))
@@ -59,6 +60,8 @@ def get_scalars(
         array_beta[:, :, :, :, i] = beta_up[i]
 
     s = shape
+    # Eulerian observer 4-velocity in every cell: u^mu = (1, -beta^i) / alpha
+    # (u_up) and its lowered form u_mu = g_mu_nu u^nu (u_down).
     u_up = np.zeros((*s, 4))
     u_down = np.zeros((*s, 4))
 
@@ -148,9 +151,12 @@ def get_scalars(
                         b
                     ][j] * (1 / 2) * (del_u[a][b] - del_u[b][a])
 
+    # Expansion scalar: the trace of theta, the fractional rate of volume change.
     theta_trace = get_trace(theta, metric)
 
     omega_up = change_tensor_index(omega, "contravariant", metric)
+    # Vorticity scalar: (1/2) omega_mu_nu omega^mu_nu, the squared magnitude
+    # of the rotation tensor (a non-negative scalar, not a vector).
     omega_trace = np.zeros(metric["tensor"][0][0].shape)
 
     for mu in range(4):
@@ -173,6 +179,8 @@ def get_scalars(
             )
 
     shear_up = change_tensor_index(shear, "contravariant", metric)
+    # Shear scalar: (1/2) sigma_mu_nu sigma^mu_nu, likewise the squared
+    # magnitude of the shear tensor.
     sigma_2 = np.zeros(metric["tensor"][0][0].shape)
 
     for i in range(4):
