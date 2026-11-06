@@ -87,6 +87,7 @@ comparing numbers with published WarpFactory results.
 ## Documentation
 
 - [Quickstart](docs/quickstart.md) and [concepts](docs/concepts.md) (tensor layout, units, indexing)
+- [How it works](docs/how-it-works.md): the pipeline and a glossary of the symbols
 - [Moving from MATLAB WarpFactory](docs/matlab-migration.md)
 - [Public API and plotting](docs/api.md)
 - [Runnable examples](examples/README.md)
