@@ -61,6 +61,8 @@ def get_energy_tensor(
 
     verify_grid_size(metric["tensor"][0][0].shape, diff_order)
 
+    # The curvature formulas below take the covariant metric g_mu_nu
+    # (indices down), so convert first if the caller gave another form.
     if not strcmpi(metric["index"], "covariant"):
         metric = change_tensor_index(metric, "covariant")
 
@@ -87,6 +89,9 @@ def get_energy_tensor(
         from warplab.solver.utils.second_order.ein_e_2 import ein_e_2
         from warplab.solver.utils.second_order.ricci_t_2 import ricci_t_2
 
+        # Same chain as met_2_den (inverse metric -> Ricci tensor -> Ricci
+        # scalar -> Einstein tensor -> stress-energy), spelled out step by step
+        # so that only the curvature runs on the device.
         inverse = c4_inv(metric_tensor_gpu)
         if strcmpi(diff_order, "fourth"):
             ricci = ricci_t(inverse, metric_tensor_gpu, metric["scaling"])
@@ -121,6 +126,8 @@ def get_energy_tensor(
                 "Order Flag Not Specified Correctly. Options: 'fourth' or 'second'"
             )
 
+    # Wrap the result with the metadata later stages need. The tensor is
+    # contravariant T^mu_nu in SI units, on the same grid as the metric.
     energy: TensorDict = {}
 
     energy["type"] = "Stress-Energy"

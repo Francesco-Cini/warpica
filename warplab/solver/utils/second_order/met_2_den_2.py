@@ -35,6 +35,8 @@ def met_2_den_2(
         units = np.array([1, 1, 1])
 
     g_l = metric_tensor
+    # Same five steps as met_2_den (inverse metric, Ricci tensor, Ricci
+    # scalar, Einstein tensor, stress-energy), with second-order differences.
     g_u = c4_inv_2(g_l)
 
     R_munu = ricci_t_2(g_u, g_l, delta)
