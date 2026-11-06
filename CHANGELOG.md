@@ -56,6 +56,9 @@ Work towards 1.0.0. The package name `warplab` is provisional.
   metric (previously an `assert`, which disappears under `python -O`), for an
   unsupported shape (a 3 by 3 array used to fail with an `IndexError`), and for
   a metric with no Eulerian observers.
+- Add explanatory comments to the solver and analyser core (pipeline steps, index
+  and unit conventions, the observer tetrad, the sampling). Comments only: the parsed
+  syntax tree of every touched file is identical to before.
 - Examples import from the public API, and `examples/README.md` states the
   grid-size limits correctly.
 - Remove the stray `backend-results.json`; `benchmarks/backend_comparison.py` now
@@ -74,7 +77,7 @@ Work towards 1.0.0. The package name `warplab` is provisional.
   are the only exclusions. CI also gains a `lint` job (`ruff check` and
   `ruff format --check`) and Python 3.13.
 - Documentation: README with WarpFactory attribution and citation, quickstart,
-  concepts, MATLAB migration guide and a versioning and support policy.
+  concepts, a "how it works" guide with a symbol glossary, MATLAB migration guide and a versioning and support policy.
 - `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `CITATION.cff`, issue
   and pull request templates, and Dependabot for GitHub Actions.
 - Document why the `directml` extra stays pinned to `torch-directml`
