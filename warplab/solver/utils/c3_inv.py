@@ -20,6 +20,7 @@ def c3_inv(cell_array):
 
     r = cell_array
 
+    # Same adjugate method as c4_inv, for the 3x3 spatial metric.
     # Alias the components to match MATLAB notation
     r11, r12, r13 = r[0][0], r[0][1], r[0][2]
     r21, r22, r23 = r[1][0], r[1][1], r[1][2]

@@ -27,6 +27,9 @@ def change_tensor_index(
         New dictionary with independent component arrays and updated index.
         Other metadata is shallow-copied.
     """
+    # For each form, whether (first index, second index) is raised (contravariant):
+    # covariant = (False, False), contravariant = (True, True), and the mixed forms
+    # have one index up and one down.
     states = {
         "covariant": (False, False),
         "contravariant": (True, True),
@@ -38,6 +41,8 @@ def change_tensor_index(
     if index not in states or source not in states:
         raise ValueError("Unknown tensor index convention")
     output = dict(input_tensor)
+    # A metric changes between covariant and contravariant by matrix inversion,
+    # not by contracting with a metric; mixed forms make no sense for it.
     if input_tensor["type"].lower() == "metric":
         if index.startswith("mixed") or source.startswith("mixed"):
             raise ValueError("Metric tensors cannot use mixed indices")
@@ -52,6 +57,8 @@ def change_tensor_index(
         metric_index = metric_tensor["index"].lower()
         if metric_index not in ("covariant", "contravariant"):
             raise ValueError("Metric tensors cannot use mixed indices")
+        # Any other tensor: lower an index by contracting with the covariant metric,
+        # raise it with the inverse metric. Pick whichever the given metric needs.
         lower = (
             metric_tensor["tensor"]
             if metric_index == "covariant"
@@ -63,6 +70,7 @@ def change_tensor_index(
             else c4_inv(metric_tensor["tensor"])
         )
         output["tensor"] = [[v.copy() for v in row] for row in input_tensor["tensor"]]
+        # Convert one index at a time, and only the indices whose position differs.
         for axis in range(2):
             if states[source][axis] != states[index][axis]:
                 factor = {"tensor": upper if states[index][axis] else lower}
@@ -94,6 +102,7 @@ def mix_index_1(input_tensor, metric_tensor):
         for j in range(4):
             temp_output_tensor[i][j] = np.zeros(input_tensor["tensor"][i][j].shape)
 
+            # Contract the first index: out[i][j] = sum_a in[a][j] * M[a][i].
             for a in range(4):
                 temp_output_tensor[i][j] = (
                     temp_output_tensor[i][j]
@@ -123,6 +132,7 @@ def mix_index_2(input_tensor, metric_tensor):
         for j in range(4):
             temp_output_tensor[i][j] = np.zeros(input_tensor["tensor"][i][j].shape)
 
+            # Contract the second index: out[i][j] = sum_a in[i][a] * M[a][j].
             for a in range(4):
                 temp_output_tensor[i][j] = (
                     temp_output_tensor[i][j]

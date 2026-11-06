@@ -50,7 +50,7 @@ Details worth knowing:
   derivative needs at least 5 (or 3) samples along the axis. Near the grid edge
   the stencil does not fit, so the edge cells copy the nearest fully computed
   value. Treat results within two cells (fourth order) of the boundary as
-  unreliable and keep the interesting region away from the edges.
+  unreliable and keep the interesting region away from the edges. Mixed second derivatives are not copied at all: their edge cells are exactly 0.
 - **Time is stored in seconds, curvature is computed in `ct`.** Time derivatives
   are divided by `c` (and by `c^2` for a second time derivative) so all four
   coordinates have units of length.

@@ -44,6 +44,8 @@ def metric_get_lentz(
     The metric uses signature (-, +, +, +).
     """
     if scale is None:
+        # Default region size: one seventh of the largest spatial grid dimension.
+        # Note this is a sample count, not a length in metres.
         scale = np.max(np.asarray(grid_size)[1:4] / 7)
 
     if grid_scale is None:
@@ -79,6 +81,8 @@ def metric_get_lentz(
 
                     WFX, WFY = get_warp_factor_by_region(xp, y, scale)
 
+                    # The shift has x and y components only; the Lentz construction does
+                    # not depend on z.
                     beta[0][t, i, j, k] = -WFX * v
                     beta[1][t, i, j, k] = WFY * v
 
@@ -102,6 +106,10 @@ def get_warp_factor_by_region(x_in, y_in, size_scale):
     factor_x, factor_y : float
         Dimensionless shift factors; factor_y changes sign across y = 0.
     """
+    # Piecewise-constant warp factors. Each branch below tests one polygonal region
+    # of the (x, y) plane, measured in units of size_scale, and sets constant
+    # factors (WFX, WFY) for the shift. y is folded to |y| so one set of regions
+    # serves both halves; the sign of y_in is restored for WFY at the end.
     x = x_in
     y = np.abs(y_in)
 

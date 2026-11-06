@@ -54,6 +54,8 @@ def get_momentum_flow_lines(
             raise ValueError("Select one time slice before tracing momentum flow")
         return field * scale_factor
 
+    # Momentum density components T^0x, T^0y, T^0z: the vector field whose flow
+    # lines are traced. scale_factor rescales them.
     x_mom = spatial_field(energy_tensor["tensor"][0][1])
     y_mom = spatial_field(energy_tensor["tensor"][0][2])
     z_mom = spatial_field(energy_tensor["tensor"][0][3])
@@ -62,6 +64,7 @@ def get_momentum_flow_lines(
     starting_points_y = np.ravel(start_points[1])
     starting_points_z = np.ravel(start_points[2])
 
+    # One path per starting point. Positions are in one-based grid coordinates.
     paths: list[Any] = [None for _ in range(max(starting_points_x.shape))]
 
     for j in range(max(starting_points_x.shape)):
@@ -73,6 +76,9 @@ def get_momentum_flow_lines(
 
         # Keep the interpolation stencil inside the one-based spatial grid.
         count = 1
+        # Follow the field with forward Euler steps: move by step_size times the
+        # momentum interpolated at the current position. Stop at a NaN or near the
+        # grid edge.
         for i in range(max_steps):
             if (
                 np.sum(np.isnan(pos[i, :])) > 0

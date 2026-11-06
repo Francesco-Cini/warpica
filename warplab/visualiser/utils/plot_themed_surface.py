@@ -93,6 +93,8 @@ def plot_themed_surface(
     """
     # ---------- Surface data (validated before any figure is created) ----------
     if len(args) == 1:
+        # One array: heights over a grid. It is transposed so its first axis runs along
+        # x, as in the other plotting functions; x and y are then sample indices.
         z = np.squeeze(np.asarray(args[0])).T
         if z.ndim != 2:
             raise ValueError(
@@ -177,6 +179,9 @@ def plot_themed_surface(
         colors=text_color, which="both", pad=tick_pad, labelsize=tick_fontsize
     )
 
+    # Styling from here on is best-effort: a failure is ignored so a cosmetic option
+    # can never prevent the plot. Some of it relies on private Matplotlib internals
+    # (for example _axinfo) that differ between versions.
     try:
         ax.zaxis.set_major_locator(plt.MaxNLocator(4))
     except Exception:
@@ -230,6 +235,8 @@ def plot_themed_surface(
         cbar.outline.set_edgecolor(cbar_tick_color)
         cbar.ax.set_facecolor(background_color)
 
+    # A figure created here is shown immediately; with a caller-supplied ax nothing
+    # is shown. (Unlike plot_tensor and plot_three_plus_one, which never show.)
     if created_ax:
         plt.show()
 

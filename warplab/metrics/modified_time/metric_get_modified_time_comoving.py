@@ -85,17 +85,22 @@ def metric_get_modified_time_comoving(
                 z = (k + 1) * grid_scaling[3] - world_centre[3]
 
                 for t in range(grid_size[0]):
+                    # Comoving frame: the bubble centre stays at the origin.
                     xs = 0
 
                     r = (((x - xs) ** 2) + (y**2) + (z**2)) ** (1 / 2)
 
                     fs = shape_function_alcubierre(r, R, sigma)
 
+                    # Shift v (1 - fs) along x (0 inside the bubble, v far away) and the
+                    # same modified lapse alpha = (1 - fs) + fs / A as in the non-
+                    # comoving metric.
                     metric["tensor"][0][1][t, i, j, k] = v * (1 - fs)
                     metric["tensor"][1][0][t, i, j, k] = metric["tensor"][0][1][
                         t, i, j, k
                     ]
 
+                    # g_00 = -alpha^2 + beta_i beta^i, with beta_x = v (1 - fs).
                     metric["tensor"][0][0][t, i, j, k] = -(((1 - fs) + fs / A) ** 2) + (
                         (v * (1 - fs)) ** 2
                     )

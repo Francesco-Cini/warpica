@@ -88,6 +88,8 @@ def metric_get_van_den_broeck(
                 z = (k + 1) * grid_scale[3] - world_centre[3]
 
                 for t in range(grid_size[0]):
+                    # Bubble centre on the x axis. Note the extra factor (1 + A)^2 in
+                    # the speed: the centre advances by v (1 + A)^2 c per unit time.
                     x_s = (
                         ((t + 1) * grid_scale[0] - world_centre[0])
                         * v
@@ -97,10 +99,15 @@ def metric_get_van_den_broeck(
 
                     r = np.sqrt(((x - x_s) ** 2) + (y**2) + (z**2))
 
+                    # B is a conformal factor that scales the spatial metric: B = 1 far
+                    # away and 1 + A inside the radius R_1. f_s is the Alcubierre-style
+                    # shift profile (radius R_2, sharpness sigma_2) times the speed v.
                     B = 1 + shape_function_alcubierre(r, R_1, sigma_1) * A
 
                     f_s = shape_function_alcubierre(r, R_2, sigma_2) * v
 
+                    # Spatial metric B^2 times the identity, shift beta^x = -f_s with
+                    # lapse 1: g_0x = -B^2 f_s and g_00 = -(1 - B^2 f_s^2).
                     metric["tensor"][1][1][t, i, j, k] = B**2
                     metric["tensor"][2][2][t, i, j, k] = B**2
                     metric["tensor"][3][3][t, i, j, k] = B**2

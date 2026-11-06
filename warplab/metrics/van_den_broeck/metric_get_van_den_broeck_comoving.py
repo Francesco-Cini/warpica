@@ -96,10 +96,16 @@ def metric_get_van_den_broeck_comoving(
 
                 r = np.sqrt((x**2) + (y**2) + (z**2))
 
+                # B is a conformal factor that scales the spatial metric: B = 1 far away
+                # and 1 + A inside the radius R_1. f_s is the Alcubierre-style shift
+                # profile (radius R_2, sharpness sigma_2) times the speed v.
                 B = 1 + shape_function_alcubierre(r, R_1, sigma_1) * A
 
                 f_s = shape_function_alcubierre(r, R_2, sigma_2) * v
 
+                # Comoving frame, centre at the origin: spatial metric B^2 times the
+                # identity, shift beta^x = v - f_s with lapse 1, so g_0x = B^2 (v - f_s)
+                # and g_00 = -(1 - B^2 (v - f_s)^2).
                 metric["tensor"][1][1][t, i, j, k] = B**2
                 metric["tensor"][2][2][t, i, j, k] = B**2
                 metric["tensor"][3][3][t, i, j, k] = B**2

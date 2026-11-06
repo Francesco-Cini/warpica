@@ -18,6 +18,8 @@ def set_minkowski_three_plus_one(grid_size):
     gamma : list of lists of arrays
         Symmetric 3 by 3 covariant spatial-metric fields.
     """
+    # Flat space in 3+1 variables: lapse 1, shift 0 and a spatial metric equal to
+    # the identity.
     alpha = np.ones(grid_size)
 
     beta = [np.zeros(grid_size) for _ in range(3)]

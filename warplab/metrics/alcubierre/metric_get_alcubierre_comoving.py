@@ -73,6 +73,8 @@ def metric_get_alcubierre_comoving(
 
     alpha, beta, gamma = set_minkowski_three_plus_one(grid_size)
 
+    # Single time slice: in the bubble's own frame the metric does not depend on
+    # time.
     t = 0
     for i in range(grid_size[1]):
         for j in range(grid_size[2]):
@@ -85,6 +87,9 @@ def metric_get_alcubierre_comoving(
 
                 fs = shape_function_alcubierre(r, R, sigma)
 
+                # Bubble frame: the centre sits at the origin. The shift is 0 inside (fs
+                # ~ 1, the bubble is at rest) and v far away, where space streams past
+                # it.
                 beta[0][t, i, j, k] = v * (1 - fs)
 
     metric["tensor"] = three_plus_one_builder(alpha, beta, gamma)

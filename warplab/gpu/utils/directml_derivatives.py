@@ -7,6 +7,9 @@ No CPU round trip is used for the derivative calculation.
 import torch
 
 
+# Apply a 1-D stencil along `axis`: move that axis last, add the shifted slices
+# weighted by the (offset, weight) pairs, divide by the denominator, and move
+# the axis back. The result is shorter by `radius` cells at each end.
 def _interior(value, axis, coefficients, radius, denominator):
     permutation = [i for i in range(value.ndim) if i != axis] + [axis]
     inverse = [permutation.index(i) for i in range(value.ndim)]
@@ -20,6 +23,8 @@ def _interior(value, axis, coefficients, radius, denominator):
     return (result / float(denominator)).permute(inverse).contiguous()
 
 
+# Pad `radius` cells at each end of `axis`, repeating the end value (copy=True)
+# or zeros (copy=False), restoring the original length.
 def _boundary(value, axis, radius, copy):
     permutation = [i for i in range(value.ndim) if i != axis] + [axis]
     inverse = [permutation.index(i) for i in range(value.ndim)]
@@ -60,10 +65,15 @@ def derivative(value, k, delta, order, second_axis=None):
     Short axes yield zero derivatives. Unmixed derivatives copy interior
     values to the boundary; mixed derivatives keep boundary faces zero.
     """
+    # Stencil half-width: 1 for the 3-point second-order stencil, 2 for the 5-point
+    # fourth-order one. Axes too short return zeros here; the public solver rejects
+    # such grids first (verify_grid_size).
     radius = 1 if order == 2 else 2
     axes = [k] if second_axis is None else [k, second_axis]
     if any(value.shape[axis] < 2 * radius + 1 for axis in axes):
         return torch.zeros_like(value)
+    # First-derivative stencil as (offset, weight) pairs, matching the CPU formulas:
+    # (A[i+1] - A[i-1]) / 2h, or (A[i-2] - 8 A[i-1] + 8 A[i+1] - A[i+2]) / 12h.
     first = [(-1, -1), (1, 1)] if order == 2 else [(-2, 1), (-1, -8), (1, 8), (2, -1)]
     denominator = 2 if order == 2 else 12
     if second_axis is None:
@@ -79,6 +89,8 @@ def derivative(value, k, delta, order, second_axis=None):
             value, k, coefficients, radius, (1 if order == 2 else 12) * delta[k] ** 2
         )
         return _boundary(result, k, radius, True)
+    # Mixed derivative: the first-derivative stencil along each axis in turn, with
+    # zeros at the edges (no copying), as on the CPU.
     result = _interior(value, k, first, radius, denominator * delta[k])
     result = _interior(
         result, second_axis, first, radius, denominator * delta[second_axis]

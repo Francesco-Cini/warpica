@@ -69,6 +69,8 @@ def metric_get_lentz_comoving(
 
     alpha, beta, gamma = set_minkowski_three_plus_one(grid_size)
 
+    # Single time slice: in the soliton's own frame the metric does not depend on
+    # time.
     t = 0
 
     for i in range(grid_size[1]):
@@ -79,6 +81,8 @@ def metric_get_lentz_comoving(
 
                 WFX, WFY = get_warp_factor_by_region(x, y, scale)
 
+                # Comoving frame: the soliton sits at the origin and space streams past
+                # it at v away from the regions, so the x shift is v * (1 - WFX).
                 beta[0][t, i, j, k] = v * (1 - WFX)
                 beta[1][t, i, j, k] = v * WFY
 
@@ -102,6 +106,9 @@ def get_warp_factor_by_region(x_in, y_in, size_scale):
     factor_x, factor_y : float
         Dimensionless shift factors; factor_y changes sign across y = 0.
     """
+    # Same piecewise-constant regions as metric_get_lentz.get_warp_factor_by_region:
+    # each branch tests one polygonal region in units of size_scale. y is folded to
+    # |y|, and the sign of y_in is restored for WFY at the end.
     x = x_in
     y = np.abs(y_in)
     WFX = 0

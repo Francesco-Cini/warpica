@@ -26,10 +26,13 @@ def verify_grid_size(shape, diff_order):
     axis of exactly one sample is allowed: nothing varies along it, so zero is
     the correct derivative for static, comoving and homogeneous fields.
     """
+    # Fewest samples an axis needs for the stencil of this order.
     required = _STENCIL_SIZE.get(str(diff_order).lower())
     if required is None:
         return
     for axis, size in zip(_AXES, shape):
+        # A single sample is allowed (nothing varies along that axis); 2 up to the
+        # stencil size cannot be differentiated, and used to give silent zeros.
         if 1 < size < required:
             remedies = ["add samples", "use a single sample if nothing varies"]
             if str(diff_order).lower() == "fourth" and size >= _STENCIL_SIZE["second"]:

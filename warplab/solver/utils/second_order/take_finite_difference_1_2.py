@@ -23,6 +23,7 @@ def take_finite_difference_1_2(A, k, delta):
     Axes shorter than three samples return zeros.
     Boundary cells copy the nearest interior derivative.
     """
+    # DirectML tensors take the dedicated GPU derivative kernel instead.
     if getattr(getattr(A, "device", None), "type", None) == "privateuseone":
         from warplab.gpu.utils.directml_derivatives import derivative
 
@@ -34,6 +35,8 @@ def take_finite_difference_1_2(A, k, delta):
         A, dtype=A.dtype if xp.isdtype(A.dtype, "real floating") else xp.float64
     )
 
+    # Second-order central difference: (A[i+1] - A[i-1]) / (2 h), needing 3 samples.
+    # The first and last cell copy their neighbour.
     if s[k] >= 3:
         match k:
             case 0:

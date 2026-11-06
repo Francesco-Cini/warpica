@@ -85,11 +85,16 @@ def metric_get_modified_time(
 
                     fs = shape_function_alcubierre(r, R, sigma)
 
+                    # Flat spatial metric with a shift along x (g_0x = -v fs, as in
+                    # Alcubierre) and a modified lapse alpha = (1 - fs) + fs / A: equal
+                    # to 1 outside the bubble and 1 / A inside it, so time runs at a
+                    # different rate there.
                     metric["tensor"][0][1][t, i, j, k] = -v * fs
                     metric["tensor"][1][0][t, i, j, k] = metric["tensor"][0][1][
                         t, i, j, k
                     ]
 
+                    # g_00 = -alpha^2 + beta_i beta^i, with beta_x = -v fs.
                     metric["tensor"][0][0][t, i, j, k] = -(((1 - fs) + fs / A) ** 2) + (
                         (fs * v) ** 2
                     )

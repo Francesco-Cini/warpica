@@ -53,6 +53,9 @@ def eval_metric(
 
     output: TensorDict = {}
 
+    # Pipeline: stress-energy from the metric, then into the Eulerian observers'
+    # frame, then the four energy-condition maps (each keeps the worst sampled
+    # value per cell), then the scalars.
     output["metric"] = metric
 
     output["energy_tensor"] = get_energy_tensor(metric, diff_order, gpu=gpu)
@@ -97,6 +100,8 @@ def eval_metric(
         gpu,
     )
 
+    # keep_positive=False clips satisfied (positive) values to 0, so only
+    # violations remain visible in the maps.
     if not keep_positive:
         output["null"][output["null"] > 0] = 0
         output["weak"][output["weak"] > 0] = 0

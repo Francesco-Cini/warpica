@@ -23,6 +23,7 @@ def take_finite_difference_1(A, k, delta):
     Axes shorter than five samples return zeros.
     Boundary cells copy the nearest interior derivative.
     """
+    # DirectML tensors take the dedicated GPU derivative kernel instead.
     if getattr(getattr(A, "device", None), "type", None) == "privateuseone":
         from warplab.gpu.utils.directml_derivatives import derivative
 

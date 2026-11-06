@@ -50,12 +50,15 @@ def custom_metric(
     metric["index"] = "covariant"
     metric["date"] = datetime.now()
 
+    # Start from flat space and overwrite every cell with the user's functions.
     alpha, beta, gamma = set_minkowski_three_plus_one(grid_size)
 
     for h in range(grid_size[0]):
         for i in range(grid_size[1]):
             for j in range(grid_size[2]):
                 for k in range(grid_size[3]):
+                    # Physical coordinates of this cell, with the same (index + 1) *
+                    # spacing - world_centre convention as the built-in generators.
                     t = (h + 1) * grid_scaling[0] - world_centre[0]
                     x = (i + 1) * grid_scaling[1] - world_centre[1]
                     y = (j + 1) * grid_scaling[2] - world_centre[2]
@@ -78,6 +81,8 @@ def custom_metric(
                     gamma[0][2][h, i, j, k] = gamma_field[0][2]
                     gamma[1][2][h, i, j, k] = gamma_field[1][2]
 
+                    # Only the upper triangle of the spatial metric is read from the
+                    # user's function; mirror it to keep gamma symmetric.
                     gamma[1][0][h, i, j, k] = gamma[0][1][h, i, j, k]
                     gamma[2][0][h, i, j, k] = gamma[0][2][h, i, j, k]
                     gamma[2][1][h, i, j, k] = gamma[1][2][h, i, j, k]
