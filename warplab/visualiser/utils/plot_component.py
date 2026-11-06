@@ -43,10 +43,15 @@ def plot_component(
         _, ax = plt.subplots(layout="constrained")
     x = np.arange(1, values.shape[0] + 1) if x is None else np.asarray(x)
     y = np.arange(1, values.shape[1] + 1) if y is None else np.asarray(y)
+    # Colour scale symmetric about zero, so the diverging colour map shows the sign
+    # and zero is the neutral colour. `or 1.0` avoids an empty range when the
+    # component is identically zero.
     limit = float(np.max(np.abs(values))) or 1.0
     mesh = ax.pcolormesh(
         x,
         y,
+        # pcolormesh wants rows along y, so transpose: the first array axis is plotted
+        # horizontally.
         values.T,
         shading="nearest",
         cmap="RdBu_r",

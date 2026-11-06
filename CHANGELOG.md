@@ -56,9 +56,10 @@ Work towards 1.0.0. The package name `warplab` is provisional.
   metric (previously an `assert`, which disappears under `python -O`), for an
   unsupported shape (a 3 by 3 array used to fail with an `IndexError`), and for
   a metric with no Eulerian observers.
-- Add explanatory comments to the solver and analyser core (pipeline steps, index
-  and unit conventions, the observer tetrad, the sampling). Comments only: the parsed
-  syntax tree of every touched file is identical to before.
+- Add explanatory comments across the package: the solver and analyser pipeline, every
+  metric generator, the finite-difference stencils and their edge handling, the plotting
+  code and the GPU helpers. Comments only: the parsed syntax tree of every touched file is
+  identical to before.
 - Examples import from the public API, and `examples/README.md` states the
   grid-size limits correctly.
 - Remove the stray `backend-results.json`; `benchmarks/backend_comparison.py` now

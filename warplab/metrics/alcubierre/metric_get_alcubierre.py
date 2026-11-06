@@ -66,6 +66,8 @@ def metric_get_alcubierre(
     metric["index"] = "covariant"
     metric["date"] = _date.today().isoformat()
 
+    # Start from flat space (lapse 1, shift 0, spatial metric = identity). The
+    # Alcubierre metric changes only the x component of the shift.
     alpha, beta, gamma = set_minkowski_three_plus_one(grid_size)
 
     for i in range(grid_size[1]):
@@ -76,12 +78,18 @@ def metric_get_alcubierre(
                 z = (k + 1) * grid_scale[3] - world_centre[3]
 
                 for t in range(grid_size[0]):
+                    # Bubble centre on the x axis at this time: speed v (a fraction of
+                    # c) times elapsed time, converted to metres with c.
                     xs = ((t + 1) * grid_scale[0] - world_centre[0]) * v * c()
 
+                    # Distance from this cell to the (moving) bubble centre.
                     r = ((x - xs) ** 2 + y**2 + z**2) ** 0.5
 
                     fs = shape_function_alcubierre(r, R, sigma)
 
+                    # Shift along x. Eulerian observers move with velocity -beta^i, so
+                    # inside the bubble (fs ~ 1) they are carried along +x at speed v,
+                    # and far away (fs ~ 0) they are at rest.
                     beta[0][t, i, j, k] = -v * fs
 
     metric["tensor"] = three_plus_one_builder(alpha, beta, gamma)

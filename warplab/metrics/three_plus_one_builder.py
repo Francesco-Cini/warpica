@@ -47,6 +47,9 @@ def three_plus_one_builder(
 
     metric_tensor: list[list[Any]] = [[None for _ in range(4)] for _ in range(4)]
 
+    # Assemble the 3+1 form of the metric:
+    #   g_00 = -alpha^2 + beta_i beta^i,   g_0i = beta_i,   g_ij = gamma_ij,
+    # where beta is the covariant shift (indices down) and gamma the spatial metric.
     metric_tensor[0][0] = -(alpha**2)
     for i in range(3):
         metric_tensor[0][0] += beta_up[i] * beta[i]

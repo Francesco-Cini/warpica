@@ -17,6 +17,8 @@ def get_trace(tensor, metric):
     trace : ndarray
         Scalar trace at each grid cell.
     """
+    # A mixed tensor is already contracted by position: the trace is the sum of the
+    # diagonal. Otherwise contract with the metric (or its inverse, as needed).
     if tensor["index"].lower().startswith("mixed"):
         return sum(tensor["tensor"][i][i] for i in range(4))
     g = metric["tensor"]

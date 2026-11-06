@@ -23,6 +23,10 @@ def ein_e_2(E, g_u, units):
     The second-order port preserves the upstream rounded constants
     and unit-scaling formula.
     """
+    # G and c are written out here (G = 6.6740e-11, c = 2.99792e8), scaled by the
+    # unit factors, instead of taken from warplab.units (6.6743e-11 and 299792458).
+    # The factor c^4 / (8 pi G) therefore differs from the fourth-order path by
+    # about 4e-5 in relative terms.
     G = 6.6740e-11 * units[2] ** 2 * units[1] / units[0] ** 3
     c = 2.99792e8 * units[2] / units[0]
 

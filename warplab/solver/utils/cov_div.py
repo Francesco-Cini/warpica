@@ -48,13 +48,19 @@ def cov_div(
         else take_finite_difference_1
     )
 
+    # Partial derivative along one axis. Time is stored in seconds but the curvature
+    # uses ct, so the time derivative is divided by c.
     def partial(field, axis):
         value = derivative(field, axis, delta)
         return value / c() if axis == 0 else value
 
+    # diff[i][j][k] = derivative of g_ij along axis k, for the Christoffel symbols.
     diff = [
         [[partial(g_l[i][j], k) for k in range(4)] for j in range(4)] for i in range(4)
     ]
+    # Covariant derivative along axis idx_div of component idx_vec:
+    #   covariant vector:     d v_k  - Gamma^i_kd v_i
+    #   contravariant vector: d v^k  + Gamma^k_di v^i,  summed over i.
     if stair_sel == 0:
         result = partial(vec_d[idx_vec], idx_div)
         for i in range(4):

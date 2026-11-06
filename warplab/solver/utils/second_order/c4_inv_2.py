@@ -25,6 +25,8 @@ def c4_inv_2(cell_array):
 
     r = cell_array
 
+    # Inverse by the adjugate: inverse[i][j] = (cofactor of r[j][i]) / det, with each
+    # cofactor a signed 3x3 minor written out below (acts on whole grid arrays).
     det = c_det_2(r)
 
     xp = array_namespace(cell_array[0][0])

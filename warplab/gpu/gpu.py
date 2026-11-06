@@ -28,6 +28,8 @@ def asarray(
     if library is None or library == "numpy":
         return np.asarray(value)
 
+    # Backends are imported only when selected, so CuPy and torch-directml are not
+    # required unless used.
     if library == "cupy":
         from .utils.cupy import asarray
 
@@ -64,6 +66,8 @@ def asnumpy(
         is_torch_array,
     )
 
+    # Device arrays are copied back to host NumPy arrays; anything else converts
+    # directly.
     if is_cupy_array(value):
         from .utils.cupy import asnumpy
 

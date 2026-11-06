@@ -7,6 +7,12 @@ def raised_derivatives(inverse, derivative):
     Each cache holds 64 grid arrays. Keeping these intermediates avoids
     repeatedly dispatching the same small operations to a device.
     """
+    # With derivative[x][y][z] = d_z g_xy and the inverse metric g^rd, summed over d:
+    #   raised[a][b][r]     = d_a g_bd * g^rd
+    #   skew[a][b][r]       = (d_b g_ad - d_d g_ab) * g^rd
+    #   connection[a][b][r] = (2 d_a g_bd - d_d g_ab) * g^rd
+    # These are the combinations of first derivatives that appear repeatedly in the
+    # Ricci tensor (see ricci_t).
     raised = [[[None] * 4 for _ in range(4)] for _ in range(4)]
     skew = [[[None] * 4 for _ in range(4)] for _ in range(4)]
     connection = [[[None] * 4 for _ in range(4)] for _ in range(4)]

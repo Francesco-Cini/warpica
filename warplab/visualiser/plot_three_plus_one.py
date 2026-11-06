@@ -44,6 +44,8 @@ def plot_three_plus_one(
     metric = change_tensor_index(metric, "covariant")
     indices, coords, labels = _slice_setup(metric, sliced_planes, slice_locations)
     lapse, beta, gamma, _, _ = three_plus_one_decomposer(metric)
+    # Ten panels: the lapse, the three covariant shift components, and the six
+    # independent spatial-metric components (the upper triangle of gamma).
     components = [(r"$\alpha$ (lapse)", lapse)]
     components += [(rf"$\beta_{{{i + 1}}}$", beta[i]) for i in range(3)]
     components += [

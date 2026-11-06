@@ -11,15 +11,21 @@ from warplab.visualiser.utils.plot_component import plot_component
 
 
 def _slice_setup(tensor, sliced_planes, slice_locations):
+    # sliced_planes names the two axes to FIX (default: time and z), so the plot
+    # shows the other two (x and y by default). Axis numbers and locations are
+    # one-based; get_slice_data turns them into an index that fixes those axes.
     planes = (1, 4) if sliced_planes is None else sliced_planes
     indices = get_slice_data(planes, slice_locations, tensor)
     axes = [i for i, index in enumerate(indices) if isinstance(index, slice)]
     shape = np.shape(tensor["tensor"][0][0])
     spacing = tensor.get("scaling")
+    # Generators record their world centre in params; without one, use 0.
     centre = tensor.get("params", {}).get("world_centre", np.zeros(4))
     coords, labels = [], []
     for axis in axes:
         label = ("t", "x", "y", "z")[axis]
+        # Axis coordinates: physical position (index + 1) * spacing - centre, the same
+        # convention as the generators, or one-based grid indices without a spacing.
         if spacing is None:
             coords.append(np.arange(1, shape[axis] + 1))
             labels.append(f"{label} (grid index)")
@@ -76,6 +82,7 @@ def plot_tensor(
     indices, coords, labels = _slice_setup(tensor, sliced_planes, slice_locations)
     fig, axes = plt.subplots(4, 4, figsize=(13, 11), layout="constrained")
     symbol = "g" if tensor["type"].lower() == "metric" else "T"
+    # One panel per component, in a 4x4 grid; each panel has its own colour scale.
     for i in range(4):
         for j in range(4):
             plot_component(
@@ -88,6 +95,8 @@ def plot_tensor(
                 x=coords[0],
                 y=coords[1],
             )
+    # Equal aspect only when both plotted axes are spatial; a time axis is in
+    # seconds, so its scale is not comparable with metres.
     if all(not label.startswith("t ") for label in labels):
         for ax in axes.flat:
             ax.set_aspect("equal")

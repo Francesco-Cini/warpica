@@ -14,6 +14,8 @@ def asarray(value):
     array : torch.Tensor
         Converted device array with float32 dtype.
     """
+    # DirectML curvature runs in float32 (see docs/gpu.md for the precision
+    # consequences).
     import torch
     import torch_directml
 

@@ -26,7 +26,10 @@ def get_slice_data(plane, slice_centre, tensor):
         or plane[0] == plane[1]
     ):
         raise ValueError("Select two distinct axes from 1=t, 2=x, 3=y, 4=z")
+    # Plane numbers are one-based (1=t, 2=x, 3=y, 4=z); convert to array axes.
     axes = plane.astype(int) - 1
+    # Default location: the middle cell. Given locations are rounded half up to
+    # the nearest sample and are one-based.
     if slice_centre is None:
         locations = [(shape[axis] + 1) // 2 for axis in axes]
     else:
@@ -34,6 +37,8 @@ def get_slice_data(plane, slice_centre, tensor):
         if values.shape != (2,) or not np.isfinite(values).all():
             raise ValueError("Provide two finite slice locations")
         locations = np.floor(values + 0.5).astype(int)
+    # Build the index: the fixed axes get a single (zero-based) sample, and the
+    # axes left as slice(None) are the ones that will be plotted.
     indices = [slice(None)] * 4
     for axis, location in zip(axes, locations):
         if not 1 <= location <= shape[axis]:

@@ -34,6 +34,8 @@ def verify_tensor(input_tensor, suppress_msgs=None):
         if not sM:
             print(msg)
 
+    # Every check below warns and clears `verified` instead of raising, so this
+    # function reports problems by warning and returning False.
     verified = True
 
     if is_field(input_tensor, "type"):
@@ -45,6 +47,8 @@ def verify_tensor(input_tensor, suppress_msgs=None):
             warnings.warn("Unknown Type")
             verified = False
 
+        # The components must be a 4x4 table (nested sequences or an array) whose
+        # entries are 4-D (t, x, y, z) arrays.
         if is_field(input_tensor, "tensor"):
             tensor = input_tensor["tensor"]
             if (
@@ -68,6 +72,7 @@ def verify_tensor(input_tensor, suppress_msgs=None):
             warnings.warn("tensor: Empty")
             verified = False
 
+        # Only Cartesian coordinates are supported: the curvature formulas assume them.
         if is_field(input_tensor, "coords"):
             if strcmpi(str(input_tensor["coords"]), "cartesian"):
                 disp_message("coords: " + str(input_tensor["coords"]), suppress_msgs)
@@ -80,6 +85,7 @@ def verify_tensor(input_tensor, suppress_msgs=None):
             warnings.warn("coords: Empty")
             verified = False
 
+        # The index position must be one of the four recognised forms.
         if is_field(input_tensor, "index"):
             if (
                 strcmpi(str(input_tensor["index"]), "contravariant")

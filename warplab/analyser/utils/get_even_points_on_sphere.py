@@ -16,6 +16,9 @@ def get_even_points_on_sphere(R, number_of_points):
     vector : ndarray, shape (3, number_of_points)
         Cartesian sample coordinates.
     """
+    # Fibonacci lattice: point i gets azimuth 2 pi i / phi (phi = golden ratio) and
+    # polar angle arccos(1 - 2 (i + 0.5) / N), which spreads N points almost evenly
+    # over the sphere.
     golden_ratio = (1 + (5**0.5)) / 2
     vector = np.zeros((3, number_of_points))
 

@@ -53,6 +53,9 @@ def three_plus_one_decomposer(
         for j in range(3):
             beta_up[i] = beta_up[i] + gamma_up[i][j] * beta_down[j]
 
+    # Invert the 3+1 form: g_00 = -alpha^2 + beta_i beta^i, so
+    # alpha = sqrt(beta_i beta^i - g_00). beta_i = g_0i and gamma_ij = g_ij were
+    # read off above.
     alpha = np.sqrt(
         beta_up[0] * beta_down[0]
         + beta_up[1] * beta_down[1]

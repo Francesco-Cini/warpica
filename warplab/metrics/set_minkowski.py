@@ -16,6 +16,8 @@ def set_minkowski(grid_size):
     """
     metric = [[None for _ in range(4)] for _ in range(4)]
 
+    # Minkowski metric diag(-1, 1, 1, 1): time component -1, space components +1,
+    # all off-diagonal components 0.
     metric[0][0] = -np.ones(grid_size)
 
     metric[1][1] = np.ones(grid_size)

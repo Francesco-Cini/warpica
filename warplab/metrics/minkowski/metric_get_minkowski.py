@@ -41,6 +41,8 @@ def metric_get_minkowski(
     metric["index"] = "covariant"
     metric["date"] = datetime.now()
 
+    # Flat space diag(-1, 1, 1, 1) on the grid; unlike the other generators this one
+    # builds the (4, 4, t, x, y, z) array directly.
     metric["tensor"] = np.zeros((4, 4, *grid_size))
 
     metric["tensor"][0][0] = -np.ones(grid_size)

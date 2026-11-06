@@ -24,6 +24,7 @@ def take_finite_difference_2_2(A, k_1, k_2, delta):
     Boundary cells copy the nearest interior derivative; mixed
     derivatives leave boundary faces zero.
     """
+    # DirectML tensors take the dedicated GPU derivative kernel instead.
     if getattr(getattr(A, "device", None), "type", None) == "privateuseone":
         from warplab.gpu.utils.directml_derivatives import derivative
 
@@ -35,6 +36,10 @@ def take_finite_difference_2_2(A, k_1, k_2, delta):
         A, dtype=A.dtype if xp.isdtype(A.dtype, "real floating") else xp.float64
     )
 
+    # Second-order second derivative, needing 3 samples on both axes. Same axis:
+    # (A[i+1] - 2 A[i] + A[i-1]) / h^2, with the first and last cell copying their
+    # neighbour. Different axes: the four-corner formula
+    # (A[+,+] - A[+,-] - A[-,+] + A[-,-]) / (4 h_S h_L), whose edge cells stay 0.
     if s[k_1] >= 3 and s[k_2] >= 3:
         if k_1 == k_2:
             match k_1:

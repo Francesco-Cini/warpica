@@ -54,11 +54,15 @@ def metric_get_schwarzschild(
         ],
         indexing="ij",
     )
+    # Radial distance of every grid point from the centre of the mass.
     r = np.sqrt(sum(x * x for x in xyz))
     if np.any(r == 0) or np.any(np.isclose(r, r_s, rtol=1e-12, atol=0)):
         raise ValueError(
             "Grid intersects the Schwarzschild origin or coordinate horizon"
         )
+    # Schwarzschild in Cartesian-like components: g_tt = -(1 - r_s/r) and
+    # g_ij = delta_ij + r_s x_i x_j / (r^2 (r - r_s)), a static metric stored on a
+    # single time slice. r_s is the Schwarzschild radius, 2GM/c^2.
     metric["tensor"][0, 0, 0] = -(1 - r_s / r)
     for i in range(3):
         for j in range(i, 3):

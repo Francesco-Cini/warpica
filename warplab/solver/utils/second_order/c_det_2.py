@@ -19,6 +19,8 @@ def c_det_2(cell_array):
     if h == 2:
         return cell_array[0][0] * cell_array[1][1] - cell_array[0][1] * cell_array[1][0]
 
+    # Cofactor expansion along the first row, recursing on the minors; entries may
+    # be whole grid arrays.
     cell_det = 0
     for i in range(h):
         sub_array = [
