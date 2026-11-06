@@ -31,6 +31,7 @@ def verify_tensor(input_tensor, suppress_msgs=None):
         suppress_msgs = 0
 
     def disp_message(msg, sM):
+        """Print `msg` unless messages are suppressed."""
         if not sM:
             print(msg)
 

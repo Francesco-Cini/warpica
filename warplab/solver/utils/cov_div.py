@@ -51,6 +51,7 @@ def cov_div(
     # Partial derivative along one axis. Time is stored in seconds but the curvature
     # uses ct, so the time derivative is divided by c.
     def partial(field, axis):
+        """Differentiate `field` along `axis`, with time in the ct basis."""
         value = derivative(field, axis, delta)
         return value / c() if axis == 0 else value
 

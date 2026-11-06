@@ -56,6 +56,7 @@ __all__ = ["__version__", *sorted(_EXPORTS)]
 
 
 def __getattr__(name):
+    """Import a public name or subpackage on first access (PEP 562)."""
     if name in _EXPORTS:
         value = getattr(importlib.import_module(f"{__name__}.{_EXPORTS[name]}"), name)
     elif name in _SUBPACKAGES:
@@ -67,4 +68,5 @@ def __getattr__(name):
 
 
 def __dir__():
+    """List the lazy public names alongside the loaded module globals."""
     return sorted({*globals(), *_EXPORTS, *_SUBPACKAGES})

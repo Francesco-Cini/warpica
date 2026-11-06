@@ -47,6 +47,7 @@ def get_momentum_flow_lines(
         raise ValueError("max_steps must be nonnegative and step_size positive")
 
     def spatial_field(component):
+        """Return one tensor component as a scaled 3-D array for a single time slice."""
         field = np.asarray(component)
         if field.ndim == 4 and field.shape[0] == 1:
             field = field[0]

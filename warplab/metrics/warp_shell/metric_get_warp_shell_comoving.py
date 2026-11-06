@@ -8,8 +8,8 @@ from warplab.units.universal_constants.c import c
 from warplab.units.universal_constants.G import G
 
 
-# Cumulative integral of y(x) by the trapezoid rule, starting from 0.
 def _cumtrapz(y, x):
+    """Return the cumulative integral of y(x) by the trapezoid rule, starting at 0."""
     return np.concatenate(([0.0], np.cumsum((y[1:] + y[:-1]) * np.diff(x) / 2)))
 
 
@@ -19,7 +19,10 @@ def _radial_limit(radius, R_2):
 
 
 def _smooth(values, span):
-    # MATLAB smooth's centered moving average, with shrinking endpoint windows.
+    """Centered moving average like MATLAB `smooth`, with shrinking end windows.
+
+    `span` is a sample count, or a fraction of the length if strictly between 0 and 1.
+    """
     width = int(span * len(values)) if 0 < span < 1 else int(span)
     width = min(width, len(values))
     width = max(1, width - (width % 2 == 0))
