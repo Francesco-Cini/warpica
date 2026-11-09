@@ -7,12 +7,12 @@ here (axis order, units, one- versus zero-based indices) see
 
 ## 1. Install
 
-Python 3.11 or newer is required. `warplab` is not on PyPI yet, so install from
+Python 3.11 or newer is required. `warpica` is not on PyPI yet, so install from
 a checkout:
 
 ```bash
-git clone https://github.com/Francesco-Cini/pywarp
-cd pywarp
+git clone https://github.com/Francesco-Cini/warpica
+cd warpica
 python -m venv .venv
 .venv/bin/python -m pip install -e ".[plot]"
 ```
@@ -27,7 +27,7 @@ and metres for space.
 
 ```python
 import numpy as np
-from warplab.metrics import metric_get_alcubierre
+from warpica.metrics import metric_get_alcubierre
 
 grid = np.array([1, 9, 9, 9])
 spacing = np.array([1.0, 0.5, 0.5, 0.5])
@@ -42,7 +42,7 @@ the wall sharpness.
 ## 3. Compute the stress-energy tensor
 
 ```python
-from warplab.solver import get_energy_tensor
+from warpica.solver import get_energy_tensor
 
 energy = get_energy_tensor(metric, diff_order="fourth")
 rho = energy["tensor"][0][0]  # shape (1, 9, 9, 9), SI units
@@ -54,7 +54,7 @@ along every axis that has more than one sample.
 ## 4. Check the energy conditions
 
 ```python
-from warplab.analyser import eval_metric
+from warpica.analyser import eval_metric
 
 result = eval_metric(metric, num_angular_vec=24, num_time_vec=4)
 for name in ("null", "weak", "strong", "dominant"):
@@ -69,7 +69,7 @@ test and a longer run. The result also holds `expansion`, `shear`, `vorticity`,
 ## 5. Plot
 
 ```python
-from warplab.visualiser import plot_tensor
+from warpica.visualiser import plot_tensor
 
 fig, axes = plot_tensor(metric)
 fig.savefig("metric.png", dpi=150)

@@ -28,7 +28,7 @@ body:
     id: versions
     attributes:
       label: Versions
-      description: warplab, Python, NumPy and operating system
+      description: warpica, Python, NumPy and operating system
     validations:
       required: true
   - type: dropdown

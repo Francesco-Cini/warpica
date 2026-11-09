@@ -8,9 +8,9 @@ from pathlib import Path
 
 import numpy as np
 
-from warplab.gpu import asarray, asnumpy
-from warplab.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
-from warplab.solver.get_energy_tensor import get_energy_tensor
+from warpica.gpu import asarray, asnumpy
+from warpica.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
+from warpica.solver.get_energy_tensor import get_energy_tensor
 
 
 def main():

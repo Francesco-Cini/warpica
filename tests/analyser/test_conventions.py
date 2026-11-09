@@ -9,9 +9,9 @@ import copy
 import numpy as np
 import pytest
 
-from warplab.analyser import get_energy_conditions, get_scalars
-from warplab.analyser.utils.generate_uniform_field import generate_uniform_field
-from warplab.metrics import metric_get_minkowski
+from warpica.analyser import get_energy_conditions, get_scalars
+from warpica.analyser.utils.generate_uniform_field import generate_uniform_field
+from warpica.metrics import metric_get_minkowski
 
 
 def adm_constant_metric(alpha, gamma, beta):

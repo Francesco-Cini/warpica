@@ -3,9 +3,9 @@ import copy
 import numpy as np
 import pytest
 
-from warplab.analyser.get_energy_conditions import get_energy_conditions
-from warplab.analyser.utils.generate_uniform_field import generate_uniform_field
-from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warpica.analyser.get_energy_conditions import get_energy_conditions
+from warpica.analyser.utils.generate_uniform_field import generate_uniform_field
+from warpica.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
 
 
 @pytest.mark.parametrize("condition", ["Null", "Weak", "Strong", "Dominant"])

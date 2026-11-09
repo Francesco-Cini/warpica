@@ -26,7 +26,7 @@ metric. See [concepts](concepts.md) for the dictionary layout.
 
 ### 2. The solver: from metric to stress-energy
 
-`get_energy_tensor` (in `warplab/solver/`) applies Einstein's equation
+`get_energy_tensor` (in `warpica/solver/`) applies Einstein's equation
 `G_mu_nu = (8 pi G / c^4) T_mu_nu` in reverse: it knows the geometry and finds the
 matter that would be needed to produce it. It calls `met_2_den` (fourth order) or
 `met_2_den_2` (second order), which chain these helpers in `solver/utils/`:

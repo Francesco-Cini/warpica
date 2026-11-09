@@ -1,6 +1,6 @@
 import numpy as np
 
-from warplab.solver.utils.tensor_cell_2_array import tensor_cell_2_array
+from warpica.solver.utils.tensor_cell_2_array import tensor_cell_2_array
 
 
 def test_tensor_cell_2_array_places_tensor_indices_last():

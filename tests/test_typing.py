@@ -10,17 +10,17 @@ from pathlib import Path
 
 import pytest
 
-import warplab
+import warpica
 
 PUBLIC_PACKAGES = ["metrics", "solver", "analyser", "units", "visualiser", "gpu"]
-PACKAGE_DIRECTORY = Path(warplab.__file__).parent
+PACKAGE_DIRECTORY = Path(warpica.__file__).parent
 
 
 def public_functions():
     for package in PUBLIC_PACKAGES:
         if package == "visualiser":
             pytest.importorskip("matplotlib")
-        module = importlib.import_module(f"warplab.{package}")
+        module = importlib.import_module(f"warpica.{package}")
         for name in module.__all__:
             yield pytest.param(getattr(module, name), id=f"{package}.{name}")
 
@@ -50,9 +50,9 @@ def test_the_package_ships_the_typed_marker():
 
 GOOD = """
 import numpy as np
-from warplab.analyser import eval_metric, get_energy_conditions, get_scalars
-from warplab.metrics import metric_get_alcubierre, metric_get_minkowski
-from warplab.solver import get_energy_tensor
+from warpica.analyser import eval_metric, get_energy_conditions, get_scalars
+from warpica.metrics import metric_get_alcubierre, metric_get_minkowski
+from warpica.solver import get_energy_tensor
 
 metric = metric_get_minkowski([1, 5, 5, 5])
 bubble = metric_get_alcubierre(
@@ -70,8 +70,8 @@ reveal_type(energy)
 """
 
 BAD = """
-from warplab.metrics import metric_get_minkowski
-from warplab.solver import get_energy_tensor
+from warpica.metrics import metric_get_minkowski
+from warpica.solver import get_energy_tensor
 
 metric = metric_get_minkowski([1, 5, 5, 5])
 get_energy_tensor(metric, "sixth")

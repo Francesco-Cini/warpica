@@ -1,15 +1,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from warplab.analyser import (
+from warpica.analyser import (
     change_tensor_index,
     get_energy_conditions,
     get_momentum_flow_lines,
     get_scalars,
 )
-from warplab.metrics import metric_get_alcubierre
-from warplab.solver import get_energy_tensor
-from warplab.visualiser.utils.plot_themed_surface import (
+from warpica.metrics import metric_get_alcubierre
+from warpica.solver import get_energy_tensor
+from warpica.visualiser.utils.plot_themed_surface import (
     plot_themed_surface,  # internal helper
 )
 

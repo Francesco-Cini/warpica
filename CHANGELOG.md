@@ -7,12 +7,12 @@ project follows [semantic versioning](https://semver.org); see
 
 ## Unreleased
 
-Work towards 1.0.0. The package name `warplab` is provisional.
+Work towards 1.0.0.
 
 ### Changed
 
-- Rename the package from `pywarp` to `warplab`.
-- Define the public API as the names in `__all__` of `warplab.metrics`,
+- Rename the package from `pywarp` to `warpica`.
+- Define the public API as the names in `__all__` of `warpica.metrics`,
   `solver`, `analyser`, `units` and `visualiser`, with lazy top-level re-exports.
   Everything else is internal.
 - Document the CPU path as stable and the CuPy and DirectML backends as

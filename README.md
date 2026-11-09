@@ -1,14 +1,14 @@
-# warplab
+# warpica
 
-[![CPU tests and package](https://github.com/Francesco-Cini/pywarp/actions/workflows/ci.yml/badge.svg)](https://github.com/Francesco-Cini/pywarp/actions/workflows/ci.yml)
+[![CPU tests and package](https://github.com/Francesco-Cini/warpica/actions/workflows/ci.yml/badge.svg)](https://github.com/Francesco-Cini/warpica/actions/workflows/ci.yml)
 
 Numerical spacetime metrics, stress-energy tensors and sampled energy-condition
-analysis in Python. `warplab` is a port of
+analysis in Python. `warpica` is a port of
 [WarpFactory](https://github.com/NerdsWithAttitudes/WarpFactory), the MATLAB
 toolkit for analysing warp-drive geometries.
 
-> **Name and status.** `warplab` is a provisional name and the project is
-> preparing a 1.0 release. It is not on PyPI yet; install from a checkout.
+> **Status.** The project is preparing a 1.0 release.
+> It is not on PyPI yet; install from a checkout.
 
 ## Credit to WarpFactory
 
@@ -50,16 +50,16 @@ see [CITATION.cff](CITATION.cff).
 Requires Python 3.11 or newer.
 
 ```bash
-git clone https://github.com/Francesco-Cini/pywarp
-cd pywarp
+git clone https://github.com/Francesco-Cini/warpica
+cd warpica
 python -m venv .venv
 .venv/bin/python -m pip install -e ".[plot]"     # Windows: .venv\Scripts\python.exe
 ```
 
 ```python
 import numpy as np
-from warplab.metrics import metric_get_alcubierre
-from warplab.analyser import eval_metric
+from warpica.metrics import metric_get_alcubierre
+from warpica.analyser import eval_metric
 
 grid = np.array([1, 9, 9, 9])  # (time, x, y, z) samples
 spacing = np.array([1.0, 0.5, 0.5, 0.5])  # seconds and metres

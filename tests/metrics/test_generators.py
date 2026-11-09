@@ -3,11 +3,11 @@ import importlib
 import numpy as np
 import pytest
 
-from warplab.metrics.custom_metric import custom_metric
-from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from warplab.metrics.three_plus_one_builder import three_plus_one_builder
-from warplab.metrics.three_plus_one_decomposer import three_plus_one_decomposer
-from warplab.solver.verify_tensor import verify_tensor
+from warpica.metrics.custom_metric import custom_metric
+from warpica.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warpica.metrics.three_plus_one_builder import three_plus_one_builder
+from warpica.metrics.three_plus_one_decomposer import three_plus_one_decomposer
+from warpica.solver.verify_tensor import verify_tensor
 
 CASES = [
     ("alcubierre", "alcubierre", [0.2, 1, 1]),
@@ -24,7 +24,7 @@ CASES = [
 
 
 def build(family, name, args):
-    module = importlib.import_module(f"warplab.metrics.{family}.metric_get_{name}")
+    module = importlib.import_module(f"warpica.metrics.{family}.metric_get_{name}")
     fn = getattr(module, f"metric_get_{name}")
     return fn(np.array([1, 5, 5, 5]), np.array([1, 2.8, 2.7, 2.6]), *args, np.ones(4))
 
@@ -104,7 +104,7 @@ def test_custom_metric_coordinates_and_flat_limit():
 
 
 def test_lentz_template_regions():
-    from warplab.metrics.lentz.metric_get_lentz import (
+    from warpica.metrics.lentz.metric_get_lentz import (
         get_warp_factor_by_region as region,
     )
 
@@ -128,7 +128,7 @@ def test_modified_metrics_reduce_to_alcubierre(comoving):
 )
 def test_comoving_requires_one_time_slice(family, name, args):
     fn = getattr(
-        importlib.import_module(f"warplab.metrics.{family}.metric_get_{name}"),
+        importlib.import_module(f"warpica.metrics.{family}.metric_get_{name}"),
         f"metric_get_{name}",
     )
     with pytest.raises(ValueError, match="requires one time slice, got 2"):
@@ -139,7 +139,7 @@ def test_comoving_requires_one_time_slice(family, name, args):
 @pytest.mark.parametrize("order", ["second", "fourth"])
 @pytest.mark.parametrize("family,name,args", CASES, ids=[case[1] for case in CASES])
 def test_each_generator_reaches_public_solver(family, name, args, order):
-    from warplab.solver.get_energy_tensor import get_energy_tensor
+    from warpica.solver.get_energy_tensor import get_energy_tensor
 
     metric = build(family, name, args)
     before = np.asarray(metric["tensor"]).copy()
@@ -154,8 +154,8 @@ def test_each_generator_reaches_public_solver(family, name, args, order):
 
 
 def test_shell_exterior_matches_schwarzschild_profile():
-    from warplab.units.universal_constants.c import c
-    from warplab.units.universal_constants.G import G
+    from warpica.units.universal_constants.c import c
+    from warpica.units.universal_constants.G import G
 
     metric = build(
         "warp_shell", "warp_shell_comoving", [1e25, 0.5, 1.5, 0, 1, 1, 0, False]
@@ -170,7 +170,7 @@ def test_shell_exterior_matches_schwarzschild_profile():
 @pytest.mark.integration
 @pytest.mark.parametrize("family,name,args", CASES, ids=[case[1] for case in CASES])
 def test_all_metrics_complete_analysis(family, name, args):
-    from warplab.analyser.eval_metric import eval_metric
+    from warpica.analyser.eval_metric import eval_metric
 
     metric = build(family, name, args)
     result = eval_metric(metric, num_angular_vec=6, num_time_vec=2, diff_order="second")
@@ -191,7 +191,7 @@ def test_shell_is_finite_when_a_grid_point_is_the_centre():
 
     Its Legendre interpolation divides by zero there, and r == 0 is sample 1.
     """
-    from warplab.solver import get_energy_tensor
+    from warpica.solver import get_energy_tensor
 
     metric = build_at_origin_shell()
     assert np.isfinite(metric["tensor"]).all()
@@ -199,7 +199,7 @@ def test_shell_is_finite_when_a_grid_point_is_the_centre():
 
 
 def build_at_origin_shell():
-    from warplab.metrics import metric_get_warp_shell_comoving
+    from warpica.metrics import metric_get_warp_shell_comoving
 
     # World centre (3, 3, 3) with unit spacing puts grid point 2 at r == 0.
     return metric_get_warp_shell_comoving(
@@ -219,7 +219,7 @@ def build_at_origin_shell():
 
 def test_schwarzschild_rejects_a_grid_on_the_origin_or_horizon():
     """Upstream silently adds 1e-10 to r instead; Python refuses the grid."""
-    from warplab.metrics import metric_get_schwarzschild
+    from warpica.metrics import metric_get_schwarzschild
 
     with pytest.raises(ValueError, match="origin or coordinate horizon"):
         metric_get_schwarzschild(

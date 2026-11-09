@@ -2,10 +2,10 @@
 
 import numpy as np
 
-from warplab.solver.utils.second_order.take_finite_difference_1_2 import (
+from warpica.solver.utils.second_order.take_finite_difference_1_2 import (
     take_finite_difference_1_2,
 )
-from warplab.solver.utils.take_finite_difference_1 import take_finite_difference_1
+from warpica.solver.utils.take_finite_difference_1 import take_finite_difference_1
 
 
 def main():

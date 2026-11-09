@@ -1,6 +1,6 @@
 # Concepts and conventions
 
-The few rules that explain most surprises when using `warplab`.
+The few rules that explain most surprises when using `warpica`.
 
 ## Metric and tensor dictionaries
 
@@ -29,7 +29,7 @@ Every field uses `(t, x, y, z)`. Spacetime index 0 is time, 1 to 3 are x, y, z.
 ## Units
 
 SI throughout: time spacing in seconds, space spacing in metres, stress-energy
-in SI. Velocities such as the Alcubierre `v` are fractions of c. `warplab.units`
+in SI. Velocities such as the Alcubierre `v` are fractions of c. `warpica.units`
 provides `c()` and `G()`. Internally the solver works in the `ct` basis, so it
 converts time derivatives for you.
 
@@ -74,6 +74,6 @@ scale `smooth_factor` with it.
 
 ## Stable and experimental parts
 
-Only names exported by `warplab.metrics`, `solver`, `analyser`, `units` and
+Only names exported by `warpica.metrics`, `solver`, `analyser`, `units` and
 `visualiser` are public; see [api](api.md) and the [policy](policy.md). The CPU
 backend is stable; `gpu="cupy"` and `gpu="torch-directml"` are experimental.
