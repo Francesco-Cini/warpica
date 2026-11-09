@@ -21,6 +21,8 @@ from warpica.solver import get_energy_tensor
 from warpica.solver.utils.c4_inv import c4_inv
 from warpica.solver.utils.ricci_t import ricci_t
 from warpica.solver.utils.second_order.ricci_t_2 import ricci_t_2
+from warpica.units.universal_constants.c import c
+from warpica.units.universal_constants.G import G
 
 pytestmark = pytest.mark.parity
 DIRECTORY = Path(__file__).parent / "matlab"
@@ -82,6 +84,12 @@ def compute(case):
     }
     with np.load(DIRECTORY / "warp_factory.npz", allow_pickle=False) as fixture:
         expected = {name: fixture[case + "__" + name] for name in actual}
+    # MATLAB's second-order path uses the rounded constants G = 6.6740e-11 and
+    # c = 2.99792e8; this port uses warpica.units. Rescale the fixture by the exact
+    # ratio so the comparison stays tight (the ratio is about 1 - 3.9e-5).
+    expected["energy_second"] = expected["energy_second"] * (
+        (c() ** 4 / G()) / (2.99792e8**4 / 6.6740e-11)
+    )
     return actual, expected, result
 
 

@@ -17,6 +17,7 @@ from warpica.solver.utils.second_order.take_finite_difference_2_2 import (
     take_finite_difference_2_2 as d2,
 )
 from warpica.units.universal_constants.c import c
+from warpica.units.universal_constants.G import G
 
 
 @pytest.mark.parametrize("nested", [False, True])
@@ -107,8 +108,8 @@ def test_energy_index_contraction_and_nondefault_units():
     einstein = rng.normal(size=(4, 4, 2, 3))
     inverse = rng.normal(size=(4, 4, 2, 3))
     units = [2, 3, 5]
-    grav = 6.674e-11 * 5**2 * 3 / 2**3
-    speed = 2.99792e8 * 5 / 2
+    grav = G() * 5**2 * 3 / 2**3
+    speed = c() * 5 / 2
     expected = np.einsum("ab...,am...,bn...->mn...", einstein, inverse, inverse)
     expected *= speed**4 / (8 * np.pi * grav)
     np.testing.assert_allclose(ein_e_2(einstein, inverse, units), expected, rtol=1e-13)
@@ -164,7 +165,7 @@ def test_public_curved_metric_energy():
     )
     metric["tensor"][0, 0] = -(f**2)
     energy = np.asarray(get_energy_tensor(metric, "second")["tensor"])
-    factor = 2.99792e8**4 / (8 * np.pi * 6.674e-11)
+    factor = c() ** 4 / (8 * np.pi * G())
     # This metric has T^22 = T^33 = (c^4 / 8*pi*G) * f''/f.
     for i in (2, 3):
         np.testing.assert_allclose(
