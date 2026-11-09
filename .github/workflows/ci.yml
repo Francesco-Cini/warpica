@@ -22,7 +22,7 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: python -m pip install -e ".[test,plot]"
       - run: python -m pytest -q -W error -m "not gpu" --cov=warpica --cov-report=xml
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: coverage-${{ matrix.os }}-${{ matrix.python }}
           path: coverage.xml
@@ -79,7 +79,7 @@ jobs:
       - name: Flag a possible slowdown
         if: steps.guard.outcome == 'failure'
         run: echo "::warning title=Performance guard::A timing check failed. This is advisory; rerun the job before treating it as a regression."
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: performance-report
@@ -96,7 +96,7 @@ jobs:
       - run: python -m build
       - run: python -m twine check dist/*
       - run: python tools/check_wheel.py
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: distribution
           path: dist/*
