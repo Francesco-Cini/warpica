@@ -80,7 +80,7 @@ def main():
         ax.grid(True, which="major", alpha=0.2)
         ax.legend(loc="upper left", frameon=False, fontsize=9)
     device = report["results"][0]["device"] if report["results"] else report["backend"]
-    fig.suptitle(f"warplab scaling · {device} / {report['backend']}", fontsize=16)
+    fig.suptitle(f"warpica scaling · {device} / {report['backend']}", fontsize=16)
     counts = sorted({len(r["samples_seconds"]["cpu"]) for r in report["results"]})
     repetitions = (
         "–".join(map(str, (counts[0], counts[-1])))

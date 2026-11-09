@@ -18,7 +18,7 @@ guarantees.
 
 ## Scope
 
-`warplab` is a numerical library: it reads no network input and runs no servers.
+`warpica` is a numerical library: it reads no network input and runs no servers.
 Realistic problems are unsafe handling of crafted input (for example, a metric
 dictionary that crashes the interpreter or allocates unbounded memory) and
 problems in the build and release process. Wrong physical results are ordinary

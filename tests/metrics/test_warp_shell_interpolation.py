@@ -7,7 +7,7 @@ the difference can matter by measuring the interpolation error directly.
 import numpy as np
 import pytest
 
-from warplab.metrics import metric_get_warp_shell_comoving
+from warpica.metrics import metric_get_warp_shell_comoving
 
 SHELL_ARGS = [
     pytest.param([1e25, 0.5, 1.5, 0, 1, 1, 0, False], id="sharp"),

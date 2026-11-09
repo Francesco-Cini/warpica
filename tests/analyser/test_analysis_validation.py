@@ -6,19 +6,19 @@ import importlib
 import numpy as np
 import pytest
 
-from warplab.analyser import (
+from warpica.analyser import (
     do_frame_transfer,
     eval_metric,
     get_energy_conditions,
     get_momentum_flow_lines,
 )
-from warplab.analyser.utils.generate_uniform_field import generate_uniform_field
-from warplab.metrics import (
+from warpica.analyser.utils.generate_uniform_field import generate_uniform_field
+from warpica.metrics import (
     metric_get_alcubierre,
     metric_get_minkowski,
     metric_get_warp_shell_comoving,
 )
-from warplab.solver import get_energy_tensor
+from warpica.solver import get_energy_tensor
 
 CONDITIONS = ["Null", "Weak", "Strong", "Dominant"]
 
@@ -181,7 +181,7 @@ def test_samples_are_only_returned_on_request(bubble_and_energy):
 
 
 def test_eval_metric_defaults_to_100_directions_and_10_speeds(monkeypatch):
-    module = importlib.import_module("warplab.analyser.eval_metric")
+    module = importlib.import_module("warpica.analyser.eval_metric")
     calls = []
 
     def spy(energy, metric, condition, angular, timelike, *rest):

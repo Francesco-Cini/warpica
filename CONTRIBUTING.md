@@ -15,14 +15,14 @@ fixes are all welcome.
 ## Reporting a bug
 
 Include the smallest script that shows it, the full traceback or the wrong
-numbers, your `warplab`, Python and NumPy versions, and your operating system.
+numbers, your `warpica`, Python and NumPy versions, and your operating system.
 For a numerical problem, say what you compared against and why you expect it.
 
 ## Setting up
 
 ```bash
-git clone https://github.com/Francesco-Cini/pywarp
-cd pywarp
+git clone https://github.com/Francesco-Cini/warpica
+cd warpica
 python -m venv .venv
 .venv/bin/python -m pip install -e ".[test,plot,dev]"
 ```
@@ -32,7 +32,7 @@ On Windows use `.venv\Scripts\python.exe`.
 ## Checks to run before opening a pull request
 
 ```bash
-python -m pytest -q -W error -m "not gpu" --cov=warplab
+python -m pytest -q -W error -m "not gpu" --cov=warpica
 python -m ruff check .
 python -m ruff format --check .
 python -m mypy

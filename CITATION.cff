@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: >-
   If you use this software, please cite it together with the WarpFactory paper
   listed under references, on which it is based.
-title: warplab
+title: warpica
 abstract: >-
   Python port of the MATLAB WarpFactory toolkit: numerical spacetime metrics,
   stress-energy tensors and sampled energy-condition analysis.
@@ -10,7 +10,7 @@ type: software
 authors:
   - family-names: Cini
     given-names: Francesco
-repository-code: "https://github.com/Francesco-Cini/pywarp"
+repository-code: "https://github.com/Francesco-Cini/warpica"
 license: MIT
 keywords:
   - general relativity

@@ -1,12 +1,12 @@
 import numpy as np
 import pytest
 
-from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
-from warplab.solver.utils.c4_inv import c4_inv
-from warplab.solver.utils.ricci_t import ricci_t
-from warplab.solver.utils.take_finite_difference_1 import take_finite_difference_1 as d1
-from warplab.solver.utils.take_finite_difference_2 import take_finite_difference_2 as d2
-from warplab.units.universal_constants.c import c
+from warpica.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warpica.solver.utils.c4_inv import c4_inv
+from warpica.solver.utils.ricci_t import ricci_t
+from warpica.solver.utils.take_finite_difference_1 import take_finite_difference_1 as d1
+from warpica.solver.utils.take_finite_difference_2 import take_finite_difference_2 as d2
+from warpica.units.universal_constants.c import c
 
 pytestmark = pytest.mark.numerical
 

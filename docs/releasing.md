@@ -35,4 +35,4 @@ The optional `cuda` extra targets CUDA 12 wheels; the `directml` extra pins
 the tested backend and currently requires a supported Python (tested 3.12).
 Install plotting separately with `.[plot]`; the core solver needs only NumPy
 and array-api-compat. Source distributions also contain tests/examples/tools;
-the wheel contains only the installable `warplab` library and license metadata.
+the wheel contains only the installable `warpica` library and license metadata.

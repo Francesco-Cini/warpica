@@ -3,7 +3,7 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "warplab"
+name = "warpica"
 dynamic = ["version"]
 description = "Numerical spacetime metrics, stress-energy and energy-condition analysis"
 readme = "README.md"
@@ -33,10 +33,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Francesco-Cini/pywarp"
-Documentation = "https://github.com/Francesco-Cini/pywarp/tree/develop/docs"
-Changelog = "https://github.com/Francesco-Cini/pywarp/blob/develop/CHANGELOG.md"
-Issues = "https://github.com/Francesco-Cini/pywarp/issues"
+Homepage = "https://github.com/Francesco-Cini/warpica"
+Documentation = "https://github.com/Francesco-Cini/warpica/tree/develop/docs"
+Changelog = "https://github.com/Francesco-Cini/warpica/blob/develop/CHANGELOG.md"
+Issues = "https://github.com/Francesco-Cini/warpica/issues"
 Upstream = "https://github.com/NerdsWithAttitudes/WarpFactory"
 
 [project.optional-dependencies]
@@ -69,7 +69,7 @@ convention = "numpy"
 "benchmarks/**" = ["D"]
 "tools/**" = ["D"]
 # Keep the established mathematical keyword argument for compatibility.
-"warplab/solver/utils/get_christoffel_sym.py" = ["E741"]
+"warpica/solver/utils/get_christoffel_sym.py" = ["E741"]
 # Select the optional plotting dependency and backend before importing pyplot.
 "tests/visualiser/*.py" = ["D", "E402"]
 
@@ -87,7 +87,7 @@ markers = [
 
 [tool.mypy]
 python_version = "3.11"
-files = ["warplab"]
+files = ["warpica"]
 warn_unused_ignores = true
 warn_redundant_casts = true
 # Functions without annotations are not checked: the public API is annotated
@@ -107,10 +107,10 @@ module = [
 ignore_missing_imports = true
 
 [tool.coverage.run]
-source = ["warplab"]
+source = ["warpica"]
 # The backend adapters need a physical CUDA or DirectML device, so hosted CI
 # cannot run them (see docs/gpu.md). Everything else is measured.
-omit = ["warplab/gpu/utils/*"]
+omit = ["warpica/gpu/utils/*"]
 
 [tool.coverage.report]
 fail_under = 98
@@ -123,10 +123,10 @@ exclude_also = [
 ]
 
 [tool.setuptools.package-data]
-warplab = ["py.typed"]
+warpica = ["py.typed"]
 
 [tool.setuptools.dynamic]
-version = {attr = "warplab.__version__"}
+version = {attr = "warpica.__version__"}
 
 [tool.setuptools.packages.find]
-include = ["warplab*"]
+include = ["warpica*"]

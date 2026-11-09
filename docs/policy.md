@@ -5,7 +5,7 @@ development and anything may change; the [changelog](../CHANGELOG.md) records it
 
 ## What the version number promises
 
-`warplab` uses [semantic versioning](https://semver.org). For a release
+`warpica` uses [semantic versioning](https://semver.org). For a release
 `MAJOR.MINOR.PATCH`:
 
 - **PATCH** releases fix bugs and change nothing you can rely on.
@@ -15,14 +15,14 @@ development and anything may change; the [changelog](../CHANGELOG.md) records it
 
 ## What is covered
 
-Covered: the names in `__all__` of `warplab.metrics`, `solver`, `analyser`,
+Covered: the names in `__all__` of `warpica.metrics`, `solver`, `analyser`,
 `units` and `visualiser` (and their top-level re-exports): their signatures,
 return layout and documented errors, on the **CPU path**.
 
 Not covered, and free to change in any release:
 
-- Internal modules: everything under a `utils` directory, `warplab.gpu`,
-  `warplab._typing` and deep module paths.
+- Internal modules: everything under a `utils` directory, `warpica.gpu`,
+  `warpica._typing` and deep module paths.
 - The **experimental GPU backends**, `gpu="cupy"` and `gpu="torch-directml"`,
   and the `cuda` and `directml` extras.
 - Exact floating-point output. Results may change in the last digits between

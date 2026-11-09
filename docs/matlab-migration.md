@@ -1,6 +1,6 @@
 # Moving from MATLAB WarpFactory
 
-`warplab` follows the structure of WarpFactory, so MATLAB scripts translate
+`warpica` follows the structure of WarpFactory, so MATLAB scripts translate
 almost line by line. This page lists what changes. Intentional numerical
 differences are in [reference-validation.md](reference-validation.md).
 
@@ -29,8 +29,8 @@ Function names are snake_case versions of the MATLAB names.
 Rows from `metricGet_*` through `getScalars` and `doFrameTransfer` use names that
 appear in this repository's MATLAB reference scripts. The remaining rows follow
 the same renaming rule and were not checked against the upstream source. All
-Python names import from `warplab.metrics`, `warplab.solver`, `warplab.analyser`
-and `warplab.visualiser`.
+Python names import from `warpica.metrics`, `warpica.solver`, `warpica.analyser`
+and `warpica.visualiser`.
 
 ## Conventions that differ
 

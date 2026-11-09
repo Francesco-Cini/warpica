@@ -9,7 +9,7 @@ correct, and a fast calculation may still be wrong.
 ## Folder structure
 
 ```text
-warplab/                         Library implementation
+warpica/                         Library implementation
   metrics/                      Metric generators and 3+1 components
   solver/                       Derivatives, curvature, stress-energy
   analyser/                     Frames, energy conditions, scalar quantities
@@ -93,7 +93,7 @@ python -m pytest -k "flrw" -q
 python -m pytest -m numerical -q
 python -m pytest -m integration -q
 python -m pytest -x
-python -m pytest --cov=warplab --cov-report=term-missing
+python -m pytest --cov=warpica --cov-report=term-missing
 python -m examples.basic.minkowski
 python -m examples.analysis.alcubierre
 python -m benchmarks.alcubierre_timing
@@ -114,7 +114,7 @@ This example follows the usual arrange, act, assert pattern:
 
 ```python
 import numpy as np
-from warplab.solver.utils.take_finite_difference_2 import take_finite_difference_2
+from warpica.solver.utils.take_finite_difference_2 import take_finite_difference_2
 
 
 def test_constant_field_has_zero_second_derivative():

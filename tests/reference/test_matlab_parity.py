@@ -6,8 +6,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from warplab.analyser import eval_metric
-from warplab.metrics import (
+from warpica.analyser import eval_metric
+from warpica.metrics import (
     metric_get_alcubierre,
     metric_get_alcubierre_comoving,
     metric_get_lentz,
@@ -16,10 +16,10 @@ from warplab.metrics import (
     metric_get_schwarzschild,
     metric_get_van_den_broeck,
 )
-from warplab.solver import get_energy_tensor
-from warplab.solver.utils.c4_inv import c4_inv
-from warplab.solver.utils.ricci_t import ricci_t
-from warplab.solver.utils.second_order.ricci_t_2 import ricci_t_2
+from warpica.solver import get_energy_tensor
+from warpica.solver.utils.c4_inv import c4_inv
+from warpica.solver.utils.ricci_t import ricci_t
+from warpica.solver.utils.second_order.ricci_t_2 import ricci_t_2
 
 pytestmark = pytest.mark.parity
 DIRECTORY = Path(__file__).parent / "matlab"

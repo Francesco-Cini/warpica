@@ -1,19 +1,19 @@
 import numpy as np
 import pytest
 
-from warplab.analyser.eval_metric import eval_metric
-from warplab.gpu import asarray, asnumpy
-from warplab.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
-from warplab.solver.utils.second_order.take_finite_difference_1_2 import (
+from warpica.analyser.eval_metric import eval_metric
+from warpica.gpu import asarray, asnumpy
+from warpica.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
+from warpica.solver.utils.second_order.take_finite_difference_1_2 import (
     take_finite_difference_1_2 as d12,
 )
-from warplab.solver.utils.second_order.take_finite_difference_2_2 import (
+from warpica.solver.utils.second_order.take_finite_difference_2_2 import (
     take_finite_difference_2_2 as d22,
 )
-from warplab.solver.utils.take_finite_difference_1 import (
+from warpica.solver.utils.take_finite_difference_1 import (
     take_finite_difference_1 as d14,
 )
-from warplab.solver.utils.take_finite_difference_2 import (
+from warpica.solver.utils.take_finite_difference_2 import (
     take_finite_difference_2 as d24,
 )
 
@@ -55,7 +55,7 @@ def test_all_derivative_axes(gpu_backend, first, second):
 @pytest.mark.parametrize("order", ["second", "fourth"])
 @pytest.mark.parametrize("dynamic", [False, True])
 def test_full_analysis_matches_cpu(gpu_backend, order, dynamic):
-    from warplab.units.universal_constants.c import c
+    from warpica.units.universal_constants.c import c
 
     grid = np.array([5 if dynamic else 1, 5, 5, 5])
     spacing = np.array([0.25 / c(), 0.5, 0.5, 0.5])

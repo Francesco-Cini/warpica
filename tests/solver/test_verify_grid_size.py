@@ -1,10 +1,10 @@
 import numpy as np
 import pytest
 
-from warplab.analyser import eval_metric, get_scalars
-from warplab.metrics import metric_get_minkowski
-from warplab.solver import get_energy_tensor
-from warplab.solver.utils.verify_grid_size import verify_grid_size
+from warpica.analyser import eval_metric, get_scalars
+from warpica.metrics import metric_get_minkowski
+from warpica.solver import get_energy_tensor
+from warpica.solver.utils.verify_grid_size import verify_grid_size
 
 AXES = ["time", "x", "y", "z"]
 
@@ -110,7 +110,7 @@ def test_single_sample_axes_still_work(name, shape):
 
 def test_a_moving_bubble_on_three_time_slices_is_refused():
     """Regression: with 3 slices the time derivative was silently dropped."""
-    from warplab.metrics import metric_get_alcubierre
+    from warpica.metrics import metric_get_alcubierre
 
     metric = metric_get_alcubierre(
         np.array([3, 9, 9, 9]),
