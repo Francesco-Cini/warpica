@@ -19,7 +19,7 @@ def eval_metric(
     Parameters
     ----------
     metric : dict
-        Metric metadata and components indexed as tensor[mu][nu], each
+        Metric metadata and components indexed as `tensor[mu][nu]`, each
         with shape (nt, nx, ny, nz).
     keep_positive : bool, optional
         Keep positive energy-condition values. If false, clip them to zero.

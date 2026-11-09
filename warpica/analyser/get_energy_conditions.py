@@ -53,7 +53,7 @@ def get_energy_conditions(
     energy_tensor : dict
         Stress-energy tensor; transformed to the Eulerian frame if needed.
     metric : dict
-        Metric metadata and components indexed as tensor[mu][nu], each
+        Metric metadata and components indexed as `tensor[mu][nu]`, each
         with shape (nt, nx, ny, nz).
     condition : {'Null', 'Weak', 'Strong', 'Dominant'}
         Energy condition, compared case-insensitively.

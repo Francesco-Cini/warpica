@@ -11,7 +11,7 @@ The upstream MIT copyright and permission notice is retained in the root LICENSE
 - `ricci_t_2` converts time derivatives using `c()`; Python time axis is zero.
 - `ricci_t_mem_2` preserves the upstream memory variant's different convention:
   its first coordinate is `ct`, so its first grid spacing is a length.
-- `ein_e_2` preserves the upstream rounded constants and unit formula;
+- `ein_e_2` takes G and c from `warpica.units`, like the fourth-order path, and keeps the upstream unit formula;
   `units` has three entries (length, mass, time), with SI defaults `[1, 1, 1]`.
 - Determinants and inverses work pointwise for nested component lists or arrays.
 - Array allocation follows the input backend; DirectML hardware checks cover both orders; CUDA checks require an NVIDIA machine (see docs/gpu.md).

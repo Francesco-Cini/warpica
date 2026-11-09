@@ -50,6 +50,6 @@ At 96³, the second-order worker completed warmup but failed during a timed GPU 
 python -m benchmarks.plot_scaling benchmarks/results/rx580-scaling.json --output docs/assets/rx580-scaling.png
 ```
 
-The spatial domain spans eight units with one time slice, Alcubierre velocity 0.2, radius 1 and sigma 1. Metric construction and backend initialization are excluded. Timed calls include transfers, synchronization, host conversion and final index contraction. Each grid/order starts in a fresh subprocess. See [GPU benchmark methodology](gpu.md#measuring-the-crossover) and [all samples, environment versions and solver source hashes](../benchmarks/results/rx580-scaling.json).
+The spatial domain spans eight units with one time slice, Alcubierre velocity 0.2, radius 1 and sigma 1. Metric construction and backend initialization are excluded. Timed calls include transfers, synchronization, host conversion and final index contraction. Each grid/order starts in a fresh subprocess. See [GPU benchmark methodology](gpu.md#measuring-the-crossover) and [all samples, environment versions and solver source hashes](https://github.com/Francesco-Cini/warpica/blob/main/benchmarks/results/rx580-scaling.json).
 
 These results apply to this static workload, current machine conditions, installed NumPy/DirectML versions and solver implementation. They do not establish crossover sizes for CUDA float64, time-dependent grids or the complete analysis pipeline.

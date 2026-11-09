@@ -23,7 +23,7 @@ def get_energy_tensor(
     Parameters
     ----------
     metric : dict
-        Metric metadata and components indexed as tensor[mu][nu], each
+        Metric metadata and components indexed as `tensor[mu][nu]`, each
         with shape (nt, nx, ny, nz).
     diff_order : {'second', 'fourth'}, optional
         Finite-difference accuracy order. Default is 'fourth'.

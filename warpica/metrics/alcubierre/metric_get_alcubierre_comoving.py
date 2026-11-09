@@ -39,7 +39,7 @@ def metric_get_alcubierre_comoving(
     -------
     metric : dict
         Cartesian covariant metric, grid scaling, and identifying metadata.
-        Components use tensor[mu][nu] with shape (nt, nx, ny, nz).
+        Components use `tensor[mu][nu]` with shape (nt, nx, ny, nz).
 
     Notes
     -----

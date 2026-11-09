@@ -189,3 +189,6 @@ figures/
 
 # Default output of benchmarks/backend_comparison.py
 benchmarks/results/backend-results.json
+
+# MkDocs build output
+site/

@@ -99,3 +99,18 @@ document that distinction when extending those interfaces.
 For readability changes, preserve the order of floating-point operations and
 run the existing numerical regression tests. GPU tests require an explicitly
 selected hardware backend; see [GPU testing](gpu.md).
+
+## Documentation site
+
+The site is built with MkDocs (Material theme) and mkdocstrings, which turns the
+docstrings into the API reference. Preview it locally:
+
+```bash
+python -m pip install -e ".[docs,plot]"
+mkdocs serve
+```
+
+CI runs `mkdocs build --strict`, so a broken link or a docstring that does not
+resolve fails the build. Pages outside `docs/` (the changelog, `CONTRIBUTING.md`)
+are linked by their GitHub URL, because MkDocs only serves files in `docs/`.
+New public functions need a line in `docs/reference.md`.
