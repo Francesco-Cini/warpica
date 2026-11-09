@@ -51,9 +51,9 @@ def available_memory():
 
 
 def run_case(size, order, backend, repeats, warmups):
-    from warplab.gpu import asarray, asnumpy
-    from warplab.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
-    from warplab.solver.get_energy_tensor import get_energy_tensor
+    from warpica.gpu import asarray, asnumpy
+    from warpica.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
+    from warpica.solver.get_energy_tensor import get_energy_tensor
 
     asnumpy(asarray(np.ones(1), library=backend))
     if backend == "torch-directml":

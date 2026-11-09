@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from warplab.gpu import asarray, asnumpy
+from warpica.gpu import asarray, asnumpy
 
 
 @pytest.mark.parametrize("library", [None, "numpy"])

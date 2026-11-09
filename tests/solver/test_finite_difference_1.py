@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from warplab.solver.utils.take_finite_difference_1 import (
+from warpica.solver.utils.take_finite_difference_1 import (
     take_finite_difference_1 as derivative,
 )
 

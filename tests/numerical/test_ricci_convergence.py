@@ -1,10 +1,10 @@
 import numpy as np
 import pytest
 
-from warplab.solver.utils.c4_inv import c4_inv
-from warplab.solver.utils.ricci_t import ricci_t
-from warplab.solver.utils.second_order.ricci_t_2 import ricci_t_2
-from warplab.units.universal_constants.c import c
+from warpica.solver.utils.c4_inv import c4_inv
+from warpica.solver.utils.ricci_t import ricci_t
+from warpica.solver.utils.second_order.ricci_t_2 import ricci_t_2
+from warpica.units.universal_constants.c import c
 
 pytestmark = pytest.mark.numerical
 

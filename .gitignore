@@ -186,3 +186,6 @@ cython_debug/
 .validation-output/
 tests/reference/matlab/raw.json
 figures/
+
+# Default output of benchmarks/backend_comparison.py
+benchmarks/results/backend-results.json

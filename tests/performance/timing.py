@@ -18,9 +18,9 @@ from pathlib import Path
 
 import numpy as np
 
-from warplab.analyser import do_frame_transfer, get_energy_conditions, get_scalars
-from warplab.metrics import metric_get_alcubierre
-from warplab.solver import get_energy_tensor
+from warpica.analyser import do_frame_transfer, get_energy_conditions, get_scalars
+from warpica.metrics import metric_get_alcubierre
+from warpica.solver import get_energy_tensor
 
 BASELINE_FILE = Path(__file__).with_name("baseline.json")
 REPEATS = 5

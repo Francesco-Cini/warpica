@@ -7,11 +7,11 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-from warplab.metrics import metric_get_minkowski
-from warplab.visualiser import plot_tensor, plot_three_plus_one
-from warplab.visualiser.utils.get_slice_data import get_slice_data
-from warplab.visualiser.utils.label_cartesian_axis import label_cartesian_axis
-from warplab.visualiser.utils.plot_component import plot_component
+from warpica.metrics import metric_get_minkowski
+from warpica.visualiser import plot_tensor, plot_three_plus_one
+from warpica.visualiser.utils.get_slice_data import get_slice_data
+from warpica.visualiser.utils.label_cartesian_axis import label_cartesian_axis
+from warpica.visualiser.utils.plot_component import plot_component
 
 
 @pytest.fixture(autouse=True)

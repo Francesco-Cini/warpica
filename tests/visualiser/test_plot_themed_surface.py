@@ -7,7 +7,7 @@ import numpy as np
 from matplotlib.colors import to_hex
 from matplotlib.ticker import MaxNLocator, ScalarFormatter
 
-from warplab.visualiser.utils.plot_themed_surface import plot_themed_surface
+from warpica.visualiser.utils.plot_themed_surface import plot_themed_surface
 
 DARK_BACKGROUND = "#0e1117"
 DARK_TEXT = "#e6edf3"

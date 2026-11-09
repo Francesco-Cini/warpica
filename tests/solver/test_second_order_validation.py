@@ -3,10 +3,10 @@
 import numpy as np
 import pytest
 
-from warplab.metrics import metric_get_alcubierre
-from warplab.solver.utils.second_order.c4_inv_2 import c4_inv_2
-from warplab.solver.utils.second_order.c_det_2 import c_det_2
-from warplab.solver.utils.second_order.met_2_den_2 import met_2_den_2
+from warpica.metrics import metric_get_alcubierre
+from warpica.solver.utils.second_order.c4_inv_2 import c4_inv_2
+from warpica.solver.utils.second_order.c_det_2 import c_det_2
+from warpica.solver.utils.second_order.met_2_den_2 import met_2_den_2
 
 CELLS = (2, 2, 2)
 

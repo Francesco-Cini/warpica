@@ -5,9 +5,9 @@ from pathlib import Path
 
 import pytest
 
-import warplab
+import warpica
 
-PACKAGE = Path(warplab.__file__).parent
+PACKAGE = Path(warpica.__file__).parent
 FORBIDDEN = {"Exception", "BaseException", "Warning"}
 
 

@@ -2,7 +2,7 @@
 
 Examples are small programs you run to learn the API. Run these commands
 from the repository root after installing the project (`pip install -e .`).
-They do not require copying files into `warplab/` or editing `sys.path`.
+They do not require copying files into `warpica/` or editing `sys.path`.
 
 | Command | Purpose |
 | --- | --- |
@@ -24,11 +24,15 @@ Generator sample coordinates follow WarpFactory's `(index + 1)*spacing -
 world_centre` convention, with Python array indices starting at zero.
 For a centered grid use `(grid_size + 1)/2 * spacing`.
 Time spacing is in seconds; the solver converts derivatives to the `ct`
-basis. At least 3 samples are needed along a differentiated axis for second
-order and 5 for fourth order. Shorter axes produce zero derivatives.
+basis. A differentiated axis needs at least 3 samples for second order and 5 for
+fourth order; an axis of 2 to 4 samples (fourth order) or 2 (second order) raises
+`ValueError`, and a single sample is a snapshot with no derivatives along it.
 A one-time-slice example is a spatial snapshot and cannot resolve time
 variation of a moving bubble.
 
 These small grids and direction counts keep examples quick; they are not
 converged research configurations. See `docs/testing.md` before interpreting
 numerical results or choosing tolerances.
+
+`examples/analysis/compare_orders.py` imports the finite-difference kernels
+directly because it measures them; those are internal helpers, not public API.

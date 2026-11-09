@@ -3,10 +3,10 @@ import copy
 import numpy as np
 import pytest
 
-from warplab.analyser import do_frame_transfer, eval_metric, get_energy_conditions
-from warplab.metrics import metric_get_minkowski
-from warplab.solver import get_energy_tensor
-from warplab.solver.verify_tensor import verify_tensor
+from warpica.analyser import do_frame_transfer, eval_metric, get_energy_conditions
+from warpica.metrics import metric_get_minkowski
+from warpica.solver import get_energy_tensor
+from warpica.solver.verify_tensor import verify_tensor
 
 
 def valid_metric():

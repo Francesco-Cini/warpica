@@ -6,12 +6,12 @@ import itertools
 import numpy as np
 import pytest
 
-from warplab.analyser import change_tensor_index
-from warplab.analyser.utils.get_eulerian_transformation_matrix import (
+from warpica.analyser import change_tensor_index
+from warpica.analyser.utils.get_eulerian_transformation_matrix import (
     get_eulerian_transformation_matrix,
 )
-from warplab.analyser.utils.get_inner_product import get_inner_product
-from warplab.analyser.utils.get_trace import get_trace
+from warpica.analyser.utils.get_inner_product import get_inner_product
+from warpica.analyser.utils.get_trace import get_trace
 
 ETA = np.diag([-1.0, 1, 1, 1])
 SHAPE = (1, 2, 2, 2)
