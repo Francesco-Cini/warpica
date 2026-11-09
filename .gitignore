@@ -179,3 +179,16 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+# Local validation environments and downloaded reference implementation
+.venv-*/
+.reference-source/
+.release-check/
+.validation-output/
+tests/reference/matlab/raw.json
+figures/
+
+# Default output of benchmarks/backend_comparison.py
+benchmarks/results/backend-results.json
+
+# MkDocs build output
+site/

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions about WarpFactory itself
+    url: https://github.com/NerdsWithAttitudes/WarpFactory
+    about: Physics or MATLAB questions belong with the upstream project.

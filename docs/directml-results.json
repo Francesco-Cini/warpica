@@ -1,0 +1,29 @@
+{
+  "python": "3.12.13",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "backend": "torch-directml",
+  "grid": [
+    1,
+    5,
+    5,
+    5
+  ],
+  "repeats": 2,
+  "results": [
+    {
+      "order": "second",
+      "cpu_seconds": 0.10718844999792054,
+      "device_seconds": 9.55720414998359,
+      "cpu_over_device_speed_ratio": 0.011215460956550204,
+      "relative_max_error": 6.074563991972339e-07
+    },
+    {
+      "order": "fourth",
+      "cpu_seconds": 0.0570296999940183,
+      "device_seconds": 12.79868214999442,
+      "cpu_over_device_speed_ratio": 0.004455904078690099,
+      "relative_max_error": 8.200644089689271e-07
+    }
+  ],
+  "device": "Radeon RX 580 Series"
+}

@@ -1,0 +1,946 @@
+{
+  "created_utc": "2026-09-24T13:39:43.081419+00:00",
+  "python": "3.12.13",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "processor": "AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD",
+  "packages": {
+    "numpy": "2.5.3",
+    "array-api-compat": "1.15.0",
+    "torch": "2.4.1",
+    "torch-directml": "0.2.5.dev240914"
+  },
+  "backend": "torch-directml",
+  "warmups": 1,
+  "domain": {
+    "spatial_extent": 8,
+    "time_slices": 1,
+    "velocity": 0.2,
+    "R": 1,
+    "sigma": 1
+  },
+  "timing": "median end-to-end get_energy_tensor including transfers and host conversion; excludes metric construction",
+  "hardware": {
+    "cpu": "AMD Ryzen 5 3600 6-Core Processor",
+    "gpu": "Radeon RX 580 Series",
+    "installed_ram_gib": 15.9521,
+    "gpu_vram_gib": 8,
+    "available_host_ram_gib_before_sweep": 5.56
+  },
+  "precision": {
+    "cpu": "float64",
+    "device_curvature": "float32",
+    "device_postprocessing": "float64 on host"
+  },
+  "batches": {
+    "sweep": {
+      "created_utc": "2026-09-24T13:39:43.081419+00:00",
+      "repeats": 3,
+      "warmups": 1
+    },
+    "refinement": {
+      "created_utc": "2026-09-24T13:50:19.885640+00:00",
+      "repeats": 5,
+      "warmups": 1
+    },
+    "crossover": {
+      "created_utc": "2026-09-24T13:56:15.175729+00:00",
+      "repeats": 5,
+      "warmups": 1
+    }
+  },
+  "results": [
+    {
+      "size": 5,
+      "grid": [
+        1,
+        5,
+        5,
+        5
+      ],
+      "points": 125,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.014565600082278252,
+      "device_seconds": 2.4079208000330254,
+      "cpu_over_device_speed_ratio": 0.006049036198399249,
+      "samples_seconds": {
+        "cpu": [
+          0.014255700050853193,
+          0.014603699906729162,
+          0.014565600082278252
+        ],
+        "device": [
+          2.408708400093019,
+          2.4079208000330254,
+          2.403313899994828
+        ]
+      },
+      "relative_max_error": 4.225550240667736e-07,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": true,
+      "batch": "sweep"
+    },
+    {
+      "size": 5,
+      "grid": [
+        1,
+        5,
+        5,
+        5
+      ],
+      "points": 125,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.014398000086657703,
+      "device_seconds": 2.1238906000507995,
+      "cpu_over_device_speed_ratio": 0.0067790686047168956,
+      "samples_seconds": {
+        "cpu": [
+          0.014221100020222366,
+          0.014398000086657703,
+          0.014634799910709262
+        ],
+        "device": [
+          2.1238906000507995,
+          2.1288120999233797,
+          2.1199879000196233
+        ]
+      },
+      "relative_max_error": 2.750690836356304e-07,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": true,
+      "batch": "sweep"
+    },
+    {
+      "size": 8,
+      "grid": [
+        1,
+        8,
+        8,
+        8
+      ],
+      "points": 512,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.018974500009790063,
+      "device_seconds": 2.410881500109099,
+      "cpu_over_device_speed_ratio": 0.007870357796072274,
+      "samples_seconds": {
+        "cpu": [
+          0.018974500009790063,
+          0.018733599921688437,
+          0.019648800021968782
+        ],
+        "device": [
+          2.4176120000192896,
+          2.4009991000639275,
+          2.410881500109099
+        ]
+      },
+      "relative_max_error": 1.0286920071496823e-06,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": true,
+      "batch": "sweep"
+    },
+    {
+      "size": 8,
+      "grid": [
+        1,
+        8,
+        8,
+        8
+      ],
+      "points": 512,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.018781900056637824,
+      "device_seconds": 2.198890300001949,
+      "cpu_over_device_speed_ratio": 0.00854153572673506,
+      "samples_seconds": {
+        "cpu": [
+          0.01877189998049289,
+          0.018781900056637824,
+          0.01896340004168451
+        ],
+        "device": [
+          2.198890300001949,
+          2.1882288999622688,
+          2.2035622999537736
+        ]
+      },
+      "relative_max_error": 1.42894488152138e-06,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": true,
+      "batch": "sweep"
+    },
+    {
+      "size": 16,
+      "grid": [
+        1,
+        16,
+        16,
+        16
+      ],
+      "points": 4096,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.03966860007494688,
+      "device_seconds": 2.4098536000819877,
+      "cpu_over_device_speed_ratio": 0.016460999985060204,
+      "samples_seconds": {
+        "cpu": [
+          0.03966860007494688,
+          0.03887729998677969,
+          0.040220199967734516
+        ],
+        "device": [
+          2.414685899973847,
+          2.409807899966836,
+          2.4098536000819877
+        ]
+      },
+      "relative_max_error": 3.017149942449278e-06,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": true,
+      "batch": "sweep"
+    },
+    {
+      "size": 16,
+      "grid": [
+        1,
+        16,
+        16,
+        16
+      ],
+      "points": 4096,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.03734290006104857,
+      "device_seconds": 2.1960930000059307,
+      "cpu_over_device_speed_ratio": 0.01700424347281637,
+      "samples_seconds": {
+        "cpu": [
+          0.03714410006068647,
+          0.03811399999540299,
+          0.03734290006104857
+        ],
+        "device": [
+          2.197077800054103,
+          2.1960930000059307,
+          2.195202899980359
+        ]
+      },
+      "relative_max_error": 3.917236273970373e-06,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": true,
+      "batch": "sweep"
+    },
+    {
+      "size": 24,
+      "grid": [
+        1,
+        24,
+        24,
+        24
+      ],
+      "points": 13824,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.09162520000245422,
+      "device_seconds": 2.433834500028752,
+      "cpu_over_device_speed_ratio": 0.03764643816223816,
+      "samples_seconds": {
+        "cpu": [
+          0.09096789988689125,
+          0.09162520000245422,
+          0.09473919996526092
+        ],
+        "device": [
+          2.429788399953395,
+          2.433834500028752,
+          2.496370799955912
+        ]
+      },
+      "relative_max_error": 5.804818466442039e-06,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": true,
+      "batch": "sweep"
+    },
+    {
+      "size": 24,
+      "grid": [
+        1,
+        24,
+        24,
+        24
+      ],
+      "points": 13824,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.0879352999618277,
+      "device_seconds": 2.209635699982755,
+      "cpu_over_device_speed_ratio": 0.03979628857486055,
+      "samples_seconds": {
+        "cpu": [
+          0.08859279996249825,
+          0.0879352999618277,
+          0.08691100007854402
+        ],
+        "device": [
+          2.221184700028971,
+          2.2073757000034675,
+          2.209635699982755
+        ]
+      },
+      "relative_max_error": 8.861387937234603e-06,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": true,
+      "batch": "sweep"
+    },
+    {
+      "size": 32,
+      "grid": [
+        1,
+        32,
+        32,
+        32
+      ],
+      "points": 32768,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.2029680999694392,
+      "device_seconds": 2.574861799948849,
+      "cpu_over_device_speed_ratio": 0.07882679372285972,
+      "samples_seconds": {
+        "cpu": [
+          0.20139699999708682,
+          0.2029680999694392,
+          0.23586839996278286
+        ],
+        "device": [
+          2.574861799948849,
+          2.6825481000123546,
+          2.574703999911435
+        ]
+      },
+      "relative_max_error": 1.0321711744742148e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": true,
+      "batch": "sweep"
+    },
+    {
+      "size": 32,
+      "grid": [
+        1,
+        32,
+        32,
+        32
+      ],
+      "points": 32768,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.21056310005951673,
+      "device_seconds": 2.3546182001009583,
+      "cpu_over_device_speed_ratio": 0.08942558078014026,
+      "samples_seconds": {
+        "cpu": [
+          0.2028898000717163,
+          0.21056310005951673,
+          0.2130839000456035
+        ],
+        "device": [
+          2.347634600009769,
+          2.3814307000720873,
+          2.3546182001009583
+        ]
+      },
+      "relative_max_error": 1.761010000351218e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": true,
+      "batch": "sweep"
+    },
+    {
+      "size": 48,
+      "grid": [
+        1,
+        48,
+        48,
+        48
+      ],
+      "points": 110592,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.9158990000141785,
+      "device_seconds": 2.8470203999895602,
+      "cpu_over_device_speed_ratio": 0.32170440366972325,
+      "samples_seconds": {
+        "cpu": [
+          0.8711493000155315,
+          0.9158990000141785,
+          0.9332980000181124
+        ],
+        "device": [
+          2.8470203999895602,
+          2.8440613999264315,
+          2.8592257000273094
+        ]
+      },
+      "relative_max_error": 2.2107646236081805e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "sweep"
+    },
+    {
+      "size": 48,
+      "grid": [
+        1,
+        48,
+        48,
+        48
+      ],
+      "points": 110592,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.7727693000342697,
+      "device_seconds": 2.618846800061874,
+      "cpu_over_device_speed_ratio": 0.2950799947580026,
+      "samples_seconds": {
+        "cpu": [
+          0.7755597000941634,
+          0.7727693000342697,
+          0.75458599999547
+        ],
+        "device": [
+          2.618846800061874,
+          2.6304556999821216,
+          2.6154893999919295
+        ]
+      },
+      "relative_max_error": 4.4744014597476796e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "sweep"
+    },
+    {
+      "size": 50,
+      "grid": [
+        1,
+        50,
+        50,
+        50
+      ],
+      "points": 125000,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 0.9434980000369251,
+      "device_seconds": 2.8585281000705436,
+      "cpu_over_device_speed_ratio": 0.3300642732928325,
+      "samples_seconds": {
+        "cpu": [
+          1.052964499918744,
+          0.8566456999396905,
+          0.959606199990958,
+          0.8967001000419259,
+          0.9434980000369251
+        ],
+        "device": [
+          2.848101499956101,
+          2.8585281000705436,
+          2.8648094999371096,
+          2.9531421000137925,
+          2.7899547000415623
+        ]
+      },
+      "relative_max_error": 2.3905709487202725e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "crossover"
+    },
+    {
+      "size": 50,
+      "grid": [
+        1,
+        50,
+        50,
+        50
+      ],
+      "points": 125000,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 1.0012184999650344,
+      "device_seconds": 2.6893452999647707,
+      "cpu_over_device_speed_ratio": 0.37229079507869445,
+      "samples_seconds": {
+        "cpu": [
+          1.0012184999650344,
+          1.037502899998799,
+          0.8945499999681488,
+          0.9989211999345571,
+          1.0108891999116167
+        ],
+        "device": [
+          2.690284200012684,
+          2.9107258999720216,
+          2.6719139999477193,
+          2.5957655999809504,
+          2.6893452999647707
+        ]
+      },
+      "relative_max_error": 5.066781189973067e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "crossover"
+    },
+    {
+      "size": 51,
+      "grid": [
+        1,
+        51,
+        51,
+        51
+      ],
+      "points": 132651,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 4.236705499934033,
+      "device_seconds": 3.114190599997528,
+      "cpu_over_device_speed_ratio": 1.3604515728540816,
+      "samples_seconds": {
+        "cpu": [
+          5.420041000004858,
+          5.130906199919991,
+          4.236705499934033,
+          3.747678800020367,
+          3.8016101999673992
+        ],
+        "device": [
+          3.114190599997528,
+          3.139869299950078,
+          3.130947500001639,
+          2.940483200014569,
+          2.9663422000594437
+        ]
+      },
+      "relative_max_error": 2.6000104315552658e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "crossover"
+    },
+    {
+      "size": 51,
+      "grid": [
+        1,
+        51,
+        51,
+        51
+      ],
+      "points": 132651,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 3.338850000058301,
+      "device_seconds": 2.7719873000169173,
+      "cpu_over_device_speed_ratio": 1.20449686044302,
+      "samples_seconds": {
+        "cpu": [
+          3.338850000058301,
+          3.3105463999090716,
+          3.2925460999831557,
+          3.4289186999667436,
+          3.4220381999621168
+        ],
+        "device": [
+          2.761273100040853,
+          2.7719873000169173,
+          2.7768976000370458,
+          2.84750370006077,
+          2.7137690000236034
+        ]
+      },
+      "relative_max_error": 5.405273412470211e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "crossover"
+    },
+    {
+      "size": 52,
+      "grid": [
+        1,
+        52,
+        52,
+        52
+      ],
+      "points": 140608,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 4.617926100036129,
+      "device_seconds": 3.0028793000383303,
+      "cpu_over_device_speed_ratio": 1.5378327393902191,
+      "samples_seconds": {
+        "cpu": [
+          4.551013600081205,
+          4.667347799986601,
+          4.507967800018378,
+          4.633342599961907,
+          4.617926100036129
+        ],
+        "device": [
+          3.279740300029516,
+          3.251763900043443,
+          2.978107300004922,
+          3.0028793000383303,
+          2.98678270005621
+        ]
+      },
+      "relative_max_error": 2.4943660891013592e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "refinement"
+    },
+    {
+      "size": 52,
+      "grid": [
+        1,
+        52,
+        52,
+        52
+      ],
+      "points": 140608,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 3.955598800093867,
+      "device_seconds": 2.8640870000235736,
+      "cpu_over_device_speed_ratio": 1.381102878530334,
+      "samples_seconds": {
+        "cpu": [
+          4.046339799999259,
+          3.9783532000146806,
+          3.9239460999378935,
+          3.9422021999489516,
+          3.955598800093867
+        ],
+        "device": [
+          2.9561074000084773,
+          2.8640870000235736,
+          2.845644299988635,
+          2.9748557000420988,
+          2.7670802999055013
+        ]
+      },
+      "relative_max_error": 5.64273325032647e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "refinement"
+    },
+    {
+      "size": 56,
+      "grid": [
+        1,
+        56,
+        56,
+        56
+      ],
+      "points": 175616,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 5.631385499960743,
+      "device_seconds": 3.33915779995732,
+      "cpu_over_device_speed_ratio": 1.6864688155895842,
+      "samples_seconds": {
+        "cpu": [
+          5.683405499905348,
+          5.631385499960743,
+          5.685158799984492,
+          5.584603799972683,
+          5.601713199983351
+        ],
+        "device": [
+          3.4522360999835655,
+          3.33915779995732,
+          3.287220200058073,
+          3.2949170999927446,
+          3.3640418999129906
+        ]
+      },
+      "relative_max_error": 2.917812437173721e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "refinement"
+    },
+    {
+      "size": 56,
+      "grid": [
+        1,
+        56,
+        56,
+        56
+      ],
+      "points": 175616,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 5.570987700019032,
+      "device_seconds": 3.1793593999464065,
+      "cpu_over_device_speed_ratio": 1.7522359064259738,
+      "samples_seconds": {
+        "cpu": [
+          6.896937199984677,
+          5.570987700019032,
+          5.705596499959938,
+          5.350182000081986,
+          5.3261127000441775
+        ],
+        "device": [
+          3.200584699981846,
+          3.203449600026943,
+          3.042568999924697,
+          3.049646799918264,
+          3.1793593999464065
+        ]
+      },
+      "relative_max_error": 5.828227782583175e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "refinement"
+    },
+    {
+      "size": 60,
+      "grid": [
+        1,
+        60,
+        60,
+        60
+      ],
+      "points": 216000,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 7.1623563000466675,
+      "device_seconds": 3.5142961000092328,
+      "cpu_over_device_speed_ratio": 2.0380628428059464,
+      "samples_seconds": {
+        "cpu": [
+          7.057096800068393,
+          7.342425499926321,
+          7.1623563000466675,
+          7.039136100094765,
+          7.552897900110111
+        ],
+        "device": [
+          3.808199799968861,
+          3.6023018000414595,
+          3.5142961000092328,
+          3.427851499989629,
+          3.195495399995707
+        ]
+      },
+      "relative_max_error": 3.2963521013539504e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "refinement"
+    },
+    {
+      "size": 60,
+      "grid": [
+        1,
+        60,
+        60,
+        60
+      ],
+      "points": 216000,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 6.798862800002098,
+      "device_seconds": 3.3542702000122517,
+      "cpu_over_device_speed_ratio": 2.0269275862085485,
+      "samples_seconds": {
+        "cpu": [
+          6.742766099981964,
+          6.67996320000384,
+          6.798862800002098,
+          6.816337900003418,
+          7.0262725999346
+        ],
+        "device": [
+          3.3989908000221476,
+          3.3542702000122517,
+          3.213896300061606,
+          3.444615599932149,
+          3.1220007999800146
+        ]
+      },
+      "relative_max_error": 7.26391730682361e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "refinement"
+    },
+    {
+      "size": 64,
+      "grid": [
+        1,
+        64,
+        64,
+        64
+      ],
+      "points": 262144,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 9.053760000038892,
+      "device_seconds": 3.8048884000163525,
+      "cpu_over_device_speed_ratio": 2.3795073726735274,
+      "samples_seconds": {
+        "cpu": [
+          9.053760000038892,
+          10.38550800003577,
+          8.603965399903245
+        ],
+        "device": [
+          3.91515180002898,
+          3.8048884000163525,
+          3.445658699958585
+        ]
+      },
+      "relative_max_error": 3.843725528048467e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "sweep"
+    },
+    {
+      "size": 64,
+      "grid": [
+        1,
+        64,
+        64,
+        64
+      ],
+      "points": 262144,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 8.306238499935716,
+      "device_seconds": 3.6684569000499323,
+      "cpu_over_device_speed_ratio": 2.26423227156428,
+      "samples_seconds": {
+        "cpu": [
+          8.306238499935716,
+          8.22793409996666,
+          8.79201880004257
+        ],
+        "device": [
+          3.6977008000249043,
+          3.6684569000499323,
+          3.2699588999385014
+        ]
+      },
+      "relative_max_error": 8.30948895685895e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "sweep"
+    },
+    {
+      "size": 80,
+      "grid": [
+        1,
+        80,
+        80,
+        80
+      ],
+      "points": 512000,
+      "order": "second",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 19.0571766999783,
+      "device_seconds": 5.225186399999075,
+      "cpu_over_device_speed_ratio": 3.64717643374056,
+      "samples_seconds": {
+        "cpu": [
+          19.0571766999783,
+          19.491924299974926,
+          18.941202500020154
+        ],
+        "device": [
+          4.7361001000972465,
+          5.53771509998478,
+          5.225186399999075
+        ]
+      },
+      "relative_max_error": 6.818361640826541e-05,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "sweep"
+    },
+    {
+      "size": 80,
+      "grid": [
+        1,
+        80,
+        80,
+        80
+      ],
+      "points": 512000,
+      "order": "fourth",
+      "device": "Radeon RX 580 Series",
+      "cpu_seconds": 17.56557239999529,
+      "device_seconds": 4.37101449992042,
+      "cpu_over_device_speed_ratio": 4.018648851500056,
+      "samples_seconds": {
+        "cpu": [
+          17.56557239999529,
+          17.126271300017834,
+          17.615074299974367
+        ],
+        "device": [
+          4.37101449992042,
+          4.30704029998742,
+          4.824225299991667
+        ]
+      },
+      "relative_max_error": 0.00013114844657261007,
+      "error_tolerance": 2e-05,
+      "accuracy_passed": false,
+      "batch": "sweep"
+    }
+  ],
+  "failures": [
+    {
+      "size": 96,
+      "order": "second",
+      "reason": "RuntimeError: Could not allocate tensor with 14155776 bytes. There is not enough GPU video memory available!",
+      "phase": "timed solve after completed warmup",
+      "batch": "sweep"
+    }
+  ],
+  "unattempted_sizes": [
+    112,
+    128
+  ],
+  "solver_source_sha256": {
+    "pywarp/solver/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pywarp/solver/get_energy_tensor.py": "ee2aa921ed10834db73607d3b88829e935a2174062867c18fda8190208da0a29",
+    "pywarp/solver/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pywarp/solver/utils/c3_inv.py": "1373d3c5b42ee579597f670132e7f725dd6df733a1ba3420e7496bc5010df4c2",
+    "pywarp/solver/utils/c4_inv.py": "aae70a88efc5cdad45f24b130b41f1e5bf43b82850de5cc272532410051407fd",
+    "pywarp/solver/utils/c_det.py": "7b5bec27111a9fafebd84bc9359871816f8c57af462b3b0549aca7d0fb3ac407",
+    "pywarp/solver/utils/cov_div.py": "def8aeb2565a56c59012158977194148ddd8cf99409846467dda6479186fc187",
+    "pywarp/solver/utils/ein_e.py": "9dba006f336b0c899e3a802462151bc7f232e7f9e0fa0c5b6529001fa1533ee7",
+    "pywarp/solver/utils/ein_t.py": "82975d3175d6795675f3c6d7decdda2c09383269637ab3f0477dc24ae48c2078",
+    "pywarp/solver/utils/get_christoffel_sym.py": "3c088395b96391335fb33c935d9f1c46c04a3895c46b39ff99c2b554b43bf6bb",
+    "pywarp/solver/utils/is_field.py": "69a986d0cb7e958df776e43a62b0b3f2f6d0efd38595b88d2e6c98468367eac3",
+    "pywarp/solver/utils/met_2_den.py": "53afe8c8cff8aeed9847cc58eed2e394217ac3a73a78b14836d9c67adeb91913",
+    "pywarp/solver/utils/ricci_contractions.py": "1b0f996b1b336f6cca59e43bf7b93ecbba99b8137bd5527343a1b20e71bc2a27",
+    "pywarp/solver/utils/ricci_s.py": "abf2f0ba2940d2989ee1cc12238a8764dcc3cf22587901e4f5a3893055606f39",
+    "pywarp/solver/utils/ricci_t.py": "f840e2e62a88d07843f7488b019be5fb128e5ce3c99aca02a85c0f0c808155df",
+    "pywarp/solver/utils/second_order/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pywarp/solver/utils/second_order/c4_inv_2.py": "ff36bb75f6b5132aab8746127a639dedd7167ea38b69fbe5977752c75ddd887b",
+    "pywarp/solver/utils/second_order/c_det_2.py": "0fef404c88b70c28192b1a5c7033d774100cd99de861cfe5835376cbf2f47ccb",
+    "pywarp/solver/utils/second_order/ein_e_2.py": "24309518da4d0c6c61bf1aaf76668b2b1fe4ff2576a06b169711eb6f03b257fa",
+    "pywarp/solver/utils/second_order/ein_t_2.py": "868a08b60f13cc1c7f24c5afa7ca3c3075b58bbae9af73c0e248b2f5218294e5",
+    "pywarp/solver/utils/second_order/met_2_den_2.py": "4f2ac4176b57e033f7ee8a9767cb1dbc985be36e6989864a512a58737dff4614",
+    "pywarp/solver/utils/second_order/ricci_s_2.py": "c9f2254613b0860d3adfe97d8f5ad35d8e6114258f068a895cf18cb823e2b2fa",
+    "pywarp/solver/utils/second_order/ricci_t_2.py": "eaa100b3eb438bc3f54a6caec10ee041f2b30c0125b00713056542a668f01517",
+    "pywarp/solver/utils/second_order/ricci_t_mem_2.py": "35bd229949ab127e310d97c238257f5e456a224c77533c667ffae90af1bc0e29",
+    "pywarp/solver/utils/second_order/take_finite_difference_1_2.py": "c2ecd5843ec5894934440344d0434cef05735cbb1ea733911d4b368bfdd9c7d0",
+    "pywarp/solver/utils/second_order/take_finite_difference_2_2.py": "83036640035927f9847e68c9f0ec88fb7f17c431bc2b8a1281e8cacfe48099b9",
+    "pywarp/solver/utils/strcmpi.py": "22fc2cbe97ee5cbdca2acf133390c45d1c356671d6383747eb3a4b35032ae28c",
+    "pywarp/solver/utils/take_finite_difference_1.py": "c4a6ea15c124fb852493b46c87c4b27461346ce6255e4c1a419c01b6caebd256",
+    "pywarp/solver/utils/take_finite_difference_2.py": "da48c47e0352ebad3fcb22179fd7b617ea5244da9536424f02ac27283b1054fe",
+    "pywarp/solver/utils/tensor_cell_2_array.py": "a039896ecc8d14511c7008aec494246a6afadee3c9af84878876da813f8f2a06",
+    "pywarp/solver/utils/trilinear_interp.py": "fb697eab3d18d43bcc0f2c43afdc71e88227fabfa5fc1fa421f8306de4498b66",
+    "pywarp/solver/verify_tensor.py": "7a2990f4e5f17b02cbfa77abb4ba8610299350f595ce7586d9dadbbb5ec8655b"
+  }
+}

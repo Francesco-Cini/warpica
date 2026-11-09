@@ -1,0 +1,140 @@
+# Public API and conventions
+
+## What is public
+
+The supported API is the set of names in `__all__` of these packages. They
+are what the version number promises to keep stable.
+
+| Package | Public names |
+| --- | --- |
+| `warpica.metrics` | `metric_get_minkowski`, `metric_get_alcubierre`, `metric_get_lentz`, `metric_get_modified_time`, `metric_get_van_den_broeck`, `metric_get_schwarzschild`, the `*_comoving` variants, `metric_get_warp_shell_comoving`, `custom_metric`, `three_plus_one_builder`, `three_plus_one_decomposer` |
+| `warpica.solver` | `get_energy_tensor` |
+| `warpica.analyser` | `eval_metric`, `get_energy_conditions`, `get_scalars`, `get_momentum_flow_lines`, `change_tensor_index`, `do_frame_transfer` |
+| `warpica.units` | `c`, `G` |
+| `warpica.visualiser` | `plot_tensor`, `plot_three_plus_one` (needs the `plot` extra) |
+
+```python
+from warpica.metrics import metric_get_alcubierre
+from warpica.solver import get_energy_tensor
+from warpica.analyser import eval_metric
+```
+
+The metrics, solver and analyser names are also available from the top-level
+`warpica` package, which loads them on first use. `import warpica` itself
+imports neither Matplotlib nor any GPU library.
+
+Everything else is internal and may change without notice: the helper
+modules under every `utils` directory, `warpica.solver.utils.second_order`
+and `warpica.gpu`. Deep paths such as `warpica.solver.get_energy_tensor` keep
+working, but only the names listed above are covered by the compatibility
+promise.
+
+## Type hints
+
+The package ships a `py.typed` marker, and every public function is fully
+annotated (a test enforces this), so editors and type checkers use the
+signatures. Metrics and stress-energy tensors are typed as `dict[str, Any]` on
+purpose: their layout is documented here, but the type system does not freeze
+it. Grid sizes, centres and spacings accept sequences or NumPy arrays. A few
+arguments have closed sets of values and are `Literal` types:
+`diff_order` (`"second"`, `"fourth"`) and the `gpu` backend. They also accept
+other capitalisations at run time, but a type checker will flag them.
+`get_energy_conditions` is overloaded, so a checker knows that
+`return_vec=True` returns three arrays and anything else returns one.
+
+Only annotated functions are type-checked by the project's own mypy run. Most
+internal helpers are not annotated yet, and their annotations are not part of
+the compatibility promise.
+
+## Errors
+
+Invalid arguments, malformed or unverified tensors and unsupported
+configurations (a grid axis too short for the stencil, non-Cartesian
+coordinates, a comoving generator given several time slices) raise
+`ValueError`, with a message that names the offending argument. The package
+never raises a bare `Exception` or `Warning`, so catching `ValueError` is
+enough. `verify_tensor` is the one function that reports problems as warnings
+and a `False` result instead of raising. Using plotting without the `plot`
+extra, or a GPU backend that is not installed, raises `ImportError`.
+
+## Metrics and tensors
+
+A metric is a dictionary containing `type`, `name`, `coords`, `index`, `date`,
+`scaling`, and `tensor`. Components use `tensor[mu][nu]`, each shaped
+`(time, x, y, z)`. A `(4,4,t,x,y,z)` array is also accepted. Grid spacing is
+in seconds and metres; velocities are fractions of c. Python tensor indices
+are zero-based. Generator positions retain WarpFactory's `(index+1)*spacing
+- world_centre` convention.
+
+`metric_get_minkowski(grid_size, grid_scaling=None)` creates flat space.
+`metric_get_alcubierre(grid_size, world_centre, v, R, sigma, grid_scale=None)`
+creates a moving bubble. Comoving generators require one time slice.
+`custom_metric(grid_size, world_centre, grid_scaling, alpha_function,
+beta_function, gamma_function)` accepts callables of `(t,x,y,z)` returning
+a scalar lapse, three covariant shift components, and a 3x3 spatial metric.
+See the examples and metric modules for family-specific parameters.
+
+## Solve and analyse
+
+```python
+energy = get_energy_tensor(metric, diff_order="fourth", gpu=None)
+result = eval_metric(
+    metric,
+    keep_positive=True,
+    num_angular_vec=100,
+    num_time_vec=10,
+    gpu=None,
+    diff_order="fourth",
+)
+```
+
+Import from `warpica.solver` and
+`warpica.analyser`. Both second and fourth orders are supported.
+The solver returns contravariant stress-energy in SI units, with the same
+spacetime grid. `eval_metric` returns `metric`, `energy_tensor`,
+`energy_tensor_eulerian`, `null`, `weak`, `strong`, `dominant`, `expansion`,
+`shear`, and `vorticity`. `keep_positive=False` clips positive condition-map
+entries to zero. Energy conditions use finite direction sampling.
+
+`change_tensor_index(tensor, index, metric_tensor=None)` returns a new tensor
+in `covariant`, `contravariant`, `mixedupdown`, or `mixeddownup` form.
+`do_frame_transfer(metric, energy, "Eulerian")` returns orthonormal-frame
+components. `get_scalars(metric, diff_order="fourth")` returns expansion,
+shear and vorticity. These operations preserve their input arrays.
+
+The `gpu` option selects solver curvature acceleration only: `None` or
+`"numpy"` uses CPU, `"cupy"` uses CUDA float64, and `"torch-directml"` uses
+DirectML float32. SI scaling/index contraction and downstream analysis run
+on CPU float64. All public outputs are NumPy arrays or lists of NumPy arrays.
+Only the CPU path is covered by the stability promise: `"cupy"` and
+`"torch-directml"` are experimental and may change in a 1.x release.
+See [GPU validation](gpu.md) before choosing a device backend.
+
+## Plotting
+
+Install `.[plot]`, then:
+
+```python
+from warpica.visualiser import plot_tensor, plot_three_plus_one
+
+fig, axes = plot_tensor(metric, sliced_planes=[1, 4], slice_locations=[1, 5])
+fig.savefig("metric.png", dpi=150)
+fig, axes = plot_three_plus_one(metric)
+```
+
+Plots return Matplotlib figures and axes; they never call `show()`.
+Call `matplotlib.pyplot.show()` yourself for interactive display.
+`plot_tensor` returns a 4x4 component grid; `plot_three_plus_one` returns a
+2x5 grid containing lapse, covariant shift, and six spatial components.
+
+For compatibility with the original plotting interface, fixed axis numbers
+and slice locations are **one-based**: 1=t, 2=x, 3=y, 4=z. Default slicing
+fixes time and z at their middle cells. The first remaining array dimension
+is plotted horizontally; the second vertically. Physical axes use grid
+spacing and the generator center if available. Without spacing, axes show
+one-based grid indices. Spatial aspect ratios are equal. Components each
+have their own symmetric zero-centered colour scale; compare colourbar
+values, not colours alone. `alpha` controls opacity, with a default of 1.
+
+Boundary conventions and minimum stencil sizes are documented in
+[testing.md](testing.md).
