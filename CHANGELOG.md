@@ -47,6 +47,10 @@ Work towards 1.0.0.
   or non-Cartesian metric raises `ValueError("Invalid tensor")` instead of a
   `KeyError`. `do_frame_transfer` now verifies the metric and stress-energy
   tensor first, so a malformed metric reports "not verified".
+- The second-order stress-energy uses G and c from `warpica.units`, like the fourth-order
+  path, instead of the rounded constants of upstream's second-order code. The two orders now
+  agree, and second-order results are about 3.9e-5 smaller than MATLAB's. See
+  `docs/reference-validation.md`.
 - Accept `diff_order` case-insensitively in `get_scalars` and `cov_div`, as
   `get_energy_tensor` already did.
 - Rename the internal `surf_q_modified.sqm` surface-plot helper to

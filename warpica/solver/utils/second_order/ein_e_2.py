@@ -1,5 +1,8 @@
 import numpy as np
 
+from warpica.units.universal_constants.c import c
+from warpica.units.universal_constants.G import G
+
 
 def ein_e_2(E, g_u, units):
     """Convert the Einstein tensor to contravariant stress-energy.
@@ -20,21 +23,19 @@ def ein_e_2(E, g_u, units):
 
     Notes
     -----
-    The second-order port preserves the upstream rounded constants
-    and unit-scaling formula.
+    G and c come from `warpica.units`, as in the fourth-order path, and are
+    scaled by the unit factors.
     """
-    # G and c are written out here (G = 6.6740e-11, c = 2.99792e8), scaled by the
-    # unit factors, instead of taken from warpica.units (6.6743e-11 and 299792458).
-    # The factor c^4 / (8 pi G) therefore differs from the fourth-order path by
-    # about 4e-5 in relative terms.
-    G = 6.6740e-11 * units[2] ** 2 * units[1] / units[0] ** 3
-    c = 2.99792e8 * units[2] / units[0]
+    # G and c in the requested units. With the SI default units = [1, 1, 1] these are
+    # exactly the values the fourth-order path uses.
+    grav = G() * units[2] ** 2 * units[1] / units[0] ** 3
+    light = c() * units[2] / units[0]
 
     en_den_ = [[None for _ in range(4)] for _ in range(4)]
 
     for mu in range(4):
         for nu in range(4):
-            en_den_[mu][nu] = c**4 / (8 * np.pi * G) * E[mu][nu]
+            en_den_[mu][nu] = light**4 / (8 * np.pi * grav) * E[mu][nu]
 
     en_den = [[None for _ in range(4)] for _ in range(4)]
 

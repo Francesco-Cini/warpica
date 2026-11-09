@@ -47,7 +47,7 @@ and `warpica.visualiser`.
 
 ## Behaviour that differs on purpose
 
-Six deliberate numerical divergences, plus a few stricter checks, are described
+Seven deliberate numerical divergences, plus a few stricter checks, are described
 and justified in [reference-validation.md](reference-validation.md). In short:
 
 - Eulerian components are lowered with the Minkowski metric.
@@ -56,6 +56,8 @@ and justified in [reference-validation.md](reference-validation.md). In short:
 - Expansion and shear use the real grid spacing.
 - Modified Time and Van Den Broeck use the comoving `g00`.
 - The warp shell interpolates linearly.
+- Second-order stress-energy uses the exact `c` and `G`, so it is about 3.9e-5 smaller than
+  MATLAB's rounded constants give.
 
 The stricter checks: non-Cartesian `coords` fail verification instead of
 warning, and a grid axis of 2 to 4 samples (fourth order) or 2 (second order)
