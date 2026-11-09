@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warpica.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
 
 
 @pytest.fixture
@@ -63,7 +63,7 @@ def gpu_backend(request):
         pytest.skip(
             "Select --gpu-backend=cupy or --gpu-backend=torch-directml to test hardware"
         )
-    from warplab.gpu import asarray, asnumpy
+    from warpica.gpu import asarray, asnumpy
 
     try:
         value = asarray(np.array([1.0, 2.0]), library=backend)

@@ -1,9 +1,9 @@
 import numpy as np
 import pytest
 
-from warplab.analyser.eval_metric import eval_metric
-from warplab.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
-from warplab.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
+from warpica.analyser.eval_metric import eval_metric
+from warpica.metrics.alcubierre.metric_get_alcubierre import metric_get_alcubierre
+from warpica.metrics.minkowski.metric_get_minkowski import metric_get_minkowski
 
 pytestmark = pytest.mark.integration
 

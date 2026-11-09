@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from warplab.metrics import (
+from warpica.metrics import (
     metric_get_alcubierre,
     metric_get_alcubierre_comoving,
     metric_get_lentz,
@@ -16,11 +16,11 @@ from warplab.metrics import (
     metric_get_van_den_broeck_comoving,
     metric_get_warp_shell_comoving,
 )
-from warplab.metrics.lentz.metric_get_lentz import get_warp_factor_by_region
-from warplab.metrics.lentz.metric_get_lentz_comoving import (
+from warpica.metrics.lentz.metric_get_lentz import get_warp_factor_by_region
+from warpica.metrics.lentz.metric_get_lentz_comoving import (
     get_warp_factor_by_region as get_warp_factor_by_region_comoving,
 )
-from warplab.units import G, c
+from warpica.units import G, c
 
 GRID = np.array([1, 5, 5, 5])
 CENTRE = np.array([1, 2.8, 2.7, 2.6])

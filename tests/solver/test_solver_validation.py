@@ -5,15 +5,15 @@ import copy
 import numpy as np
 import pytest
 
-from warplab.analyser import change_tensor_index
-from warplab.metrics import metric_get_alcubierre, metric_get_minkowski
-from warplab.solver import get_energy_tensor
-from warplab.solver.utils.c3_inv import c3_inv
-from warplab.solver.utils.c4_inv import c4_inv
-from warplab.solver.utils.cov_div import cov_div
-from warplab.solver.utils.met_2_den import met_2_den
-from warplab.solver.utils.trilinear_interp import trilinear_interp
-from warplab.units import c
+from warpica.analyser import change_tensor_index
+from warpica.metrics import metric_get_alcubierre, metric_get_minkowski
+from warpica.solver import get_energy_tensor
+from warpica.solver.utils.c3_inv import c3_inv
+from warpica.solver.utils.c4_inv import c4_inv
+from warpica.solver.utils.cov_div import cov_div
+from warpica.solver.utils.met_2_den import met_2_den
+from warpica.solver.utils.trilinear_interp import trilinear_interp
+from warpica.units import c
 
 
 def bubble():

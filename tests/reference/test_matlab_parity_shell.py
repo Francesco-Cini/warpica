@@ -13,18 +13,18 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from warplab.analyser import change_tensor_index, eval_metric
-from warplab.analyser.utils.generate_uniform_field import generate_uniform_field
-from warplab.analyser.utils.get_inner_product import get_inner_product
-from warplab.metrics import metric_get_minkowski, metric_get_warp_shell_comoving
-from warplab.solver import get_energy_tensor
-from warplab.solver.utils.c4_inv import c4_inv
-from warplab.solver.utils.ricci_t import ricci_t
-from warplab.solver.utils.second_order.ricci_t_2 import ricci_t_2
+from warpica.analyser import change_tensor_index, eval_metric
+from warpica.analyser.utils.generate_uniform_field import generate_uniform_field
+from warpica.analyser.utils.get_inner_product import get_inner_product
+from warpica.metrics import metric_get_minkowski, metric_get_warp_shell_comoving
+from warpica.solver import get_energy_tensor
+from warpica.solver.utils.c4_inv import c4_inv
+from warpica.solver.utils.ricci_t import ricci_t
+from warpica.solver.utils.second_order.ricci_t_2 import ricci_t_2
 
 pytestmark = pytest.mark.parity
 DIRECTORY = Path(__file__).parent / "matlab"
-MODULE = "warplab.metrics.warp_shell.metric_get_warp_shell_comoving"
+MODULE = "warpica.metrics.warp_shell.metric_get_warp_shell_comoving"
 
 # smoothFactor 1 makes upstream's smooth() an identity; 502 does not.
 SMOOTH_FACTORS = {"warp_shell_comoving": 1, "warp_shell_smoothed": 502}
