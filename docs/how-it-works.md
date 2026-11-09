@@ -106,7 +106,7 @@ Details worth knowing:
 | Cartesian-only check | `solver/verify_tensor.py` | non-Cartesian `coords` fail |
 | Direction and speed sampling | `analyser/utils/generate_uniform_field.py` | strictly timelike speeds |
 | Observer frame | `analyser/utils/get_eulerian_transformation_matrix.py` | closed-form tetrad |
-| Differences from MATLAB | [reference-validation.md](reference-validation.md) | six deliberate ones |
+| Differences from MATLAB | [reference-validation.md](reference-validation.md) | seven deliberate ones |
 
 ## Glossary
 

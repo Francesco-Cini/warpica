@@ -86,6 +86,7 @@ comparing numbers with published WarpFactory results.
 
 ## Documentation
 
+- Hosted site: <https://francesco-cini.github.io/warpica/> (once published)
 - [Quickstart](docs/quickstart.md) and [concepts](docs/concepts.md) (tensor layout, units, indexing)
 - [How it works](docs/how-it-works.md): the pipeline and a glossary of the symbols
 - [Moving from MATLAB WarpFactory](docs/matlab-migration.md)
@@ -95,7 +96,7 @@ comparing numbers with published WarpFactory results.
 - [MATLAB comparisons and intentional differences](docs/reference-validation.md)
 - [GPU precision, hardware tests and benchmark](docs/gpu.md)
 - [Testing guide](docs/testing.md), [development checks](docs/development.md), [releasing](docs/releasing.md)
-- [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md)
+- [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md)
 
 ## Licence
 

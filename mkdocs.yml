@@ -1,0 +1,73 @@
+site_name: warpica
+site_description: Numerical spacetime metrics, stress-energy tensors and energy-condition analysis, a Python port of WarpFactory.
+site_url: https://francesco-cini.github.io/warpica/
+repo_url: https://github.com/Francesco-Cini/warpica
+repo_name: Francesco-Cini/warpica
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Guide:
+      - Quickstart: quickstart.md
+      - Concepts: concepts.md
+      - How it works: how-it-works.md
+      - Moving from MATLAB: matlab-migration.md
+  - Reference:
+      - Public API and conventions: api.md
+      - API reference: reference.md
+      - Policy: policy.md
+      - MATLAB comparisons: reference-validation.md
+  - GPU:
+      - GPU validation: gpu.md
+      - RX 580 scaling: gpu-scaling-rx580.md
+  - Project:
+      - Testing: testing.md
+      - Development: development.md
+      - Releasing: releasing.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_root_heading: true
+            show_source: false
+            members_order: source
+            separate_signature: true
+            show_signature_annotations: true
+            merge_init_into_class: true
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn

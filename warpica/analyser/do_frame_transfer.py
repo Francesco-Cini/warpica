@@ -24,7 +24,7 @@ def do_frame_transfer(
     Parameters
     ----------
     metric : dict
-        Metric metadata and components indexed as tensor[mu][nu], each
+        Metric metadata and components indexed as `tensor[mu][nu]`, each
         with shape (nt, nx, ny, nz).
     energy_tensor : dict
         Stress-energy tensor in any supported index convention.
