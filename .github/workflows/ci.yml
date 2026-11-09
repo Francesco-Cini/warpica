@@ -1,0 +1,102 @@
+name: CPU tests and package
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.11', '3.12', '3.13', '3.14']
+    runs-on: ${{ matrix.os }}
+    env:
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e ".[test,plot]"
+      - run: python -m pytest -q -W error -m "not gpu" --cov=warpica --cov-report=xml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.os }}-${{ matrix.python }}
+          path: coverage.xml
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[dev,test,plot]"
+      - run: python -m ruff check .
+      - run: python -m ruff format --check .
+      - run: python -m mypy
+      - run: python -m pytest -q tests/test_typing.py
+  minimum:
+    # The oldest versions of every dependency we declare support for. A
+    # transitive deprecation warning from old Matplotlib (pyparsing) is ignored
+    # because it says nothing about this package.
+    runs-on: ubuntu-latest
+    env:
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install "numpy==1.26.4" "array-api-compat==1.5" "matplotlib==3.8.0" -e ".[test,plot]"
+      - name: Check the pins held
+        run: python -c "import numpy, matplotlib, array_api_compat as a; assert numpy.__version__ == '1.26.4', numpy.__version__; assert matplotlib.__version__ == '3.8.0', matplotlib.__version__; assert a.__version__ == '1.5', a.__version__"
+      - run: python -m pytest -q -W error -W "ignore::pyparsing.warnings.PyparsingDeprecationWarning" -m "not gpu"
+  performance:
+    # Advisory only: it reports slowdowns but must never block a merge, because
+    # timings on a shared runner are noisy. Do not add it to the required checks.
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      PERFORMANCE_REPORT: performance-report.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[test]"
+      - id: guard
+        continue-on-error: true
+        run: python -m pytest tests/performance --run-performance -m performance -q -W error -p no:cacheprovider
+      - name: Summarise
+        if: always()
+        run: |
+          if [ -f performance-report.json ]; then
+            python -m tests.performance.timing --summary performance-report.json >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Flag a possible slowdown
+        if: steps.guard.outcome == 'failure'
+        run: echo "::warning title=Performance guard::A timing check failed. This is advisory; rerun the job before treating it as a regression."
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-report
+          path: performance-report.json
+          if-no-files-found: ignore
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install build twine
+      - run: python -m build
+      - run: python -m twine check dist/*
+      - run: python tools/check_wheel.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: distribution
+          path: dist/*

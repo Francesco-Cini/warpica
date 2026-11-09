@@ -1,87 +1,103 @@
-# PyWarp
+# warpica
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Status](https://img.shields.io/badge/status-experimental-orange.svg)]()
+[![CPU tests and package](https://github.com/Francesco-Cini/warpica/actions/workflows/ci.yml/badge.svg)](https://github.com/Francesco-Cini/warpica/actions/workflows/ci.yml)
 
-PyWarp is an experimental Python library for constructing and analysing
-warp-drive spacetimes using Einstein's theory of general relativity. It is a
-Python adaptation of the original WarpFactory MATLAB toolkit.
+Numerical spacetime metrics, stress-energy tensors and sampled energy-condition
+analysis in Python. `warpica` is a port of
+[WarpFactory](https://github.com/NerdsWithAttitudes/WarpFactory), the MATLAB
+toolkit for analysing warp-drive geometries.
 
-> [!WARNING]
-> This project is under active development. Its API may change between releases,
-> and results should be independently verified before being used in research.
+> **Status.** The project is preparing a 1.0 release.
+> It is not on PyPI yet; install from a checkout.
 
-## Features
+## Credit to WarpFactory
 
-- Construct several warp-drive and reference metrics.
-- Calculate the Einstein tensor and corresponding energy tensor.
-- Evaluate null, weak, strong, and dominant energy conditions.
-- Calculate expansion, shear, and vorticity scalars.
-- Visualise tensor components and momentum-flow lines.
+All of the physics, the algorithms and the structure of this package come from
+WarpFactory, created by **Christopher Helmerich and Jared Fuchs**, with
+contributions from Alexey Bobrick, Luke Sellers, Brandon Melcher, Justin Feng and
+Gianni Martire. This is an independent port, not an official WarpFactory
+release, and the WarpFactory authors have not reviewed it. WarpFactory is MIT
+licensed, as is this project.
 
-## Requirements
+If you use this code in published work, please cite the WarpFactory paper, as
+its authors ask:
 
-- Python 3.10 or newer
-- NumPy
-- Matplotlib for visualisation
+> C. Helmerich, J. Fuchs, A. Bobrick, L. Sellers, B. Melcher and G. Martire,
+> "Analyzing warp drive spacetimes with Warp Factory",
+> *Classical and Quantum Gravity* (2024),
+> [doi:10.1088/1361-6382/ad2e42](https://doi.org/10.1088/1361-6382/ad2e42),
+> [arXiv:2404.03095](https://arxiv.org/abs/2404.03095).
 
-## Installation
+The authors also describe the solver, analyser and optimiser modules in
+[arXiv:2404.10855](https://arxiv.org/abs/2404.10855). To cite this port itself,
+see [CITATION.cff](CITATION.cff).
 
-Until a package is published to PyPI, install the latest development version
-directly from GitHub:
+## What it does
 
-```bash
-python -m pip install "git+https://github.com/Francesco-Cini/pywarp.git"
-```
-
-For local development:
-
-```bash
-git clone https://github.com/Francesco-Cini/pywarp.git
-cd pywarp
-python -m pip install -e .
-```
+- **Metrics:** Minkowski, Alcubierre, Lentz, Modified Time, Van Den Broeck,
+  Schwarzschild and a spherical warp shell (plus comoving variants), a
+  `custom_metric` builder from lapse, shift and spatial metric, and 3+1
+  decomposition helpers.
+- **Solver:** the stress-energy tensor of any sampled metric, with second- or
+  fourth-order finite differences, in SI units.
+- **Analyser:** null, weak, strong and dominant energy conditions sampled over
+  directions, expansion, shear and vorticity scalars, momentum flow lines,
+  index changes and frame transfers.
+- **Visualiser:** Matplotlib slices of metric and tensor components.
 
 ## Quick start
 
-```python
-import numpy as np
+Requires Python 3.11 or newer.
 
-from pywarp.metrics.alcubierre.metric_get_alcubierre import (
-    metric_get_alcubierre,
-)
-from pywarp.solver.get_energy_tensor import get_energy_tensor
-
-grid_size = np.array([5, 10, 10, 10])
-world_centre = (grid_size + 1) / 2
-
-metric = metric_get_alcubierre(
-    grid_size=grid_size,
-    world_centre=world_centre,
-    v=0.1,
-    R=2,
-    sigma=0.5,
-    grid_scale=None,
-)
-
-energy_tensor = get_energy_tensor(metric, "fourth")
-print(energy_tensor["tensor"].shape)
+```bash
+git clone https://github.com/Francesco-Cini/warpica
+cd warpica
+python -m venv .venv
+.venv/bin/python -m pip install -e ".[plot]"     # Windows: .venv\Scripts\python.exe
 ```
 
-More complete examples are available in the [`examples`](examples) directory.
+```python
+import numpy as np
+from warpica.metrics import metric_get_alcubierre
+from warpica.analyser import eval_metric
 
-## Attribution
+grid = np.array([1, 9, 9, 9])  # (time, x, y, z) samples
+spacing = np.array([1.0, 0.5, 0.5, 0.5])  # seconds and metres
+centre = (grid + 1) / 2 * spacing
+metric = metric_get_alcubierre(grid, centre, v=0.2, R=1, sigma=2, grid_scale=spacing)
 
-PyWarp is an independent adaptation of the MIT-licensed
-[WarpFactory MATLAB toolkit](https://github.com/NerdsWithAttitudes/WarpFactory)
-created by Christopher Helmerich and Jared Fuchs.
+result = eval_metric(metric, num_angular_vec=24, num_time_vec=4)
+print(result["weak"].min())  # negative: the condition is violated
+```
 
-This project is not an official release of WarpFactory and is not affiliated
-with or endorsed by the original authors.
+The [quickstart](docs/quickstart.md) walks through this step by step.
 
-## License
+## Stability
 
-PyWarp is distributed under the [MIT License](LICENSE). The license
-retains attribution for the original WarpFactory authors and identifies the
-copyright holder of this Python adaptation.
+The **CPU path is stable** and is what the 1.x compatibility promise covers.
+The CUDA (CuPy) and DirectML backends are **experimental**: DirectML has been
+tested on one AMD RX 580, and CUDA has never been run on NVIDIA hardware. See
+[GPU validation](docs/gpu.md).
+
+Results are checked against MATLAB WarpFactory on ten reference cases, and the
+places where this port deliberately differs are listed and justified in
+[MATLAB comparisons](docs/reference-validation.md). Read that page before
+comparing numbers with published WarpFactory results.
+
+## Documentation
+
+- Hosted site: <https://francesco-cini.github.io/warpica/> (once published)
+- [Quickstart](docs/quickstart.md) and [concepts](docs/concepts.md) (tensor layout, units, indexing)
+- [How it works](docs/how-it-works.md): the pipeline and a glossary of the symbols
+- [Moving from MATLAB WarpFactory](docs/matlab-migration.md)
+- [Public API and plotting](docs/api.md)
+- [Runnable examples](examples/README.md)
+- [Versioning and support policy](docs/policy.md)
+- [MATLAB comparisons and intentional differences](docs/reference-validation.md)
+- [GPU precision, hardware tests and benchmark](docs/gpu.md)
+- [Testing guide](docs/testing.md), [development checks](docs/development.md), [releasing](docs/releasing.md)
+- [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md)
+
+## Licence
+
+MIT. See [LICENSE](LICENSE).

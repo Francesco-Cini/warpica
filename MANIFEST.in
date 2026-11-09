@@ -1,0 +1,7 @@
+include README.md LICENSE CHANGELOG.md
+recursive-include docs *.md *.json
+recursive-include tests *.py *.md *.npz *.json
+exclude tests/reference/matlab/raw.json
+recursive-include examples *.py *.md
+recursive-include benchmarks *.py
+recursive-include tools *.py *.m
