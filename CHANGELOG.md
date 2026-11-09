@@ -84,7 +84,7 @@ Work towards 1.0.0.
   `ruff format --check`) and Python 3.13.
 - Documentation: README with WarpFactory attribution and citation, quickstart,
   concepts, a "how it works" guide with a symbol glossary, MATLAB migration guide and a versioning and support policy.
-- `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `CITATION.cff`, issue
+- `CONTRIBUTING.md`, `CITATION.cff`, issue
   and pull request templates, and Dependabot for GitHub Actions.
 - Document why the `directml` extra stays pinned to `torch-directml`
   0.2.5.dev240914: it is the only installable release line and has no wheels
