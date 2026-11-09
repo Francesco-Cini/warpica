@@ -40,7 +40,6 @@ nav:
   - Project:
       - Testing: testing.md
       - Development: development.md
-      - Releasing: releasing.md
 
 plugins:
   - search
