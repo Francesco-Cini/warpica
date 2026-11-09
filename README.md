@@ -96,7 +96,7 @@ comparing numbers with published WarpFactory results.
 - [MATLAB comparisons and intentional differences](docs/reference-validation.md)
 - [GPU precision, hardware tests and benchmark](docs/gpu.md)
 - [Testing guide](docs/testing.md), [development checks](docs/development.md), [releasing](docs/releasing.md)
-- [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md)
+- [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md)
 
 ## Licence
 

@@ -55,5 +55,4 @@ removed only in a MAJOR release.
 
 ## Reporting problems
 
-See [SECURITY.md](https://github.com/Francesco-Cini/warpica/blob/main/SECURITY.md) for vulnerabilities and
-[CONTRIBUTING.md](https://github.com/Francesco-Cini/warpica/blob/main/CONTRIBUTING.md) for bugs and proposals.
+See [CONTRIBUTING.md](https://github.com/Francesco-Cini/warpica/blob/main/CONTRIBUTING.md) for bugs and proposals.

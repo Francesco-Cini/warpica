@@ -59,5 +59,3 @@ All four must pass. Coverage must stay at or above the 98% floor. See
 Branch from `develop` and target `develop`. Keep a pull request to one topic, and
 describe what changed and how you checked it. By contributing you agree that your
 work is released under the project's MIT licence.
-
-Please follow the [code of conduct](CODE_OF_CONDUCT.md).
