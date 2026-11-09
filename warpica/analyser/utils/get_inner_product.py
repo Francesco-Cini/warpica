@@ -9,7 +9,7 @@ def get_inner_product(vec_a, vec_b, metric):
     vec_a, vec_b : dict
         Vector dictionaries with 'field' components and an 'index' convention.
     metric : dict
-        Metric metadata and components indexed as tensor[mu][nu], each
+        Metric metadata and components indexed as `tensor[mu][nu]`, each
         with shape (nt, nx, ny, nz).
 
     Returns

@@ -86,6 +86,7 @@ comparing numbers with published WarpFactory results.
 
 ## Documentation
 
+- Hosted site: <https://francesco-cini.github.io/warpica/> (once published)
 - [Quickstart](docs/quickstart.md) and [concepts](docs/concepts.md) (tensor layout, units, indexing)
 - [How it works](docs/how-it-works.md): the pipeline and a glossary of the symbols
 - [Moving from MATLAB WarpFactory](docs/matlab-migration.md)

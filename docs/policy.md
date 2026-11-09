@@ -1,7 +1,7 @@
 # Versioning, deprecation and support policy
 
 This policy takes effect with the 1.0 release. Until then the package is in
-development and anything may change; the [changelog](../CHANGELOG.md) records it.
+development and anything may change; the [changelog](https://github.com/Francesco-Cini/warpica/blob/main/CHANGELOG.md) records it.
 
 ## What the version number promises
 
@@ -55,5 +55,5 @@ removed only in a MAJOR release.
 
 ## Reporting problems
 
-See [SECURITY.md](../SECURITY.md) for vulnerabilities and
-[CONTRIBUTING.md](../CONTRIBUTING.md) for bugs and proposals.
+See [SECURITY.md](https://github.com/Francesco-Cini/warpica/blob/main/SECURITY.md) for vulnerabilities and
+[CONTRIBUTING.md](https://github.com/Francesco-Cini/warpica/blob/main/CONTRIBUTING.md) for bugs and proposals.

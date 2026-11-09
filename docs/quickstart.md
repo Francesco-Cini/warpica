@@ -80,6 +80,6 @@ Plot functions return the figure and never open a window; call
 
 ## Where next
 
-- [Runnable examples](../examples/README.md), including a custom metric.
+- [Runnable examples](https://github.com/Francesco-Cini/warpica/blob/main/examples/README.md), including a custom metric.
 - [Moving from MATLAB WarpFactory](matlab-migration.md).
 - [Public API](api.md).
