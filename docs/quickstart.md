@@ -7,8 +7,13 @@ here (axis order, units, one- versus zero-based indices) see
 
 ## 1. Install
 
-Python 3.11 or newer is required. `warpica` is not on PyPI yet, so install from
-a checkout:
+Python 3.11 or newer is required.
+
+```bash
+pip install "warpica[plot]"
+```
+
+To work on the code, install from a checkout instead:
 
 ```bash
 git clone https://github.com/Francesco-Cini/warpica
