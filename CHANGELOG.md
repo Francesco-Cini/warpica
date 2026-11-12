@@ -7,7 +7,11 @@ project follows [semantic versioning](https://semver.org); see
 
 ## Unreleased
 
-Work towards 1.0.0.
+## Unreleased
+
+## 1.0.0 - 2026-11-12
+
+First stable release.
 
 ### Changed
 
@@ -72,6 +76,8 @@ Work towards 1.0.0.
 
 ### Added
 
+- Add a `release` workflow that publishes to PyPI from a version tag with trusted
+  publishing, and to TestPyPI on a manual run.
 - Validation against MATLAB R2026a WarpFactory on ten reference cases, with the
   deliberate divergences documented in `docs/reference-validation.md` and pinned
   by tests.
