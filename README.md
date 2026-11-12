@@ -7,9 +7,6 @@ analysis in Python. `warpica` is a port of
 [WarpFactory](https://github.com/NerdsWithAttitudes/WarpFactory), the MATLAB
 toolkit for analysing warp-drive geometries.
 
-> **Status.** The project is preparing a 1.0 release.
-> It is not on PyPI yet; install from a checkout.
-
 ## Credit to WarpFactory
 
 All of the physics, the algorithms and the structure of this package come from
@@ -50,6 +47,12 @@ see [CITATION.cff](CITATION.cff).
 Requires Python 3.11 or newer.
 
 ```bash
+pip install "warpica[plot]"
+```
+
+The `plot` extra adds Matplotlib. To work on the code, install from a checkout:
+
+```bash
 git clone https://github.com/Francesco-Cini/warpica
 cd warpica
 python -m venv .venv
@@ -86,7 +89,7 @@ comparing numbers with published WarpFactory results.
 
 ## Documentation
 
-- Hosted site: <https://francesco-cini.github.io/warpica/> (once published)
+- Hosted site: <https://francesco-cini.github.io/warpica/>
 - [Quickstart](docs/quickstart.md) and [concepts](docs/concepts.md) (tensor layout, units, indexing)
 - [How it works](docs/how-it-works.md): the pipeline and a glossary of the symbols
 - [Moving from MATLAB WarpFactory](docs/matlab-migration.md)
