@@ -1,6 +1,12 @@
 # warpica
 
 [![CPU tests and package](https://github.com/Francesco-Cini/warpica/actions/workflows/ci.yml/badge.svg)](https://github.com/Francesco-Cini/warpica/actions/workflows/ci.yml)
+[![Docs](https://github.com/Francesco-Cini/warpica/actions/workflows/docs.yml/badge.svg)](https://francesco-cini.github.io/warpica/)
+[![PyPI](https://img.shields.io/pypi/v/warpica)](https://pypi.org/project/warpica/)
+[![Latest release](https://img.shields.io/github/v/release/Francesco-Cini/warpica)](https://github.com/Francesco-Cini/warpica/releases)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/github/license/Francesco-Cini/warpica)](LICENSE)
+[![Typed](https://img.shields.io/badge/typing-py.typed-informational.svg)](https://peps.python.org/pep-0561/)
 
 Numerical spacetime metrics, stress-energy tensors and sampled energy-condition
 analysis in Python. `warpica` is a port of
