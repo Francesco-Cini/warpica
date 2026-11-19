@@ -192,3 +192,8 @@ benchmarks/results/backend-results.json
 
 # MkDocs build output
 site/
+
+# Local assistant instructions
+CLAUDE.md
+CLAUDE.local.md
+.claude/

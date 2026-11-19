@@ -45,10 +45,12 @@ cuda = ["cupy-cuda12x>=13"]
 directml = ["torch-directml==0.2.5.dev240914"]
 release = ["build>=1", "twine>=6"]
 plot = ["matplotlib>=3.8"]
+ui = ["PySide6-Essentials>=6.7", "matplotlib>=3.8"]
 test = [
     "pytest>=8",
     "pytest-cov>=5",
 ]
+ui-test = ["pytest-qt>=4.4"]
 dev = ["ruff>=0.11", "mypy>=1.11"]
 docs = ["mkdocs-material>=9.5", "mkdocstrings[python]>=0.26"]
 
@@ -104,6 +106,8 @@ module = [
     "torch",
     "torch.*",
     "torch_directml",
+    "PySide6",
+    "PySide6.*",
 ]
 ignore_missing_imports = true
 
@@ -111,7 +115,12 @@ ignore_missing_imports = true
 source = ["warpica"]
 # The backend adapters need a physical CUDA or DirectML device, so hosted CI
 # cannot run them (see docs/gpu.md). Everything else is measured.
-omit = ["warpica/gpu/utils/*"]
+omit = [
+    "warpica/gpu/utils/*",
+    "warpica/ui/windows/*",
+    "warpica/ui/pages/*",
+    "warpica/ui/__main__.py",
+]
 
 [tool.coverage.report]
 fail_under = 98
