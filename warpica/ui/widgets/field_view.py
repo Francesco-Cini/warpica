@@ -25,8 +25,8 @@ class FieldView(QWidget):
     several), which plane to cut along, where along the remaining axis to cut,
     and, for a grid with more than one time step, which time step.
 
-    The colour scale is centred on zero, so negative values are blue and
-    positive values are red.
+    The colour scale is centred on zero, so negative values are dark purple,
+    zero is magenta and positive values are yellow (plasma colour map).
     """
 
     def __init__(self) -> None:
@@ -178,7 +178,7 @@ class FieldView(QWidget):
             values.T,
             origin="lower",
             extent=(*axis_extent(x_axis), *axis_extent(y_axis)),
-            cmap="RdBu_r",
+            cmap="plasma",
             vmin=-limit,
             vmax=limit,
         )

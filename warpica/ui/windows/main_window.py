@@ -3,12 +3,11 @@
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import (
-    QHBoxLayout,
     QListWidget,
     QListWidgetItem,
     QMainWindow,
+    QSplitter,
     QStackedWidget,
-    QWidget,
 )
 
 from warpica.ui.core.state import Session, Stage
@@ -37,7 +36,8 @@ class MainWindow(QMainWindow):
         # The sidebar rows and the pages are both in the order of ``Stage``,
         # so row n always shows page n.
         self._sidebar = QListWidget()
-        self._sidebar.setFixedWidth(170)
+        self._sidebar.setMinimumWidth(140)
+        self._sidebar.setMaximumWidth(400)
         self._pages = QStackedWidget()
         self._solver_page = SolverPage(self.session)
         self._results_page = ResultsPage(self.session)
@@ -54,11 +54,13 @@ class MainWindow(QMainWindow):
         self._refresh_sidebar()
         self._sidebar.setCurrentRow(0)
 
-        central = QWidget()
-        layout = QHBoxLayout(central)
-        layout.addWidget(self._sidebar)
-        layout.addWidget(self._pages, stretch=1)
-        self.setCentralWidget(central)
+        # The splitter lets the user drag the edge of the sidebar.
+        splitter = QSplitter()
+        splitter.addWidget(self._sidebar)
+        splitter.addWidget(self._pages)
+        splitter.setStretchFactor(1, 1)
+        splitter.setChildrenCollapsible(False)
+        self.setCentralWidget(splitter)
 
     def closeEvent(self, event: QCloseEvent) -> None:
         """Stop running calculations, so no process is left working after we close."""

@@ -17,6 +17,9 @@ _MIN_SIZE = (1, 3, 3, 3)
 _MAX_SIZE = (16, 41, 41, 41)
 _SPACING_RANGE = ((0.001, 1000.0), (0.01, 10.0), (0.01, 10.0), (0.01, 10.0))
 
+# Narrowest a spin box may get, in pixels, so its value and arrows stay visible.
+_MIN_FIELD_WIDTH = 90
+
 
 class GridForm(QWidget):
     """Choose how many points to use along t, x, y, z and how far apart they are.
@@ -32,22 +35,26 @@ class GridForm(QWidget):
 
         self._size: list[QSpinBox] = []
         self._spacing: list[QDoubleSpinBox] = []
-        layout.addWidget(QLabel("Points"), 1, 0)
-        layout.addWidget(QLabel("Spacing"), 2, 0)
-        for column, axis in enumerate(_AXES, start=1):
-            layout.addWidget(QLabel(axis), 0, column)
+        # One row per axis and one column per quantity. Four spin boxes side by
+        # side were too narrow to show their values in the side panel.
+        layout.addWidget(QLabel("Points"), 0, 1)
+        layout.addWidget(QLabel("Spacing"), 0, 2)
+        for row, axis in enumerate(_AXES, start=1):
+            layout.addWidget(QLabel(axis), row, 0)
 
             points = QSpinBox()
-            points.setRange(_MIN_SIZE[column - 1], _MAX_SIZE[column - 1])
-            points.setValue(_DEFAULT_SIZE[column - 1])
-            layout.addWidget(points, 1, column)
+            points.setRange(_MIN_SIZE[row - 1], _MAX_SIZE[row - 1])
+            points.setValue(_DEFAULT_SIZE[row - 1])
+            points.setMinimumWidth(_MIN_FIELD_WIDTH)
+            layout.addWidget(points, row, 1)
             self._size.append(points)
 
             spacing = QDoubleSpinBox()
             spacing.setDecimals(3)
-            spacing.setRange(*_SPACING_RANGE[column - 1])
-            spacing.setValue(_DEFAULT_SPACING[column - 1])
-            layout.addWidget(spacing, 2, column)
+            spacing.setRange(*_SPACING_RANGE[row - 1])
+            spacing.setValue(_DEFAULT_SPACING[row - 1])
+            spacing.setMinimumWidth(_MIN_FIELD_WIDTH)
+            layout.addWidget(spacing, row, 2)
             self._spacing.append(spacing)
 
     def grid_size(self) -> Array:

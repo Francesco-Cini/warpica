@@ -1,6 +1,13 @@
 """The Solver page: compute the stress-energy tensor of the built metric."""
 
-from PySide6.QtWidgets import QComboBox, QHBoxLayout, QLabel, QVBoxLayout, QWidget
+from PySide6.QtWidgets import (
+    QComboBox,
+    QHBoxLayout,
+    QLabel,
+    QSplitter,
+    QVBoxLayout,
+    QWidget,
+)
 
 from warpica._typing import TensorDict
 from warpica.ui.core.solving import DIFF_ORDERS, available_backends, solve_energy_tensor
@@ -55,7 +62,7 @@ class SolverPage(QWidget):
         self._run_bar = RunBar("Solve", "Solving")
 
         panel = QWidget()
-        panel.setFixedWidth(330)
+        panel.setMinimumWidth(300)
         panel_layout = QVBoxLayout(panel)
         panel_layout.addWidget(QLabel("<h2>Solver</h2>"))
         panel_layout.addWidget(self._summary)
@@ -71,9 +78,14 @@ class SolverPage(QWidget):
         # Right side: the energy tensor.
         self._view = FigureView()
 
+        # A splitter lets the user drag the edge between panel and plot.
+        splitter = QSplitter()
+        splitter.addWidget(panel)
+        splitter.addWidget(self._view)
+        splitter.setStretchFactor(1, 1)
+        splitter.setChildrenCollapsible(False)
         layout = QHBoxLayout(self)
-        layout.addWidget(panel)
-        layout.addWidget(self._view, stretch=1)
+        layout.addWidget(splitter)
 
         self._run_bar.run_requested.connect(self._solve)
         self._run_bar.finished.connect(self._solved)

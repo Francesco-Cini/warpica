@@ -3,9 +3,15 @@
 import sys
 
 import matplotlib
+import matplotlib.style
 
 # Draw figures into our own Qt widgets, never into separate pyplot windows.
 matplotlib.use("Agg")
+
+# Dark figures with the plasma colour map, for every plot the interface draws,
+# including the ones made by ``warpica.visualiser``. Set before any figure exists.
+matplotlib.style.use("dark_background")
+matplotlib.rcParams["image.cmap"] = "plasma"
 
 from PySide6.QtWidgets import QApplication  # noqa: E402
 

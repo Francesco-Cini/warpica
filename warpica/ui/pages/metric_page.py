@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QPushButton,
+    QSplitter,
     QVBoxLayout,
     QWidget,
 )
@@ -26,6 +27,9 @@ _PREVIEWS: dict[str, Callable[[TensorDict], tuple[Figure, Array]]] = {
     "Metric components": plot_tensor,
     "3+1 fields (lapse, shift, space)": plot_three_plus_one,
 }
+
+# Narrowest the side panel may be dragged to, so the grid fields stay readable.
+_MIN_PANEL_WIDTH = 340
 
 
 class MetricPage(QWidget):
@@ -58,7 +62,7 @@ class MetricPage(QWidget):
         self._status.setWordWrap(True)
 
         panel = QWidget()
-        panel.setFixedWidth(330)
+        panel.setMinimumWidth(_MIN_PANEL_WIDTH)
         panel_layout = QVBoxLayout(panel)
         panel_layout.addWidget(QLabel("<h2>Metric</h2>"))
         panel_layout.addWidget(self._chooser)
@@ -75,9 +79,14 @@ class MetricPage(QWidget):
         # Right side: the preview.
         self._view = FigureView()
 
+        # A splitter lets the user drag the edge between panel and preview.
+        splitter = QSplitter()
+        splitter.addWidget(panel)
+        splitter.addWidget(self._view)
+        splitter.setStretchFactor(1, 1)
+        splitter.setChildrenCollapsible(False)
         layout = QHBoxLayout(self)
-        layout.addWidget(panel)
-        layout.addWidget(self._view, stretch=1)
+        layout.addWidget(splitter)
 
         self._chooser.currentIndexChanged.connect(self._show_parameters)
         self._preview_kind.currentIndexChanged.connect(self._show_preview)

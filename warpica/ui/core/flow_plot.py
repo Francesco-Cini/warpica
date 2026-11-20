@@ -53,7 +53,7 @@ def flow_line_figure(
             values.T,
             origin="lower",
             extent=(*x_edges, *y_edges),
-            cmap="RdBu_r",
+            cmap="plasma",
             vmin=-limit,
             vmax=limit,
             alpha=0.45,
@@ -63,8 +63,8 @@ def flow_line_figure(
     # is column a - 1.
     for path in flow.paths:
         horizontal, vertical = path[:, first - 1], path[:, second - 1]
-        plot.plot(horizontal, vertical, color="black", linewidth=1)
-        plot.plot(horizontal[0], vertical[0], "o", color="black", markersize=3)
+        plot.plot(horizontal, vertical, color="white", linewidth=1)
+        plot.plot(horizontal[0], vertical[0], "o", color="white", markersize=3)
         if len(path) >= 3:
             # One arrow on the middle segment shows the direction of flow.
             middle = len(path) // 2
@@ -72,7 +72,7 @@ def flow_line_figure(
                 "",
                 xy=(horizontal[middle + 1], vertical[middle + 1]),
                 xytext=(horizontal[middle], vertical[middle]),
-                arrowprops={"arrowstyle": "->", "color": "black", "linewidth": 1},
+                arrowprops={"arrowstyle": "->", "color": "white", "linewidth": 1},
             )
 
     plot.set_xlim(x_edges)

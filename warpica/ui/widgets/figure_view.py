@@ -10,6 +10,20 @@ from PySide6.QtWidgets import QScrollArea, QVBoxLayout, QWidget
 _MIN_SCALE = 0.7
 
 
+def _use_plasma(figure: Figure) -> None:
+    """Give every colour-mapped plot in ``figure`` the plasma colour map.
+
+    The plots in ``warpica.visualiser`` choose their own colour map, so the
+    matplotlib default does not reach them. Changing the map of the image or
+    mesh also updates the colour bar that belongs to it.
+    """
+    for axes in figure.axes:
+        for artist in (*axes.images, *axes.collections):
+            # Only artists that map data to colour have a colour map.
+            if artist.get_array() is not None:
+                artist.set_cmap("plasma")
+
+
 class FigureView(QWidget):
     """Show one matplotlib figure at a time, with zoom, pan and save buttons.
 
@@ -43,6 +57,7 @@ class FigureView(QWidget):
         # stays usable and this view now owns it.
         plt.close(figure)
 
+        _use_plasma(figure)
         canvas = FigureCanvasQTAgg(figure)
 
         # Keep the figure at a readable size. If the window is too small to

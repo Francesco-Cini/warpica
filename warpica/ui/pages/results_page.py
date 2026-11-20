@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QSpinBox,
+    QSplitter,
     QTabWidget,
     QVBoxLayout,
     QWidget,
@@ -63,11 +64,15 @@ class _AnalysisTab(QWidget):
         self._panel_layout = QVBoxLayout()
         self._panel_layout.addWidget(QLabel(f"<h3>{title}</h3>"))
         panel = QWidget()
-        panel.setFixedWidth(300)
+        panel.setMinimumWidth(280)
         panel.setLayout(self._panel_layout)
 
+        # A splitter lets the user drag the edge between options and viewer.
+        self._splitter = QSplitter()
+        self._splitter.addWidget(panel)
+        self._splitter.setChildrenCollapsible(False)
         self._layout = QHBoxLayout(self)
-        self._layout.addWidget(panel)
+        self._layout.addWidget(self._splitter)
 
         session.subscribe(self._on_session_changed)
 
@@ -76,7 +81,8 @@ class _AnalysisTab(QWidget):
 
     def _add_view(self, view: QWidget) -> None:
         """Put the viewer to the right of the options."""
-        self._layout.addWidget(view, stretch=1)
+        self._splitter.addWidget(view)
+        self._splitter.setStretchFactor(1, 1)
 
     def _add_note(self, text: str) -> None:
         """Add a line of explanation to the options."""
