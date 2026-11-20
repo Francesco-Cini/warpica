@@ -15,6 +15,7 @@ matplotlib.rcParams["image.cmap"] = "plasma"
 
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
+from warpica.ui.theme import apply_dark_theme  # noqa: E402
 from warpica.ui.windows.main_window import MainWindow  # noqa: E402
 
 
@@ -27,6 +28,8 @@ def main() -> int:
         Exit status for the operating system.
     """
     app = QApplication(sys.argv)
+    # Before any window exists, so the matplotlib toolbar picks the light icons.
+    apply_dark_theme(app)
     window = MainWindow()
     window.resize(1500, 900)
     window.show()
